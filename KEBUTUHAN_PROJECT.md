@@ -190,8 +190,8 @@ piaud-laravel-react/
 
 ## 6. Estimasi Anggaran & Ketentuan Proyek
 
-Sesuai dokumen [Invoice_PIAUD_IAIPersis.html](file:///d:/Gawe/IAIPersis/piaud/piaud.iaipibandung.ac.id/Invoice_PIAUD_IAIPersis.html):
-- **Subtotal Pekerjaan**: **Rp 3.500.000**
+Sesuai dokumen [Invoice_PIAUD_IAIPersis.html](file:///d:/Gawe/IAIPersis/piaud/PiaudV2_Project/Invoice_PIAUD_IAIPersis.html):
+- **Subtotal Pekerjaan**: **Rp 3.000.000**
 - **Potongan Khusus Kemitraan**: **- Rp 500.000**
-- **Total Biaya Bersih (Nett)**: **Rp 3.000.000**
+- **Total Biaya Bersih (Nett)**: **Rp 2.500.000**
 - **Garansi Pemeliharaan**: 30 hari kalender setelah serah terima sistem.
