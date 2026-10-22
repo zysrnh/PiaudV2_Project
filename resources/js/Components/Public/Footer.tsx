@@ -36,9 +36,6 @@ export const Footer: React.FC = () => {
                 <div className="bg-piaud-emerald-dark border border-piaud-emerald-light/40 rounded-lg p-8 sm:p-12 shadow-card text-piaud-ivory relative overflow-hidden">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 relative z-10">
                         <div className="max-w-2xl">
-                            <span className="inline-block bg-white/10 text-white text-xs uppercase tracking-wider font-bold px-3 py-1 rounded mb-3">
-                                Penerimaan Mahasiswa Baru
-                            </span>
                             <h2 className="text-2xl sm:text-3xl font-serif text-white font-bold mb-3 leading-snug">
                                 Siap Menjadi Pendidik Generasi Emas yang Berkarakter Islami?
                             </h2>

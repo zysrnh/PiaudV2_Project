@@ -58,17 +58,17 @@ export default function Lecturers() {
             </Head>
 
             {/* Header Banner with Breadcrumb */}
-            <div className="bg-gradient-to-r from-piaud-emerald-dark via-piaud-emerald to-piaud-emerald-light text-white py-12 md:py-16">
+            <div className="bg-piaud-emerald-dark text-white py-10 md:py-12 border-b border-piaud-border/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <nav className="flex items-center gap-2 text-xs text-white/80 mb-3">
+                    <nav className="flex items-center gap-2 text-xs text-piaud-ivory/70 mb-3">
                         <Link href="/" className="hover:text-white transition-colors">Beranda</Link>
-                        <span>/</span>
-                        <span className="text-white font-semibold">Direktori Dosen</span>
+                        <span className="text-piaud-ivory/40">/</span>
+                        <span className="text-white font-medium">Direktori Dosen</span>
                     </nav>
-                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
                         Dosen Pengampu &amp; Tenaga Pendidik
                     </h1>
-                    <p className="mt-2 text-sm sm:text-base text-white/90 max-w-2xl leading-relaxed">
+                    <p className="mt-2 text-sm sm:text-base text-piaud-ivory/85 max-w-2xl leading-relaxed">
                         Akademisi, psikolog tumbuh kembang anak, dan praktisi perancangan media belajar yang berdedikasi membimbing calon sarjana PIAUD.
                     </p>
                 </div>
@@ -134,9 +134,6 @@ export default function Lecturers() {
                 {/* Research Focus Card */}
                 <section className="bg-piaud-ivory-dark rounded-lg p-6 sm:p-10 border border-piaud-border shadow-card">
                     <div className="max-w-2xl space-y-2">
-                        <span className="inline-block bg-piaud-emerald text-piaud-ivory text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded shadow-soft">
-                            Riset &amp; Publikasi
-                        </span>
                         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate leading-tight">
                             Fokus Penelitian Unggulan Civitas Akademika
                         </h2>

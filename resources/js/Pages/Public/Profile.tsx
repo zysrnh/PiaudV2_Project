@@ -18,17 +18,17 @@ export default function Profile() {
             </Head>
 
             {/* Header Banner with Breadcrumb */}
-            <div className="bg-gradient-to-r from-piaud-emerald-dark via-piaud-emerald to-piaud-emerald-light text-white py-12 md:py-16">
+            <div className="bg-piaud-emerald-dark text-white py-10 md:py-12 border-b border-piaud-border/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <nav className="flex items-center gap-2 text-xs text-white/80 mb-3">
+                    <nav className="flex items-center gap-2 text-xs text-piaud-ivory/70 mb-3">
                         <Link href="/" className="hover:text-white transition-colors">Beranda</Link>
-                        <span>/</span>
-                        <span className="text-white font-semibold">Profil Program Studi</span>
+                        <span className="text-piaud-ivory/40">/</span>
+                        <span className="text-white font-medium">Profil Program Studi</span>
                     </nav>
-                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
                         Profil &amp; Kelembagaan Prodi
                     </h1>
-                    <p className="mt-2 text-sm sm:text-base text-white/90 max-w-2xl leading-relaxed">
+                    <p className="mt-2 text-sm sm:text-base text-piaud-ivory/85 max-w-2xl leading-relaxed">
                         Mengenal lebih dekat sejarah, visi misi keislaman, pimpinan, dan komitmen Program Studi S1 PIAUD IAI Persis Bandung dalam mencetak pendidik usia emas.
                     </p>
                 </div>
@@ -61,9 +61,6 @@ export default function Profile() {
                         </div>
 
                         <div className="lg:col-span-8 space-y-5">
-                            <span className="inline-block bg-piaud-emerald/10 text-piaud-emerald text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded border border-piaud-emerald/20">
-                                Kata Pengantar
-                            </span>
                             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate leading-snug">
                                 Melahirkan Pendidik yang Menanamkan Tauhid &amp; Adab Sejak Usia Emas
                             </h2>
@@ -84,9 +81,6 @@ export default function Profile() {
                     {/* Visi Card */}
                     <div className="lg:col-span-5 bg-piaud-emerald text-piaud-ivory rounded-lg p-8 sm:p-10 shadow-card flex flex-col justify-between border border-piaud-emerald-dark">
                         <div className="space-y-4">
-                            <span className="inline-block bg-black/20 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded">
-                                Visi Utama
-                            </span>
                             <h2 className="font-serif text-2xl sm:text-3xl font-bold leading-tight text-white">
                                 Visi Program Studi S1 PIAUD
                             </h2>
@@ -104,9 +98,6 @@ export default function Profile() {
                     {/* Misi Card */}
                     <div className="lg:col-span-7 bg-piaud-ivory-dark rounded-lg p-8 sm:p-10 border border-piaud-border shadow-card space-y-6">
                         <div>
-                            <span className="inline-block bg-amber-100/80 text-piaud-terracotta text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded border border-amber-200 mb-2">
-                                Rencana Strategis
-                            </span>
                             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                 Misi Program Studi
                             </h2>
@@ -156,9 +147,6 @@ export default function Profile() {
                 {/* 3. Nilai Dasar & Legalitas */}
                 <section className="bg-piaud-ivory-dark rounded-lg p-8 sm:p-12 border border-piaud-border shadow-card">
                     <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-                        <span className="inline-block bg-piaud-emerald/10 text-piaud-emerald text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded border border-piaud-emerald/20">
-                            Kredibilitas Institusi
-                        </span>
                         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                             Legalitas &amp; Akreditasi Resmi
                         </h2>

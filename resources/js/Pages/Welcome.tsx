@@ -134,9 +134,6 @@ export default function Welcome() {
                             {/* Editorial Content */}
                             <div className="lg:col-span-8 space-y-5">
                                 <div>
-                                    <span className="inline-block bg-piaud-emerald/10 text-piaud-emerald text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded border border-piaud-emerald/20 mb-3">
-                                        Sambutan Ketua Program Studi
-                                    </span>
                                     <blockquote className="font-serif text-xl sm:text-2xl text-piaud-slate font-bold leading-relaxed border-l-4 border-piaud-terracotta pl-4">
                                         &ldquo;{siteConfig.kaprodi.pullQuote}&rdquo;
                                     </blockquote>
@@ -176,9 +173,6 @@ export default function Welcome() {
                 <section id="kurikulum" className="bg-piaud-ivory border-b border-piaud-border py-14 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-                            <span className="inline-block bg-amber-100/80 text-piaud-terracotta text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded border border-amber-200">
-                                Diferensiasi Akademik
-                            </span>
                             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate leading-tight">
                                 Tiga Pilar Pendidikan Holistik Calon Guru AUD
                             </h2>
@@ -237,9 +231,6 @@ export default function Welcome() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-piaud-border">
                             <div>
-                                <span className="inline-block bg-piaud-emerald/10 text-piaud-emerald text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded border border-piaud-emerald/20 mb-2">
-                                    Tenaga Pendidik
-                                </span>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Dosen Pengampu &amp; Pakar Tumbuh Kembang
                                 </h2>
@@ -293,9 +284,6 @@ export default function Welcome() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-piaud-border">
                             <div>
-                                <span className="inline-block bg-piaud-emerald/10 text-piaud-emerald text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded border border-piaud-emerald/20 mb-2">
-                                    Dokumentasi Kegiatan
-                                </span>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Galeri Praktikum &amp; Observasi Lapangan
                                 </h2>
@@ -340,9 +328,6 @@ export default function Welcome() {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-piaud-border">
                             <div>
-                                <span className="inline-block bg-amber-100/80 text-piaud-terracotta text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded border border-amber-200 mb-2">
-                                    Wawasan &amp; Edukasi
-                                </span>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Artikel Parenting Islami &amp; Khazanah AUD
                                 </h2>

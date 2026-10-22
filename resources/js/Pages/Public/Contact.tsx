@@ -28,17 +28,17 @@ export default function Contact() {
             </Head>
 
             {/* Header Banner with Breadcrumb */}
-            <div className="bg-piaud-emerald-dark text-white py-12 md:py-16 border-b border-piaud-border/20">
+            <div className="bg-piaud-emerald-dark text-white py-10 md:py-12 border-b border-piaud-border/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <nav className="flex items-center gap-2 text-xs text-white/80 mb-3">
+                    <nav className="flex items-center gap-2 text-xs text-piaud-ivory/70 mb-3">
                         <Link href="/" className="hover:text-white transition-colors">Beranda</Link>
-                        <span>/</span>
-                        <span className="text-white font-semibold">Hubungi Kami</span>
+                        <span className="text-piaud-ivory/40">/</span>
+                        <span className="text-white font-medium">Hubungi Kami</span>
                     </nav>
-                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
                         Layanan Kontak &amp; Konsultasi PMB
                     </h1>
-                    <p className="mt-2 text-sm sm:text-base text-white/90 max-w-2xl leading-relaxed">
+                    <p className="mt-2 text-sm sm:text-base text-piaud-ivory/85 max-w-2xl leading-relaxed">
                         Konsultasikan pendaftaran mahasiswa baru, konversi ijazah guru, jadwal perkuliahan, atau kemitraan lembaga bersama tim sekretariat prodi.
                     </p>
                 </div>
@@ -96,9 +96,6 @@ export default function Contact() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     {/* Form (7 cols) */}
                     <div className="lg:col-span-7 bg-piaud-ivory-dark rounded-lg p-8 sm:p-10 border border-piaud-border shadow-soft">
-                        <span className="inline-block bg-piaud-terracotta/10 text-piaud-terracotta border border-piaud-terracotta/20 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded mb-2">
-                            Formulir Konsultasi
-                        </span>
                         <h2 className="font-serif text-2xl font-bold text-piaud-slate mb-6">
                             Kirim Pesan ke Tim Program Studi
                         </h2>

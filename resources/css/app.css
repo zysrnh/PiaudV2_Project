@@ -7,20 +7,20 @@
 :root {
     --color-emerald: #0F4C3A;
     --color-emerald-dark: #0A3427;
-    --color-ivory: #FFFFFF;
-    --color-ivory-dark: #F8FAFC;
-    --color-terracotta: #A94A24;
-    --color-terracotta-dark: #8C3917;
-    --color-slate: #1F2933;
-    --color-slate-muted: #52606D;
-    --color-border: #E2E8F0;
-    --color-surface: #FFFFFF;
+    --color-ivory: #FAF6EC;
+    --color-ivory-dark: #F2ECE0;
+    --color-terracotta: #C2613A;
+    --color-terracotta-dark: #A64F2D;
+    --color-slate: #1B2A2F;
+    --color-slate-muted: #5C6B73;
+    --color-border: #E3DAC7;
+    --color-surface: #FAF6EC;
 
     --font-serif: "Source Serif 4", Georgia, serif;
     --font-sans: "Public Sans", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-    --radius-sm: 2px;
-    --radius-md: 4px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
 }
 
 html {
@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
     font-style: normal;
     font-weight: 700;
     line-height: 1.25;
-    color: var(--color-slate);
+    color: inherit;
     letter-spacing: -0.015em;
 }
 

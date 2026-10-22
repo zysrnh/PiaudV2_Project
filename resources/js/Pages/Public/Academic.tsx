@@ -52,17 +52,17 @@ export default function Academic() {
             </Head>
 
             {/* Header Banner with Breadcrumb */}
-            <div className="bg-gradient-to-r from-piaud-emerald-dark via-piaud-emerald to-piaud-emerald-light text-white py-12 md:py-16">
+            <div className="bg-piaud-emerald-dark text-white py-10 md:py-12 border-b border-piaud-border/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <nav className="flex items-center gap-2 text-xs text-white/80 mb-3">
+                    <nav className="flex items-center gap-2 text-xs text-piaud-ivory/70 mb-3">
                         <Link href="/" className="hover:text-white transition-colors">Beranda</Link>
-                        <span>/</span>
-                        <span className="text-white font-semibold">Akademik &amp; Kurikulum</span>
+                        <span className="text-piaud-ivory/40">/</span>
+                        <span className="text-white font-medium">Akademik &amp; Kurikulum</span>
                     </nav>
-                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
                         Kurikulum &amp; Ekosistem Akademik
                     </h1>
-                    <p className="mt-2 text-sm sm:text-base text-white/90 max-w-2xl leading-relaxed">
+                    <p className="mt-2 text-sm sm:text-base text-piaud-ivory/85 max-w-2xl leading-relaxed">
                         Desain kurikulum 144 SKS yang mengintegrasikan psikologi perkembangan sains mutakhir dengan nilai-nilai ketauhidan khas Jam'iyyah Persis.
                     </p>
                 </div>
@@ -100,9 +100,6 @@ export default function Academic() {
                 <section id="kurikulum" className="bg-piaud-ivory-dark rounded-lg p-6 sm:p-10 border border-piaud-border shadow-card">
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 pb-3 border-b border-piaud-border">
                         <div>
-                            <span className="inline-block bg-piaud-emerald/10 text-piaud-emerald text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded border border-piaud-emerald/20 mb-2">
-                                Struktur Mata Kuliah
-                            </span>
                             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                 Sebaran Mata Kuliah Kurikulum S1 PIAUD
                             </h2>
@@ -172,9 +169,6 @@ export default function Academic() {
                 {/* 3. Profil Lulusan & Peluang Karir */}
                 <section id="profil-lulusan" className="bg-piaud-ivory-dark rounded-lg p-6 sm:p-10 border border-piaud-border shadow-card space-y-6">
                     <div>
-                        <span className="inline-block bg-amber-100/80 text-piaud-terracotta text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded border border-amber-200 mb-2">
-                            Orientasi Karir
-                        </span>
                         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                             Profil Lulusan &amp; Peluang Karir Masa Depan
                         </h2>
@@ -218,9 +212,6 @@ export default function Academic() {
                 {/* 4. Laboratorium & Fasilitas Pendukung */}
                 <section id="lab" className="bg-piaud-emerald text-piaud-ivory rounded-lg p-6 sm:p-10 shadow-card space-y-6 border border-piaud-emerald-dark">
                     <div className="max-w-2xl">
-                        <span className="inline-block bg-black/20 text-white text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded mb-3">
-                            Fasilitas Unggulan
-                        </span>
                         <h2 className="font-serif text-2xl sm:text-3xl font-bold leading-tight text-white">
                             Laboratorium Microteaching &amp; Studio APE Terpadu
                         </h2>

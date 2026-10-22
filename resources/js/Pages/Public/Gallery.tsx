@@ -69,17 +69,17 @@ export default function Gallery() {
             </Head>
 
             {/* Header Banner with Breadcrumb */}
-            <div className="bg-piaud-emerald-dark text-white py-12 md:py-16 border-b border-piaud-border/20">
+            <div className="bg-piaud-emerald-dark text-white py-10 md:py-12 border-b border-piaud-border/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <nav className="flex items-center gap-2 text-xs text-white/80 mb-3">
+                    <nav className="flex items-center gap-2 text-xs text-piaud-ivory/70 mb-3">
                         <Link href="/" className="hover:text-white transition-colors">Beranda</Link>
-                        <span>/</span>
-                        <span className="text-white font-semibold">Galeri Dokumentasi</span>
+                        <span className="text-piaud-ivory/40">/</span>
+                        <span className="text-white font-medium">Galeri Dokumentasi</span>
                     </nav>
-                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
                         Galeri Kegiatan &amp; Praktikum
                     </h1>
-                    <p className="mt-2 text-sm sm:text-base text-white/90 max-w-2xl leading-relaxed">
+                    <p className="mt-2 text-sm sm:text-base text-piaud-ivory/85 max-w-2xl leading-relaxed">
                         Rekam visual aktivitas civitas akademika dalam berkarya, meneliti, dan mempraktikkan pembelajaran inovatif bersama anak usia dini.
                     </p>
                 </div>
