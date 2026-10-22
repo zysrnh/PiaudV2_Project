@@ -20,13 +20,13 @@ export default {
                 piaud: {
                     emerald: '#0F4C3A',
                     'emerald-dark': '#0A3427',
-                    ivory: '#FAF6EC',
-                    'ivory-dark': '#F2ECE0',
+                    ivory: '#FFFFFF',
+                    'ivory-dark': '#F8FAFC',
                     terracotta: '#A94A24',
                     'terracotta-dark': '#8C3917',
                     slate: '#1F2933',
                     'slate-muted': '#52606D',
-                    border: '#E3DAC7',
+                    border: '#E2E8F0',
                 },
             },
             borderRadius: {

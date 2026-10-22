@@ -7,13 +7,13 @@
 :root {
     --color-emerald: #0F4C3A;
     --color-emerald-dark: #0A3427;
-    --color-ivory: #FAF6EC;
-    --color-ivory-dark: #F2ECE0;
+    --color-ivory: #FFFFFF;
+    --color-ivory-dark: #F8FAFC;
     --color-terracotta: #A94A24;
     --color-terracotta-dark: #8C3917;
     --color-slate: #1F2933;
     --color-slate-muted: #52606D;
-    --color-border: #E3DAC7;
+    --color-border: #E2E8F0;
     --color-surface: #FFFFFF;
 
     --font-serif: "Source Serif 4", Georgia, serif;

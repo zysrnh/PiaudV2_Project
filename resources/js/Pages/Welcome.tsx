@@ -62,7 +62,7 @@ export default function Welcome() {
                                     </a>
                                     <a
                                         href="#kurikulum"
-                                        className="inline-flex items-center justify-center bg-piaud-ivory-dark hover:bg-piaud-border text-piaud-slate text-sm font-semibold px-6 py-3.5 rounded-sm border border-piaud-border transition-colors duration-150"
+                                        className="inline-flex items-center justify-center bg-piaud-ivory-dark hover:bg-slate-100 text-piaud-slate text-sm font-semibold px-6 py-3.5 rounded-sm border border-piaud-border transition-colors duration-150"
                                     >
                                         {siteConfig.hero.ctaSecondaryText}
                                     </a>
@@ -106,7 +106,7 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 4. SAMBUTAN KAPRODI (Editorial Layout Tanpa Cliché Side-Tab Border) */}
+                {/* 4. SAMBUTAN KAPRODI (Editorial Layout: Relaxed Line Height Pullquote) */}
                 <section id="profil" className="border-b border-piaud-border bg-piaud-ivory-dark">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -133,14 +133,14 @@ export default function Welcome() {
                                 </figure>
                             </div>
 
-                            {/* Editorial Content (Strict Heading Hierarchy h2 -> h3) */}
+                            {/* Editorial Content (Leading-relaxed on Pullquote to fix tight line-height) */}
                             <div className="lg:col-span-8 space-y-6">
                                 <div>
                                     <h2 className="text-xs font-bold uppercase tracking-wider text-piaud-emerald mb-3">
                                         Sambutan Ketua Program Studi
                                     </h2>
-                                    {/* Pure Typographic Pullquote (No thick green side-tab line) */}
-                                    <blockquote className="font-serif text-2xl sm:text-3xl text-piaud-slate font-bold leading-snug">
+                                    {/* Relaxed line height avoids tight line height warnings */}
+                                    <blockquote className="font-serif text-2xl sm:text-3xl text-piaud-slate font-bold leading-relaxed">
                                         &ldquo;{siteConfig.kaprodi.pullQuote}&rdquo;
                                     </blockquote>
                                 </div>
@@ -225,7 +225,7 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 6. DOSEN & TENAGA PENGAJAR (Flat Single Card Layout, No Nested Boxes) */}
+                {/* 6. DOSEN & TENAGA PENGAJAR (Editorial Directory Layout - No Nested Cards) */}
                 <section id="dosen" className="border-b border-piaud-border bg-piaud-ivory-dark">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
@@ -242,34 +242,32 @@ export default function Welcome() {
                             </p>
                         </div>
 
-                        {/* Flat Grid Dosen (Clean Single Card without nested borders) */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {/* Open Editorial Grid (No outer card boxes, un-crowded heading with mt-3.5) */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
                             {siteConfig.lecturers.map((lecturer, index) => (
-                                <article
-                                    key={index}
-                                    className="bg-piaud-ivory border border-piaud-border rounded-sm p-4 flex flex-col justify-between"
-                                >
+                                <article key={index} className="space-y-4">
+                                    <Photo
+                                        src={lecturer.photoUrl}
+                                        alt={`Foto ${lecturer.name}`}
+                                        aspectRatio="1/1"
+                                        className="w-full h-auto rounded-sm shadow-sm"
+                                    />
                                     <div>
-                                        <Photo
-                                            src={lecturer.photoUrl}
-                                            alt={`Foto ${lecturer.name}`}
-                                            aspectRatio="1/1"
-                                            className="w-full h-auto rounded-sm mb-4"
-                                        />
-                                        <span className="text-xs font-bold tracking-wider uppercase text-piaud-terracotta block">
+                                        <span className="text-xs font-bold tracking-wider text-piaud-terracotta block">
                                             {lecturer.role}
                                         </span>
-                                        <h3 className="font-serif font-bold text-base text-piaud-slate mt-1.5 leading-snug">
+                                        {/* mt-3.5 resolves 'Heading Crowded against Previous Block' */}
+                                        <h3 className="font-serif font-bold text-base text-piaud-slate mt-3.5 leading-snug">
                                             {lecturer.name}
                                         </h3>
-                                    </div>
-                                    <div className="mt-4 pt-3 border-t border-piaud-border text-xs text-piaud-slate-muted space-y-1">
-                                        <p className="font-mono text-xs text-piaud-slate-muted">
-                                            NIP: {lecturer.nip}
-                                        </p>
-                                        <p className="text-piaud-slate font-semibold">
-                                            {lecturer.expertise}
-                                        </p>
+                                        <div className="mt-3 pt-2.5 border-t border-piaud-border text-xs text-piaud-slate-muted space-y-1">
+                                            <p className="font-mono text-xs text-piaud-slate-muted">
+                                                NIP: {lecturer.nip}
+                                            </p>
+                                            <p className="text-piaud-slate font-semibold">
+                                                {lecturer.expertise}
+                                            </p>
+                                        </div>
                                     </div>
                                 </article>
                             ))}
@@ -277,7 +275,7 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* GALERI DOKUMENTASI (Clean Figure Grid, Fixed Heading Level h3) */}
+                {/* GALERI DOKUMENTASI (Clean Open Figures - No Nested Cards) */}
                 <section id="galeri" className="border-b border-piaud-border bg-piaud-ivory">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
@@ -294,24 +292,20 @@ export default function Welcome() {
                             </p>
                         </div>
 
-                        {/* Flat Figure Grid 4 Kolom (No nested card boxes, generous spacing) */}
+                        {/* Open Figure Grid (Direct image + caption, no double wrapper boxes) */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.gallery.map((item, index) => (
-                                <figure
-                                    key={index}
-                                    className="border border-piaud-border bg-piaud-ivory-dark rounded-sm p-3 flex flex-col justify-between"
-                                >
+                                <figure key={index} className="space-y-3">
                                     <Photo
                                         src={item.photoUrl}
                                         alt={item.title}
                                         aspectRatio="4/3"
-                                        className="w-full h-auto rounded-sm"
+                                        className="w-full h-auto rounded-sm shadow-sm"
                                     />
-                                    <figcaption className="mt-4 pt-2 border-t border-piaud-border/70 space-y-1">
+                                    <figcaption className="space-y-1">
                                         <span className="text-xs font-bold uppercase tracking-wider text-piaud-terracotta block">
                                             {item.category}
                                         </span>
-                                        {/* Changed from h4 to h3 to fix SKIPPED HEADING LEVEL */}
                                         <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug">
                                             {item.title}
                                         </h3>
@@ -322,7 +316,7 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 7. ARTIKEL PARENTING ISLAMI (Clean Divided List, Max Line Length Restraint) */}
+                {/* 7. ARTIKEL PARENTING ISLAMI (Open Editorial Column + Divided Story Feed) */}
                 <section id="artikel" className="border-b border-piaud-border bg-piaud-ivory-dark">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
@@ -339,15 +333,15 @@ export default function Welcome() {
                             </span>
                         </div>
 
-                        {/* 1 Featured (Left 6 cols) + 3 List (Right 6 cols) */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                            {/* Featured Article (Single clean card) */}
-                            <article className="lg:col-span-6 border border-piaud-border bg-piaud-ivory rounded-sm p-5 space-y-4">
+                        {/* 1 Open Featured Column + 1 Divided Story Feed (No Nested Card Boxes) */}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                            {/* Featured Article: Direct editorial layout without card wrapper */}
+                            <article className="lg:col-span-6 space-y-4">
                                 <Photo
                                     src={siteConfig.articles.featured.photoUrl}
                                     alt={siteConfig.articles.featured.title}
                                     aspectRatio="16/9"
-                                    className="w-full h-auto rounded-sm"
+                                    className="w-full h-auto rounded-sm shadow-sm"
                                 />
                                 <div className="space-y-2.5">
                                     <div className="flex items-center gap-3 text-xs text-piaud-slate-muted flex-wrap">
@@ -367,10 +361,10 @@ export default function Welcome() {
                                 </div>
                             </article>
 
-                            {/* 3 List Articles (Clean divided list, no nested cards) */}
-                            <div className="lg:col-span-6 divide-y divide-piaud-border border border-piaud-border bg-piaud-ivory rounded-sm">
+                            {/* 3 List Articles: Clean divided feed with single horizontal separator lines */}
+                            <div className="lg:col-span-6 divide-y divide-piaud-border">
                                 {siteConfig.articles.list.map((article) => (
-                                    <article key={article.id} className="p-5 space-y-2 hover:bg-piaud-ivory-dark transition-colors duration-150">
+                                    <article key={article.id} className="py-5 first:pt-0 last:pb-0 space-y-2">
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
                                             <span className="text-piaud-terracotta font-bold text-xs">
                                                 {article.category}

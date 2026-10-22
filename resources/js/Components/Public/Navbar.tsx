@@ -53,7 +53,7 @@ export const Navbar: React.FC = () => {
                         <span className="font-serif font-bold text-base sm:text-lg leading-tight text-piaud-slate tracking-tight">
                             PIAUD IAI Persis
                         </span>
-                        <span className="text-xs text-piaud-slate font-semibold uppercase tracking-wider mt-0.5">
+                        <span className="text-xs text-piaud-slate-muted font-semibold mt-0.5">
                             S1 Pendidikan Islam Anak Usia Dini
                         </span>
                     </div>
