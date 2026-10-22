@@ -220,7 +220,7 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 6. DOSEN & TENAGA PENGAJAR (Flat Cards Array) */}
+                {/* 6. DOSEN & TENAGA PENGAJAR (Data Riil Database mod_data_guru) */}
                 <section id="dosen" className="border-b border-piaud-border bg-piaud-ivory-dark">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
@@ -260,7 +260,7 @@ export default function Welcome() {
                                     </div>
                                     <div className="mt-4 pt-3 border-t border-piaud-border text-[11px] text-piaud-slate-muted space-y-1">
                                         <p className="font-mono text-[10px] text-piaud-slate-muted">
-                                            {lecturer.nidn}
+                                            NIP: {lecturer.nip}
                                         </p>
                                         <p className="text-piaud-slate font-medium">
                                             {lecturer.expertise}
@@ -272,8 +272,52 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 7. ARTIKEL PARENTING ISLAMI (1 Featured + 3 List Layout) */}
-                <section id="artikel" className="border-b border-piaud-border bg-piaud-ivory">
+                {/* GALERI DOKUMENTASI KEGIATAN & LAB (#galeri) */}
+                <section id="galeri" className="border-b border-piaud-border bg-piaud-ivory">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
+                            <div>
+                                <span className="text-xs font-semibold uppercase tracking-wider text-piaud-emerald block mb-1">
+                                    Dokumentasi Kegiatan
+                                </span>
+                                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
+                                    Galeri Praktikum &amp; Observasi Lapangan
+                                </h2>
+                            </div>
+                            <p className="text-xs text-piaud-slate-muted max-w-md">
+                                Dokumentasi nyata kegiatan mahasiswa dalam pembuatan alat permainan edukatif, pentas kreativitas anak, dan simulasi microteaching.
+                            </p>
+                        </div>
+
+                        {/* Flat Grid Galeri 4 Kolom */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                            {siteConfig.gallery.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className="border border-piaud-border bg-piaud-ivory-dark p-2 rounded-sm space-y-2"
+                                >
+                                    <Photo
+                                        src={item.photoUrl}
+                                        alt={item.title}
+                                        aspectRatio="4/3"
+                                        className="w-full h-auto rounded-sm"
+                                    />
+                                    <div className="px-1 py-1">
+                                        <span className="text-[10px] font-semibold uppercase tracking-wider text-piaud-terracotta block">
+                                            {item.category}
+                                        </span>
+                                        <h4 className="font-serif font-bold text-xs text-piaud-slate mt-0.5 line-clamp-2">
+                                            {item.title}
+                                        </h4>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* 7. ARTIKEL PARENTING ISLAMI (#artikel) */}
+                <section id="artikel" className="border-b border-piaud-border bg-piaud-ivory-dark">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
                             <div>
@@ -292,7 +336,7 @@ export default function Welcome() {
                         {/* 1 Featured (Left 6 cols) + 3 List (Right 6 cols) */}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                             {/* Featured Article */}
-                            <div className="lg:col-span-6 border border-piaud-border bg-piaud-ivory-dark rounded-sm p-4 space-y-4">
+                            <div className="lg:col-span-6 border border-piaud-border bg-piaud-ivory rounded-sm p-4 space-y-4">
                                 <Photo
                                     src={siteConfig.articles.featured.photoUrl}
                                     alt={siteConfig.articles.featured.title}

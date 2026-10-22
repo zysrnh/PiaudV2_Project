@@ -3,23 +3,20 @@ import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 
 export const Navbar: React.FC = () => {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
-
-    const navLinks = [
-        { label: 'Beranda', href: '#' },
-        { label: 'Profil & Kaprodi', href: '#profil' },
-        { label: 'Kurikulum & Lab', href: '#kurikulum' },
-        { label: 'Dosen', href: '#dosen' },
-        { label: 'Parenting & Artikel', href: '#artikel' },
-    ];
+    const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
     const waLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
+
+    const toggleSubmenu = (label: string) => {
+        setOpenSubmenu(openSubmenu === label ? null : label);
+    };
 
     return (
         <header className="w-full bg-piaud-ivory border-b border-piaud-border sticky top-0 z-40">
             {/* 1. Top Bar */}
             <div className="bg-piaud-emerald text-piaud-ivory border-b border-piaud-emerald-dark text-[11px] leading-tight">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col md:flex-row md:items-center md:justify-between gap-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-semibold tracking-wide uppercase">
                             {siteConfig.institutionName}
                         </span>
@@ -28,20 +25,23 @@ export const Navbar: React.FC = () => {
                             {siteConfig.facultyName} · {siteConfig.programName}
                         </span>
                     </div>
-                    <div className="flex items-center gap-4 text-piaud-ivory/90 text-[10px] sm:text-[11px]">
+                    <div className="flex items-center gap-4 text-piaud-ivory/90 text-[10px] sm:text-[11px] flex-wrap">
                         <span className="inline-flex items-center gap-1.5">
                             <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                             <span>{siteConfig.accreditation.status} ({siteConfig.accreditation.institution})</span>
                         </span>
                         <span className="hidden sm:inline text-piaud-ivory/40">|</span>
-                        <span className="hidden sm:inline">Layanan PMB: {siteConfig.officeHours}</span>
+                        <span className="inline-flex items-center gap-1">
+                            <span>Telp:</span>
+                            <span className="font-medium text-white">{siteConfig.phone}</span>
+                        </span>
                     </div>
                 </div>
             </div>
 
             {/* 2. Main Navbar */}
             <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                {/* Brand / Monogram */}
+                {/* Brand Monogram */}
                 <a
                     href="#"
                     className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta"
@@ -59,16 +59,42 @@ export const Navbar: React.FC = () => {
                     </div>
                 </a>
 
-                {/* Desktop Nav Links (5 Anchor Links) */}
-                <div className="hidden lg:flex items-center gap-7">
-                    {navLinks.map((link) => (
-                        <a
-                            key={link.label}
-                            href={link.href}
-                            className="text-xs font-medium text-piaud-slate hover:text-piaud-emerald transition-colors duration-150 py-1 border-b-2 border-transparent hover:border-piaud-emerald"
-                        >
-                            {link.label}
-                        </a>
+                {/* Desktop Nav Links (Disesuaikan dengan Navigasi Proyek Lama) */}
+                <div className="hidden xl:flex items-center gap-6">
+                    {siteConfig.navigation.map((item) => (
+                        <div key={item.label} className="relative group">
+                            {item.submenu ? (
+                                <div className="flex items-center gap-1 py-1 cursor-pointer">
+                                    <a
+                                        href={item.href}
+                                        className="text-xs font-semibold text-piaud-slate hover:text-piaud-emerald transition-colors duration-150"
+                                    >
+                                        {item.label}
+                                    </a>
+                                    <span className="text-[10px] text-piaud-slate-muted group-hover:text-piaud-emerald">▾</span>
+
+                                    {/* Desktop Dropdown Submenu */}
+                                    <div className="absolute top-full left-0 mt-2 w-48 bg-piaud-ivory border border-piaud-border rounded-sm shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+                                        {item.submenu.map((sub) => (
+                                            <a
+                                                key={sub.label}
+                                                href={sub.href}
+                                                className="block px-4 py-2.5 text-xs text-piaud-slate hover:bg-piaud-ivory-dark hover:text-piaud-emerald border-b border-piaud-border last:border-b-0 transition-colors duration-150 font-medium"
+                                            >
+                                                {sub.label}
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <a
+                                    href={item.href}
+                                    className="text-xs font-semibold text-piaud-slate hover:text-piaud-emerald transition-colors duration-150 py-1 border-b-2 border-transparent hover:border-piaud-emerald"
+                                >
+                                    {item.label}
+                                </a>
+                            )}
+                        </div>
                     ))}
                 </div>
 
@@ -85,7 +111,7 @@ export const Navbar: React.FC = () => {
                 </div>
 
                 {/* Mobile Menu Button */}
-                <div className="flex items-center sm:hidden">
+                <div className="flex items-center xl:hidden">
                     <button
                         type="button"
                         onClick={() => setIsMobileOpen(!isMobileOpen)}
@@ -112,20 +138,48 @@ export const Navbar: React.FC = () => {
 
             {/* Mobile Flat Drawer */}
             {isMobileOpen && (
-                <div className="sm:hidden border-t border-piaud-border bg-piaud-ivory-dark px-4 pt-3 pb-5 space-y-2">
+                <div className="xl:hidden border-t border-piaud-border bg-piaud-ivory-dark px-4 pt-3 pb-5 space-y-2">
                     <div className="flex flex-col space-y-1">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                onClick={() => setIsMobileOpen(false)}
-                                className="block py-2 px-3 text-xs font-medium text-piaud-slate hover:bg-piaud-ivory border border-transparent hover:border-piaud-border rounded-sm transition-colors duration-150"
-                            >
-                                {link.label}
-                            </a>
+                        {siteConfig.navigation.map((item) => (
+                            <div key={item.label} className="border-b border-piaud-border/50 pb-1">
+                                {item.submenu ? (
+                                    <div>
+                                        <button
+                                            type="button"
+                                            onClick={() => toggleSubmenu(item.label)}
+                                            className="w-full flex items-center justify-between py-2 px-3 text-xs font-semibold text-piaud-slate hover:bg-piaud-ivory rounded-sm"
+                                        >
+                                            <span>{item.label}</span>
+                                            <span className="text-xs">{openSubmenu === item.label ? '▲' : '▼'}</span>
+                                        </button>
+                                        {openSubmenu === item.label && (
+                                            <div className="pl-4 py-1 space-y-1 bg-piaud-ivory/50 rounded-sm">
+                                                {item.submenu.map((sub) => (
+                                                    <a
+                                                        key={sub.label}
+                                                        href={sub.href}
+                                                        onClick={() => setIsMobileOpen(false)}
+                                                        className="block py-1.5 px-3 text-xs text-piaud-slate hover:text-piaud-emerald font-medium"
+                                                    >
+                                                        {sub.label}
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <a
+                                        href={item.href}
+                                        onClick={() => setIsMobileOpen(false)}
+                                        className="block py-2 px-3 text-xs font-semibold text-piaud-slate hover:bg-piaud-ivory rounded-sm transition-colors duration-150"
+                                    >
+                                        {item.label}
+                                    </a>
+                                )}
+                            </div>
                         ))}
                     </div>
-                    <div className="pt-2 border-t border-piaud-border">
+                    <div className="pt-2">
                         <a
                             href={waLink}
                             target="_blank"

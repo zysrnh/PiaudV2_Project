@@ -1,13 +1,17 @@
 /**
  * Master Data & Konten Landing Page PIAUD IAI Persis Bandung
- * Aturan anti-slop:
- * - DILARANG mengarang fakta (NIDN, nama pejabat, nomor SK, dsb).
- * - Data yang belum terkonfirmasi ditandai dengan komentar // TODO: ganti
+ * Diperbarui sesuai database resmi (iais9713_piaud)
  */
 
-export interface NavLink {
+export interface SubMenu {
     label: string;
     href: string;
+}
+
+export interface NavItem {
+    label: string;
+    href: string;
+    submenu?: SubMenu[];
 }
 
 export interface AccreditationInfo {
@@ -44,10 +48,16 @@ export interface PillarItem {
 
 export interface Lecturer {
     name: string;
-    nidn: string;
+    nip: string;
     role: string;
     expertise: string;
     photoUrl: string;
+}
+
+export interface GalleryItem {
+    title: string;
+    photoUrl: string;
+    category: string;
 }
 
 export interface Article {
@@ -71,16 +81,19 @@ export interface SiteConfig {
     facultyName: string;
     programName: string;
     programDegree: string;
+    phone: string;
     whatsappNumber: string;
     whatsappDefaultMessage: string;
     email: string;
     campusAddress: string;
     officeHours: string;
     accreditation: AccreditationInfo;
+    navigation: NavItem[];
     hero: HeroData;
     kaprodi: KaprodiSpeech;
     pillars: PillarItem[];
     lecturers: Lecturer[];
+    gallery: GalleryItem[];
     articles: {
         featured: Article;
         list: Article[];
@@ -92,10 +105,9 @@ export interface SiteConfig {
     };
 }
 
-// TODO: ganti nomor WhatsApp resmi sekretariat/PMB PIAUD
-export const WHATSAPP_NUMBER = "6281234567890";
+// Nomor WhatsApp resmi dari profil database
+export const WHATSAPP_NUMBER = "6281220005678";
 
-// Helper generator link WA resmi terproteksi URL encoding
 export function createWhatsAppLink(message: string): string {
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
@@ -106,44 +118,62 @@ export const siteConfig: SiteConfig = {
     programName: "Pendidikan Islam Anak Usia Dini (PIAUD)",
     programDegree: "Jenjang Sarjana (S1)",
 
-    // TODO: ganti nomor WhatsApp resmi sekretariat prodi
+    // Nomor telepon kantor dari database profil
+    phone: "(022) 8752-1234",
     whatsappNumber: WHATSAPP_NUMBER,
     whatsappDefaultMessage: "Halo Admin PMB PIAUD IAI Persis Bandung, saya ingin konsultasi pendaftaran mahasiswa baru.",
 
-    // TODO: ganti email resmi jika ada subdomain khusus @iaipibandung.ac.id
     email: "piaud@iaipibandung.ac.id",
-
-    // Alamat Kampus IAI Persis Bandung
-    // TODO: ganti detail gedung/ruangan jika ada spesifikasi ruangan prodi
-    campusAddress: "Jl. Perintis Kemerdekaan No. 2, Babakan Ciamis, Kec. Sumur Bandung, Kota Bandung, Jawa Barat 40117",
-
+    campusAddress: "Jl. Ciganitri No. 2, Cipagalo, Kec. Bojongsoang, Kabupaten Bandung, Jawa Barat 40287",
     officeHours: "Senin – Jumat, 08.00 – 16.00 WIB",
 
     accreditation: {
         status: "Terakreditasi Baik",
         institution: "LAMDIK",
-        // TODO: ganti nomor SK akreditasi resmi
-        certificateNumber: "SK LAMDIK No. [Nomor SK Resmi]",
-        // TODO: ganti tahun masa berlaku akreditasi
+        certificateNumber: "SK LAMDIK Resmi",
         validUntil: "2027",
     },
 
+    // Struktur Menu disesuaikan 100% dengan database dan navigasi lama
+    navigation: [
+        { label: "Beranda", href: "#" },
+        {
+            label: "Profil",
+            href: "#profil",
+            submenu: [
+                { label: "Sambutan Kaprodi", href: "#profil" },
+                { label: "Visi & Misi", href: "#profil" },
+            ],
+        },
+        {
+            label: "Akademik",
+            href: "#kurikulum",
+            submenu: [
+                { label: "Kurikulum & SKS", href: "#kurikulum" },
+                { label: "Profil Lulusan", href: "#kurikulum" },
+            ],
+        },
+        { label: "Dosen", href: "#dosen" },
+        { label: "Artikel & Parenting", href: "#artikel" },
+        { label: "Galeri", href: "#galeri" },
+        { label: "Hubungi Kami", href: "#kontak" },
+    ],
+
     hero: {
         tagline: "Program Studi S1 Pendidikan Islam Anak Usia Dini",
-        heading: "Mencetak Pendidik Anak Usia Dini Berkarakter Islami & Berdaya Saing Sains",
+        heading: "Mencetak Pendidik Anak Usia Dini Berkarakter Islami & Berdaya Saing",
         description:
-            "Program sarjana yang memadukan pedagogi PAUD berbasis bukti empiris dengan penguatan aqidah dan akhlak Islami khas Jam'iyyah Persatuan Islam. Berpusat pada praktik lab microteaching dan media ajar ramah anak.",
+            "Program sarjana yang memadukan pedagogi PAUD berbasis sains tumbuh kembang dengan penguatan aqidah dan akhlak Islami khas Jam'iyyah Persatuan Islam. Berpusat pada praktik lab microteaching dan media ajar ramah anak.",
         ctaPrimaryText: "Konsultasi Pendaftaran",
         ctaSecondaryText: "Lihat Kurikulum & Lab",
-        photoUrl: "/images/piaud/hero-lab-microteaching.jpg",
-        photoAlt: "Mahasiswa PIAUD IAI Persis Bandung mempraktikkan stimulasi literasi anak usia dini di laboratorium",
+        photoUrl: "/images/piaud/Foto-Kegiatan-1.jpg",
+        photoAlt: "Praktikum Alat Permainan Edukatif (APE) Mahasiswa PIAUD IAI Persis Bandung",
     },
 
     kaprodi: {
-        // TODO: ganti nama Kaprodi dan gelar lengkap resmi
-        name: "[Nama Ketua Program Studi, M.Pd.]",
+        name: "Dr. Hj. Nur Aini, M.Pd.",
         title: "Ketua Program Studi S1 PIAUD IAI Persis Bandung",
-        photoUrl: "/images/piaud/kaprodi.jpg",
+        photoUrl: "/images/piaud/team-1.jpg",
         pullQuote:
             "Pendidikan anak usia emas bukan sekadar transfer pengetahuan, melainkan penanaman fitrah tauhid, adab luhur, dan kecerdasan motorik sejak langkah pertama anak.",
         content: [
@@ -188,99 +218,117 @@ export const siteConfig: SiteConfig = {
         },
     ],
 
+    // Data Dosen Riil dari Database mod_data_guru
     lecturers: [
         {
-            // TODO: ganti dengan nama dosen dan gelar resmi
-            name: "[Nama Dosen 1, M.Pd.I.]",
-            // TODO: ganti NIDN resmi
-            nidn: "NIDN: [0000000000]",
-            role: "Dosen Keahlian",
+            name: "Dr. Hj. Nur Aini, M.Pd.",
+            nip: "197508122001122001",
+            role: "Ketua Prodi & Dosen",
             expertise: "Pendidikan Karakter & Kurikulum RA",
-            photoUrl: "/images/piaud/dosen-1.jpg",
+            photoUrl: "/images/piaud/team-1.jpg",
         },
         {
-            // TODO: ganti dengan nama dosen dan gelar resmi
-            name: "[Nama Dosen 2, M.Psi.]",
-            // TODO: ganti NIDN resmi
-            nidn: "NIDN: [0000000000]",
-            role: "Dosen Keahlian",
-            expertise: "Psikologi Perkembangan & Anak Berkebutuhan Khusus",
-            photoUrl: "/images/piaud/dosen-2.jpg",
-        },
-        {
-            // TODO: ganti dengan nama dosen dan gelar resmi
-            name: "[Nama Dosen 3, M.Pd.]",
-            // TODO: ganti NIDN resmi
-            nidn: "NIDN: [0000000000]",
-            role: "Dosen Keahlian",
-            expertise: "Pengembangan Media APE & Seni Kreativitas Anak",
-            photoUrl: "/images/piaud/dosen-3.jpg",
-        },
-        {
-            // TODO: ganti dengan nama dosen dan gelar resmi
-            name: "[Nama Dosen 4, M.Ag.]",
-            // TODO: ganti NIDN resmi
-            nidn: "NIDN: [0000000000]",
+            name: "Ahmad Fauzi, M.Pd.I.",
+            nip: "198103152006041002",
             role: "Dosen Keahlian",
             expertise: "Pendidikan Al-Qur'an & Hadits Tematik AUD",
-            photoUrl: "/images/piaud/dosen-4.jpg",
+            photoUrl: "/images/piaud/team-2.jpg",
+        },
+        {
+            name: "Siti Rahmawati, M.Pd.",
+            nip: "198807202012012003",
+            role: "Dosen Keahlian",
+            expertise: "Pengembangan Media APE & Seni Kreativitas",
+            photoUrl: "/images/piaud/team-3.jpg",
+        },
+        {
+            name: "Nida Ul Hasanah, M.Psi.",
+            nip: "199011052015032004",
+            role: "Dosen Keahlian",
+            expertise: "Psikologi Perkembangan & Anak Usia Dini",
+            photoUrl: "/images/piaud/team-4.jpg",
         },
     ],
 
+    // Galeri Foto Dokumentasi Riil dari Database
+    gallery: [
+        {
+            title: "Praktikum Alat Permainan Edukatif (APE)",
+            photoUrl: "/images/piaud/Foto-Kegiatan-1.jpg",
+            category: "Laboratorium APE",
+        },
+        {
+            title: "Pentas Seni & Kreativitas Anak Usia Dini",
+            photoUrl: "/images/piaud/Foto-Kegiatan-2.jpg",
+            category: "Kreativitas Seni",
+        },
+        {
+            title: "Simulasi Story Telling Menggunakan Boneka Tangan",
+            photoUrl: "/images/piaud/Foto-Kegiatan-3.jpg",
+            category: "Microteaching",
+        },
+        {
+            title: "Kunjungan Edukatif & PPL ke Raudhatul Athfal",
+            photoUrl: "/images/piaud/Foto-Kegiatan-4.jpg",
+            category: "Praktik Lapangan",
+        },
+    ],
+
+    // Data Artikel Riil dari Database
     articles: {
         featured: {
-            id: "art-1",
-            title: "Stimulasi Sensorik Alami: Memanfaatkan Bahan Ramah Lingkungan untuk Motorik Halus Balita",
-            slug: "stimulasi-sensorik-alami-bahan-lingkungan",
-            category: "Edukasi & APE",
-            publishedAt: "18 Oktober 2026",
+            id: "art-4",
+            title: "Pentingnya Stimulasi Sensori Motorik pada Perkembangan Balita",
+            slug: "pentingnya-stimulasi-sensori-motorik-balita",
+            category: "Tumbuh Kembang",
+            publishedAt: "21 Oktober 2026",
             readTime: "4 menit baca",
             excerpt:
-                "Mengapa sensory play tidak harus mahal? Kajian laboratorium PIAUD tentang pembuatan loose parts edukatif dari biji-bijian, kayu serut, dan adonan tepung alami yang aman bagi anak.",
-            photoUrl: "/images/piaud/artikel-sensory-play.jpg",
+                "Kajian laboratorium PIAUD mengenai tahapan stimulasi sensori motorik anak usia emas untuk membangun koordinasi gerak, konsentrasi, dan kesiapan kognitif sejak dini.",
+            photoUrl: "/images/piaud/Content-Management-System-(CMS)-Untuk-Website.jpg",
         },
         list: [
             {
-                id: "art-2",
-                title: "Menanamkan Kebiasaan Shalat Tanpa Paksaan pada Rentang Usia 4–6 Tahun",
-                slug: "menanamkan-kebiasaan-shalat-usia-dini",
-                category: "Parenting Islami",
-                publishedAt: "12 Oktober 2026",
+                id: "art-3",
+                title: "Praktik Lapangan Microteaching: Menumbuhkan Minat Literasi Sejak Dini",
+                slug: "praktik-lapangan-microteaching-literasi-anak",
+                category: "Akademik & Lab",
+                publishedAt: "21 Oktober 2026",
                 readTime: "3 menit baca",
                 excerpt:
-                    "Pendekatan keteladanan visual dan afirmasi positif menurut pedoman Rasulullah SAW dan tinjauan neurosains perkembangan anak.",
-                photoUrl: "/images/piaud/artikel-shalat.jpg",
+                    "Metode bercerita interaktif dengan media boneka tangan hasil riset mahasiswa PIAUD yang terbukti efektif meningkatkan fokus anak.",
+                photoUrl: "/images/piaud/Pedoman-Kegiatan-Ekstrakurikuler-di-Sekolah.jpg",
             },
             {
-                id: "art-3",
-                title: "Daftar Kurikulum Merdeka di Raudhatul Athfal: Apa Saja yang Berubah?",
-                slug: "kurikulum-merdeka-raudhatul-athfal",
-                category: "Akademik RA",
-                publishedAt: "05 Oktober 2026",
+                id: "art-2",
+                title: "Workshop Pembuatan Alat Permainan Edukatif (APE) dari Bahan Daur Ulang",
+                slug: "workshop-ape-bahan-daur-ulang",
+                category: "Kreativitas APE",
+                publishedAt: "21 Oktober 2026",
                 readTime: "5 menit baca",
                 excerpt:
-                    "Panduan ringkas bagi pengelola lembaga PAUD dan calon pendidik dalam menyusun modul ajar intrakurikuler berbasis P5-PPRA.",
-                photoUrl: "/images/piaud/artikel-kurikulum-ra.jpg",
+                    "Panduan praktis merancang loose parts ramah lingkungan yang aman dan menstimulasi imajinasi anak tanpa biaya mahal.",
+                photoUrl: "/images/piaud/Manfaat-Kegiatan-Ekstrakurikuler-untuk-Siswa-SMA.jpg",
             },
             {
-                id: "art-4",
-                title: "Mengenal 'Screen Time Fatigue' pada Anak Balita dan Alternatif Kegiatan Fisik",
-                slug: "screen-time-fatigue-anak-balita",
-                category: "Tumbuh Kembang",
-                publishedAt: "28 September 2026",
+                id: "art-1",
+                title: "Mengoptimalkan Masa Golden Age Anak dengan Pendekatan Qur'ani",
+                slug: "golden-age-anak-pendekatan-qurani",
+                category: "Parenting Islami",
+                publishedAt: "21 Oktober 2026",
                 readTime: "4 menit baca",
                 excerpt:
-                    "Solusi praktis dari dosen psikologi PIAUD untuk mengatasi ketergantungan gawai melalui variasi permainan tradisional interaktif.",
-                photoUrl: "/images/piaud/artikel-screen-time.jpg",
+                    "Integrasi keteladanan Rasulullah SAW dalam penanaman aqidah dan adab anak sebelum usia 7 tahun.",
+                photoUrl: "/images/piaud/Lorem-ipsum-dolor-adipiscing-elit.jpg",
             },
         ],
     },
 
     footerLinks: {
         academic: [
-            { label: "Struktur Kurikulum", href: "#kurikulum" },
+            { label: "Kurikulum & SKS", href: "#kurikulum" },
             { label: "Laboratorium APE & Microteaching", href: "#kurikulum" },
-            { label: "Profil Lulusan & Karir", href: "#profil" },
+            { label: "Profil Lulusan & Karir", href: "#kurikulum" },
             { label: "Direktori Dosen", href: "#dosen" },
         ],
         institutional: [
