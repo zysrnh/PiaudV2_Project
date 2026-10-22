@@ -29,11 +29,11 @@ export default function Welcome() {
                 {/* 3. HERO SECTION (Asymmetric 7/5 Grid) */}
                 <section className="border-b border-piaud-border bg-piaud-ivory">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 lg:py-24">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
                             {/* Left Column (7 cols): Direct Misi & Accreditation Badge */}
                             <div className="lg:col-span-7 space-y-6">
                                 {/* Accreditation Badge */}
-                                <div className="inline-flex items-center gap-2 px-3 py-1 bg-piaud-ivory-dark border border-piaud-border text-xs text-piaud-slate font-medium rounded-sm">
+                                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-piaud-ivory-dark border border-piaud-border text-xs text-piaud-slate font-semibold rounded-sm">
                                     <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
                                     <span>{siteConfig.accreditation.status} · {siteConfig.accreditation.institution}</span>
                                     <span className="text-piaud-slate-muted hidden sm:inline">
@@ -45,17 +45,18 @@ export default function Welcome() {
                                     {siteConfig.hero.heading}
                                 </h1>
 
-                                <p className="text-base sm:text-lg text-piaud-slate-muted leading-relaxed max-w-2xl">
+                                {/* Line length restrained to max-w-[65ch] for optimal readability */}
+                                <p className="text-base sm:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch]">
                                     {siteConfig.hero.description}
                                 </p>
 
-                                {/* Two CTAs */}
+                                {/* Two CTAs (High Contrast Terracotta + Ivory Secondary) */}
                                 <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                                     <a
                                         href={waPmbLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-sm font-semibold px-6 py-3.5 rounded-sm border border-piaud-terracotta-dark transition-colors duration-150"
+                                        className="inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-sm font-bold px-7 py-3.5 rounded-sm border border-piaud-terracotta-dark transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta"
                                     >
                                         {siteConfig.hero.ctaPrimaryText}
                                     </a>
@@ -67,81 +68,85 @@ export default function Welcome() {
                                     </a>
                                 </div>
 
-                                <div className="pt-4 border-t border-piaud-border flex items-center gap-6 text-xs text-piaud-slate-muted">
+                                <div className="pt-5 border-t border-piaud-border flex items-center gap-6 text-xs text-piaud-slate-muted flex-wrap">
                                     <div>
-                                        <span className="font-semibold text-piaud-slate block">Gelar Lulusan</span>
-                                        <span>Sarjana Pendidikan (S.Pd.)</span>
+                                        <span className="font-bold text-piaud-slate block">Gelar Lulusan</span>
+                                        <span className="text-piaud-slate-muted">Sarjana Pendidikan (S.Pd.)</span>
                                     </div>
-                                    <div className="w-px h-7 bg-piaud-border"></div>
+                                    <div className="w-px h-8 bg-piaud-border"></div>
                                     <div>
-                                        <span className="font-semibold text-piaud-slate block">Masa Studi</span>
-                                        <span>8 Semester (144 SKS)</span>
+                                        <span className="font-bold text-piaud-slate block">Masa Studi</span>
+                                        <span className="text-piaud-slate-muted">8 Semester (144 SKS)</span>
                                     </div>
-                                    <div className="w-px h-7 bg-piaud-border"></div>
+                                    <div className="w-px h-8 bg-piaud-border"></div>
                                     <div>
-                                        <span className="font-semibold text-piaud-slate block">Kelas Perkuliahan</span>
-                                        <span>Reguler &amp; Guru Mengajar</span>
+                                        <span className="font-bold text-piaud-slate block">Kelas Perkuliahan</span>
+                                        <span className="text-piaud-slate-muted">Reguler &amp; Guru Mengajar</span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Right Column (5 cols): Real Photo without decorative frames */}
+                            {/* Right Column (5 cols): Direct clean figure without nested card boxes */}
                             <div className="lg:col-span-5">
-                                <div className="border border-piaud-border bg-piaud-ivory-dark p-2 rounded-sm">
+                                <figure className="relative">
                                     <Photo
                                         src={siteConfig.hero.photoUrl}
                                         alt={siteConfig.hero.photoAlt}
                                         priority={true}
                                         aspectRatio="4/3"
-                                        className="w-full h-auto rounded-sm"
+                                        className="w-full h-auto rounded-sm shadow-sm"
                                     />
-                                    <div className="pt-2 px-1 text-[11px] text-piaud-slate-muted flex items-center justify-between">
+                                    <figcaption className="mt-3 px-1 text-xs text-piaud-slate-muted flex items-center justify-between font-medium">
                                         <span>Dokumentasi Laboratorium PAUD</span>
                                         <span>IAI Persis Bandung</span>
-                                    </div>
-                                </div>
+                                    </figcaption>
+                                </figure>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* 4. SAMBUTAN KAPRODI (Editorial Layout: Foto + Pull-Quote + Paragraf) */}
+                {/* 4. SAMBUTAN KAPRODI (Editorial Layout Tanpa Cliché Side-Tab Border) */}
                 <section id="profil" className="border-b border-piaud-border bg-piaud-ivory-dark">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-                            {/* Kaprodi Photo & Credentials (4 cols) */}
-                            <div className="lg:col-span-4 border border-piaud-border bg-piaud-ivory p-4 rounded-sm space-y-3">
-                                <Photo
-                                    src={siteConfig.kaprodi.photoUrl}
-                                    alt={`Foto ${siteConfig.kaprodi.name}`}
-                                    aspectRatio="3/4"
-                                    className="w-full h-auto rounded-sm"
-                                />
-                                <div className="pt-2">
-                                    <h3 className="font-serif font-bold text-base text-piaud-slate">
-                                        {siteConfig.kaprodi.name}
-                                    </h3>
-                                    <p className="text-xs text-piaud-terracotta font-medium mt-0.5">
-                                        {siteConfig.kaprodi.title}
-                                    </p>
-                                    <p className="text-[11px] text-piaud-slate-muted mt-2 border-t border-piaud-border pt-2">
-                                        Fakultas Tarbiyah · IAI Persis Bandung
-                                    </p>
-                                </div>
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                            {/* Kaprodi Photo & Profile (Direct Figure without nested cards) */}
+                            <div className="lg:col-span-4 space-y-4">
+                                <figure className="relative">
+                                    <Photo
+                                        src={siteConfig.kaprodi.photoUrl}
+                                        alt={`Foto ${siteConfig.kaprodi.name}`}
+                                        aspectRatio="3/4"
+                                        className="w-full h-auto rounded-sm shadow-sm"
+                                    />
+                                    <figcaption className="mt-3 space-y-1">
+                                        <p className="font-serif font-bold text-lg text-piaud-slate">
+                                            {siteConfig.kaprodi.name}
+                                        </p>
+                                        <p className="text-xs text-piaud-terracotta font-bold">
+                                            {siteConfig.kaprodi.title}
+                                        </p>
+                                        <p className="text-xs text-piaud-slate-muted pt-1 border-t border-piaud-border">
+                                            Fakultas Tarbiyah · IAI Persis Bandung
+                                        </p>
+                                    </figcaption>
+                                </figure>
                             </div>
 
-                            {/* Pull-Quote & Detailed Editorial Paragraphs (8 cols) */}
+                            {/* Editorial Content (Strict Heading Hierarchy h2 -> h3) */}
                             <div className="lg:col-span-8 space-y-6">
-                                <div className="border-l-4 border-piaud-emerald pl-5 py-1">
-                                    <span className="text-xs font-semibold uppercase tracking-wider text-piaud-emerald block mb-1">
+                                <div>
+                                    <h2 className="text-xs font-bold uppercase tracking-wider text-piaud-emerald mb-3">
                                         Sambutan Ketua Program Studi
-                                    </span>
-                                    <blockquote className="font-serif text-xl sm:text-2xl text-piaud-slate font-bold leading-snug">
+                                    </h2>
+                                    {/* Pure Typographic Pullquote (No thick green side-tab line) */}
+                                    <blockquote className="font-serif text-2xl sm:text-3xl text-piaud-slate font-bold leading-snug">
                                         &ldquo;{siteConfig.kaprodi.pullQuote}&rdquo;
                                     </blockquote>
                                 </div>
 
-                                <div className="space-y-4 text-sm sm:text-base text-piaud-slate leading-relaxed">
+                                {/* Line length restrained to max-w-[65ch] */}
+                                <div className="space-y-4 text-sm sm:text-base text-piaud-slate leading-relaxed max-w-[65ch]">
                                     {siteConfig.kaprodi.content.map((paragraph, index) => (
                                         <p key={index} className="text-piaud-slate-muted">
                                             {paragraph}
@@ -150,31 +155,31 @@ export default function Welcome() {
                                 </div>
 
                                 <div className="pt-4 border-t border-piaud-border flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-sm bg-piaud-emerald text-piaud-ivory flex items-center justify-center font-serif text-xs font-bold">
+                                    <div className="w-8 h-8 rounded-sm bg-piaud-emerald text-piaud-ivory flex items-center justify-center font-serif text-xs font-bold shrink-0">
                                         PS
                                     </div>
-                                    <span className="text-xs text-piaud-slate-muted">
+                                    <p className="text-xs text-piaud-slate-muted font-medium">
                                         Komitmen kurikulum berbasis Al-Qur'an, As-Sunnah, dan standar keilmuan PAUD modern.
-                                    </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* 5. PILAR KEUNGGULAN (Asymmetric 2-Column: Sticky Left 5/12 + Numbered Right 7/12) */}
+                {/* 5. PILAR KEUNGGULAN (Asymmetric 2-Column with Restrained Line Length) */}
                 <section id="kurikulum" className="border-b border-piaud-border bg-piaud-ivory">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                             {/* Sticky Left Column (5 cols) */}
                             <div className="lg:col-span-5 lg:sticky lg:top-24 self-start space-y-4">
-                                <span className="text-xs font-semibold uppercase tracking-wider text-piaud-terracotta block">
+                                <span className="text-xs font-bold uppercase tracking-wider text-piaud-terracotta block">
                                     Diferensiasi Akademik
                                 </span>
-                                <h2 className="font-serif text-3xl font-bold text-piaud-slate">
+                                <h2 className="font-serif text-3xl font-bold text-piaud-slate leading-tight">
                                     Tiga Pilar Pendidikan Holistik Calon Guru AUD
                                 </h2>
-                                <p className="text-sm text-piaud-slate-muted leading-relaxed">
+                                <p className="text-sm text-piaud-slate-muted leading-relaxed max-w-[55ch]">
                                     Struktur kurikulum dan fasilitas dirancang untuk memastikan setiap lulusan memiliki kemampuan mendidik, membimbing adab, dan menciptakan media ajar interaktif secara mandiri.
                                 </p>
                                 <div className="pt-2">
@@ -182,7 +187,7 @@ export default function Welcome() {
                                         href={waPmbLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 text-xs font-bold text-piaud-emerald hover:text-piaud-emerald-dark underline underline-offset-4"
+                                        className="inline-flex items-center gap-2 text-sm font-bold text-piaud-emerald hover:text-piaud-emerald-dark underline underline-offset-4"
                                     >
                                         <span>Unduh Rencana Pembelajaran Semester (RPS) via WA</span>
                                         <span>&rarr;</span>
@@ -195,20 +200,20 @@ export default function Welcome() {
                                 {siteConfig.pillars.map((pillar) => (
                                     <div key={pillar.number} className="py-8 first:pt-0 last:pb-0 space-y-4">
                                         <div className="flex items-baseline gap-4">
-                                            <span className="font-serif text-3xl sm:text-4xl font-bold text-piaud-emerald">
+                                            <span className="font-serif text-3xl sm:text-4xl font-bold text-piaud-emerald shrink-0">
                                                 {pillar.number}
                                             </span>
                                             <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate">
                                                 {pillar.title}
                                             </h3>
                                         </div>
-                                        <p className="text-sm text-piaud-slate-muted leading-relaxed pl-12">
+                                        <p className="text-sm text-piaud-slate-muted leading-relaxed pl-12 max-w-[65ch]">
                                             {pillar.description}
                                         </p>
                                         <ul className="pl-12 space-y-2 text-xs text-piaud-slate font-medium">
                                             {pillar.deliverables.map((item, idx) => (
                                                 <li key={idx} className="flex items-center gap-2">
-                                                    <span className="w-1.5 h-1.5 bg-piaud-terracotta rounded-full"></span>
+                                                    <span className="w-1.5 h-1.5 bg-piaud-terracotta rounded-full shrink-0"></span>
                                                     <span>{item}</span>
                                                 </li>
                                             ))}
@@ -220,81 +225,81 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 6. DOSEN & TENAGA PENGAJAR (Data Riil Database mod_data_guru) */}
+                {/* 6. DOSEN & TENAGA PENGAJAR (Flat Single Card Layout, No Nested Boxes) */}
                 <section id="dosen" className="border-b border-piaud-border bg-piaud-ivory-dark">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
                             <div>
-                                <span className="text-xs font-semibold uppercase tracking-wider text-piaud-emerald block mb-1">
+                                <span className="text-xs font-bold uppercase tracking-wider text-piaud-emerald block mb-1">
                                     Tenaga Pendidik
                                 </span>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Dosen Pengampu &amp; Pakar Tumbuh Kembang
                                 </h2>
                             </div>
-                            <p className="text-xs text-piaud-slate-muted max-w-md">
+                            <p className="text-xs text-piaud-slate-muted max-w-md leading-relaxed">
                                 Praktisi dan akademisi tersertifikasi di bidang pendidikan Islam, psikologi anak usia dini, dan perancangan media belajar kreatif.
                             </p>
                         </div>
 
-                        {/* Flat Cards Grid */}
+                        {/* Flat Grid Dosen (Clean Single Card without nested borders) */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.lecturers.map((lecturer, index) => (
-                                <div
+                                <article
                                     key={index}
-                                    className="bg-piaud-ivory border border-piaud-border rounded-sm p-3 flex flex-col justify-between"
+                                    className="bg-piaud-ivory border border-piaud-border rounded-sm p-4 flex flex-col justify-between"
                                 >
                                     <div>
                                         <Photo
                                             src={lecturer.photoUrl}
                                             alt={`Foto ${lecturer.name}`}
                                             aspectRatio="1/1"
-                                            className="w-full h-auto rounded-sm mb-3"
+                                            className="w-full h-auto rounded-sm mb-4"
                                         />
-                                        <span className="text-[10px] font-semibold tracking-wider uppercase text-piaud-terracotta block">
+                                        <span className="text-xs font-bold tracking-wider uppercase text-piaud-terracotta block">
                                             {lecturer.role}
                                         </span>
-                                        <h3 className="font-serif font-bold text-sm text-piaud-slate mt-1 leading-snug">
+                                        <h3 className="font-serif font-bold text-base text-piaud-slate mt-1.5 leading-snug">
                                             {lecturer.name}
                                         </h3>
                                     </div>
-                                    <div className="mt-4 pt-3 border-t border-piaud-border text-[11px] text-piaud-slate-muted space-y-1">
-                                        <p className="font-mono text-[10px] text-piaud-slate-muted">
+                                    <div className="mt-4 pt-3 border-t border-piaud-border text-xs text-piaud-slate-muted space-y-1">
+                                        <p className="font-mono text-xs text-piaud-slate-muted">
                                             NIP: {lecturer.nip}
                                         </p>
-                                        <p className="text-piaud-slate font-medium">
+                                        <p className="text-piaud-slate font-semibold">
                                             {lecturer.expertise}
                                         </p>
                                     </div>
-                                </div>
+                                </article>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                {/* GALERI DOKUMENTASI KEGIATAN & LAB (#galeri) */}
+                {/* GALERI DOKUMENTASI (Clean Figure Grid, Fixed Heading Level h3) */}
                 <section id="galeri" className="border-b border-piaud-border bg-piaud-ivory">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
                             <div>
-                                <span className="text-xs font-semibold uppercase tracking-wider text-piaud-emerald block mb-1">
+                                <span className="text-xs font-bold uppercase tracking-wider text-piaud-emerald block mb-1">
                                     Dokumentasi Kegiatan
                                 </span>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Galeri Praktikum &amp; Observasi Lapangan
                                 </h2>
                             </div>
-                            <p className="text-xs text-piaud-slate-muted max-w-md">
+                            <p className="text-xs text-piaud-slate-muted max-w-md leading-relaxed">
                                 Dokumentasi nyata kegiatan mahasiswa dalam pembuatan alat permainan edukatif, pentas kreativitas anak, dan simulasi microteaching.
                             </p>
                         </div>
 
-                        {/* Flat Grid Galeri 4 Kolom */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        {/* Flat Figure Grid 4 Kolom (No nested card boxes, generous spacing) */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.gallery.map((item, index) => (
-                                <div
+                                <figure
                                     key={index}
-                                    className="border border-piaud-border bg-piaud-ivory-dark p-2 rounded-sm space-y-2"
+                                    className="border border-piaud-border bg-piaud-ivory-dark rounded-sm p-3 flex flex-col justify-between"
                                 >
                                     <Photo
                                         src={item.photoUrl}
@@ -302,26 +307,27 @@ export default function Welcome() {
                                         aspectRatio="4/3"
                                         className="w-full h-auto rounded-sm"
                                     />
-                                    <div className="px-1 py-1">
-                                        <span className="text-[10px] font-semibold uppercase tracking-wider text-piaud-terracotta block">
+                                    <figcaption className="mt-4 pt-2 border-t border-piaud-border/70 space-y-1">
+                                        <span className="text-xs font-bold uppercase tracking-wider text-piaud-terracotta block">
                                             {item.category}
                                         </span>
-                                        <h4 className="font-serif font-bold text-xs text-piaud-slate mt-0.5 line-clamp-2">
+                                        {/* Changed from h4 to h3 to fix SKIPPED HEADING LEVEL */}
+                                        <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug">
                                             {item.title}
-                                        </h4>
-                                    </div>
-                                </div>
+                                        </h3>
+                                    </figcaption>
+                                </figure>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                {/* 7. ARTIKEL PARENTING ISLAMI (#artikel) */}
+                {/* 7. ARTIKEL PARENTING ISLAMI (Clean Divided List, Max Line Length Restraint) */}
                 <section id="artikel" className="border-b border-piaud-border bg-piaud-ivory-dark">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
                             <div>
-                                <span className="text-xs font-semibold uppercase tracking-wider text-piaud-terracotta block mb-1">
+                                <span className="text-xs font-bold uppercase tracking-wider text-piaud-terracotta block mb-1">
                                     Wawasan &amp; Edukasi
                                 </span>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
@@ -335,17 +341,17 @@ export default function Welcome() {
 
                         {/* 1 Featured (Left 6 cols) + 3 List (Right 6 cols) */}
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                            {/* Featured Article */}
-                            <div className="lg:col-span-6 border border-piaud-border bg-piaud-ivory rounded-sm p-4 space-y-4">
+                            {/* Featured Article (Single clean card) */}
+                            <article className="lg:col-span-6 border border-piaud-border bg-piaud-ivory rounded-sm p-5 space-y-4">
                                 <Photo
                                     src={siteConfig.articles.featured.photoUrl}
                                     alt={siteConfig.articles.featured.title}
                                     aspectRatio="16/9"
                                     className="w-full h-auto rounded-sm"
                                 />
-                                <div className="space-y-2">
-                                    <div className="flex items-center gap-3 text-[11px] text-piaud-slate-muted">
-                                        <span className="bg-piaud-emerald text-piaud-ivory px-2 py-0.5 rounded-sm font-semibold">
+                                <div className="space-y-2.5">
+                                    <div className="flex items-center gap-3 text-xs text-piaud-slate-muted flex-wrap">
+                                        <span className="bg-piaud-emerald text-piaud-ivory px-2.5 py-0.5 rounded-sm font-bold text-xs">
                                             {siteConfig.articles.featured.category}
                                         </span>
                                         <span>{siteConfig.articles.featured.publishedAt}</span>
@@ -355,18 +361,18 @@ export default function Welcome() {
                                     <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug">
                                         {siteConfig.articles.featured.title}
                                     </h3>
-                                    <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
+                                    <p className="text-sm text-piaud-slate-muted leading-relaxed max-w-[65ch]">
                                         {siteConfig.articles.featured.excerpt}
                                     </p>
                                 </div>
-                            </div>
+                            </article>
 
-                            {/* 3 List Articles */}
+                            {/* 3 List Articles (Clean divided list, no nested cards) */}
                             <div className="lg:col-span-6 divide-y divide-piaud-border border border-piaud-border bg-piaud-ivory rounded-sm">
                                 {siteConfig.articles.list.map((article) => (
                                     <article key={article.id} className="p-5 space-y-2 hover:bg-piaud-ivory-dark transition-colors duration-150">
-                                        <div className="flex items-center gap-2 text-[11px] text-piaud-slate-muted">
-                                            <span className="text-piaud-terracotta font-semibold">
+                                        <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
+                                            <span className="text-piaud-terracotta font-bold text-xs">
                                                 {article.category}
                                             </span>
                                             <span>&bull;</span>
@@ -374,10 +380,10 @@ export default function Welcome() {
                                             <span>&bull;</span>
                                             <span>{article.readTime}</span>
                                         </div>
-                                        <h4 className="font-serif text-sm sm:text-base font-bold text-piaud-slate leading-snug">
+                                        <h3 className="font-serif text-base font-bold text-piaud-slate leading-snug">
                                             {article.title}
-                                        </h4>
-                                        <p className="text-xs text-piaud-slate-muted leading-relaxed line-clamp-2">
+                                        </h3>
+                                        <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed line-clamp-2 max-w-[65ch]">
                                             {article.excerpt}
                                         </p>
                                     </article>
