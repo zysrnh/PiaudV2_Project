@@ -20,7 +20,7 @@ export const Navbar: React.FC = () => {
     };
 
     return (
-        <header className="w-full bg-white/95 backdrop-blur-md border-b border-piaud-border sticky top-0 z-40 shadow-soft">
+        <header className="w-full bg-piaud-ivory/95 backdrop-blur-sm border-b border-piaud-border sticky top-0 z-40 shadow-soft">
             {/* 1. Top Bar */}
             <div className="bg-piaud-emerald text-piaud-ivory border-b border-piaud-emerald-dark text-xs leading-normal">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
@@ -34,8 +34,8 @@ export const Navbar: React.FC = () => {
                         </span>
                     </div>
                     <div className="flex items-center gap-4 text-xs text-piaud-ivory/90 flex-wrap">
-                        <span className="inline-flex items-center gap-1.5 bg-white/10 px-2 py-0.5 rounded-full">
-                            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span className="inline-flex items-center gap-1.5 bg-black/15 px-2.5 py-0.5 rounded">
+                            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
                             <span>{siteConfig.accreditation.status} ({siteConfig.accreditation.institution})</span>
                         </span>
                         <span className="hidden sm:inline text-piaud-ivory/40">|</span>
@@ -48,13 +48,13 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* 2. Main Navbar */}
-            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 py-3 flex items-center justify-between">
+            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3 flex items-center justify-between">
                 {/* Brand Monogram */}
                 <Link
                     href="/"
-                    className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta rounded-xl p-1"
+                    className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta rounded-md p-1"
                 >
-                    <div className="w-11 h-11 bg-gradient-to-br from-piaud-emerald to-piaud-emerald-dark text-piaud-ivory flex items-center justify-center font-serif text-xl font-bold rounded-xl border border-piaud-emerald-dark shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-200">
+                    <div className="w-10 h-10 bg-piaud-emerald text-piaud-ivory flex items-center justify-center font-serif text-lg font-bold rounded-md border border-piaud-emerald-dark shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-150">
                         P
                     </div>
                     <div className="flex flex-col">
@@ -68,7 +68,7 @@ export const Navbar: React.FC = () => {
                 </Link>
 
                 {/* Desktop Nav Links */}
-                <div className="hidden xl:flex items-center gap-1.5">
+                <div className="hidden xl:flex items-center gap-1">
                     {siteConfig.navigation.map((item) => {
                         const active = isActive(item.href);
                         return (
@@ -77,10 +77,10 @@ export const Navbar: React.FC = () => {
                                     <div className="flex items-center">
                                         <Link
                                             href={item.href}
-                                            className={`inline-flex items-center gap-1 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                                            className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-150 ${
                                                 active
-                                                    ? 'text-piaud-emerald bg-emerald-50/80 shadow-soft font-bold'
-                                                    : 'text-piaud-slate hover:text-piaud-emerald hover:bg-slate-50'
+                                                    ? 'text-piaud-emerald bg-piaud-ivory-dark border border-piaud-border font-bold'
+                                                    : 'text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark/60'
                                             }`}
                                         >
                                             <span>{item.label}</span>
@@ -88,12 +88,12 @@ export const Navbar: React.FC = () => {
                                         </Link>
 
                                         {/* Desktop Dropdown Submenu */}
-                                        <div className="absolute top-full left-0 mt-2 w-56 bg-white border border-slate-100 rounded-2xl shadow-card-hover p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                        <div className="absolute top-full left-0 mt-1.5 w-56 bg-piaud-ivory border border-piaud-border rounded-md shadow-card p-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
                                             {item.submenu.map((sub) => (
                                                 <Link
                                                     key={sub.label}
                                                     href={sub.href}
-                                                    className="block px-3.5 py-2 text-sm text-piaud-slate hover:text-piaud-emerald hover:bg-emerald-50/70 rounded-xl transition-all duration-150 font-medium"
+                                                    className="block px-3 py-2 text-sm text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark rounded transition-colors duration-150 font-medium"
                                                 >
                                                     {sub.label}
                                                 </Link>
@@ -103,10 +103,10 @@ export const Navbar: React.FC = () => {
                                 ) : (
                                     <Link
                                         href={item.href}
-                                        className={`inline-flex items-center px-3.5 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                                        className={`inline-flex items-center px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-150 ${
                                             active
-                                                ? 'text-piaud-emerald bg-emerald-50/80 shadow-soft font-bold'
-                                                : 'text-piaud-slate hover:text-piaud-emerald hover:bg-slate-50'
+                                                ? 'text-piaud-emerald bg-piaud-ivory-dark border border-piaud-border font-bold'
+                                                : 'text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark/60'
                                         }`}
                                     >
                                         {item.label}
@@ -117,13 +117,13 @@ export const Navbar: React.FC = () => {
                     })}
                 </div>
 
-                {/* Right CTA Button (3D Raised Shadow) */}
+                {/* Right CTA Button (Terracotta Solid with clean rounded-md) */}
                 <div className="hidden sm:flex items-center gap-3">
                     <a
                         href={waLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 border border-piaud-terracotta-dark/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta"
+                        className="inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-xs font-bold px-4 py-2 rounded-md transition-all duration-150 shadow-sm hover:shadow border border-piaud-terracotta-dark/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta"
                     >
                         <span>WhatsApp PMB</span>
                     </a>
@@ -136,7 +136,7 @@ export const Navbar: React.FC = () => {
                         onClick={() => setIsMobileOpen(!isMobileOpen)}
                         aria-expanded={isMobileOpen}
                         aria-label="Buka menu navigasi"
-                        className="p-2.5 text-piaud-slate hover:bg-slate-100 border border-piaud-border rounded-xl transition-colors duration-150 shadow-soft"
+                        className="p-2 text-piaud-slate hover:bg-piaud-ivory-dark border border-piaud-border rounded-md transition-colors duration-150"
                     >
                         <svg
                             className="w-5 h-5"
@@ -155,34 +155,34 @@ export const Navbar: React.FC = () => {
                 </div>
             </nav>
 
-            {/* Mobile Rounded Drawer */}
+            {/* Mobile Drawer */}
             {isMobileOpen && (
-                <div className="xl:hidden border-t border-piaud-border bg-white/98 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-card-hover">
+                <div className="xl:hidden border-t border-piaud-border bg-piaud-ivory-dark px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-card">
                     <div className="flex flex-col space-y-1">
                         {siteConfig.navigation.map((item) => {
                             const active = isActive(item.href);
                             return (
-                                <div key={item.label} className="pb-1">
+                                <div key={item.label} className="pb-1 border-b border-piaud-border/40">
                                     {item.submenu ? (
                                         <div>
                                             <button
                                                 type="button"
                                                 onClick={() => toggleSubmenu(item.label)}
-                                                className={`w-full flex items-center justify-between py-2.5 px-3.5 text-sm font-semibold rounded-xl transition-colors ${
-                                                    active ? 'text-piaud-emerald bg-emerald-50 font-bold' : 'text-piaud-slate hover:bg-slate-50'
+                                                className={`w-full flex items-center justify-between py-2 px-3 text-sm font-semibold rounded-md transition-colors ${
+                                                    active ? 'text-piaud-emerald bg-piaud-ivory font-bold' : 'text-piaud-slate hover:bg-piaud-ivory/60'
                                                 }`}
                                             >
                                                 <span>{item.label}</span>
                                                 <span className="text-xs">{openSubmenu === item.label ? '▲' : '▼'}</span>
                                             </button>
                                             {openSubmenu === item.label && (
-                                                <div className="pl-4 py-1.5 space-y-1 bg-slate-50/70 rounded-xl mt-1">
+                                                <div className="pl-4 py-1.5 space-y-1 bg-piaud-ivory/70 rounded-md mt-1 border border-piaud-border/40">
                                                     {item.submenu.map((sub) => (
                                                         <Link
                                                             key={sub.label}
                                                             href={sub.href}
                                                             onClick={() => setIsMobileOpen(false)}
-                                                            className="block py-2 px-3 text-sm text-piaud-slate hover:text-piaud-emerald font-medium rounded-lg"
+                                                            className="block py-2 px-3 text-sm text-piaud-slate hover:text-piaud-emerald font-medium rounded"
                                                         >
                                                             {sub.label}
                                                         </Link>
@@ -194,8 +194,8 @@ export const Navbar: React.FC = () => {
                                         <Link
                                             href={item.href}
                                             onClick={() => setIsMobileOpen(false)}
-                                            className={`block py-2.5 px-3.5 text-sm font-semibold rounded-xl transition-colors ${
-                                                active ? 'text-piaud-emerald bg-emerald-50 font-bold' : 'text-piaud-slate hover:bg-slate-50'
+                                            className={`block py-2 px-3 text-sm font-semibold rounded-md transition-colors ${
+                                                active ? 'text-piaud-emerald bg-piaud-ivory font-bold' : 'text-piaud-slate hover:bg-piaud-ivory/60'
                                             }`}
                                         >
                                             {item.label}
@@ -210,7 +210,7 @@ export const Navbar: React.FC = () => {
                             href={waLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-sm font-bold py-3 px-4 rounded-xl transition-all duration-150 shadow-md border border-piaud-terracotta-dark"
+                            className="w-full inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-xs font-bold py-2.5 px-4 rounded-md transition-all duration-150 shadow-sm border border-piaud-terracotta-dark"
                         >
                             Konsultasi WhatsApp PMB
                         </a>
@@ -220,3 +220,4 @@ export const Navbar: React.FC = () => {
         </header>
     );
 };
+

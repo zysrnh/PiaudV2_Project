@@ -31,12 +31,12 @@ export const Footer: React.FC = () => {
 
     return (
         <footer id="kontak" className="w-full bg-piaud-emerald text-piaud-ivory border-t border-piaud-emerald-dark">
-            {/* 8A. CTA Penutup (Modern Elevated 3D Container) */}
+            {/* 8A. CTA Penutup (Structured Box with Clean rounded-lg) */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mb-6 pt-10">
-                <div className="bg-gradient-to-r from-piaud-emerald-dark to-piaud-emerald border border-white/10 rounded-3xl p-8 sm:p-12 shadow-card-hover text-piaud-ivory relative overflow-hidden">
+                <div className="bg-piaud-emerald-dark border border-piaud-emerald-light/40 rounded-lg p-8 sm:p-12 shadow-card text-piaud-ivory relative overflow-hidden">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 relative z-10">
                         <div className="max-w-2xl">
-                            <span className="inline-block bg-white/10 text-white text-xs uppercase tracking-wider font-bold px-3 py-1 rounded-full mb-3 backdrop-blur-sm">
+                            <span className="inline-block bg-white/10 text-white text-xs uppercase tracking-wider font-bold px-3 py-1 rounded mb-3">
                                 Penerimaan Mahasiswa Baru
                             </span>
                             <h2 className="text-2xl sm:text-3xl font-serif text-white font-bold mb-3 leading-snug">
@@ -51,13 +51,13 @@ export const Footer: React.FC = () => {
                                 href={waLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-sm font-bold px-6 py-3.5 rounded-xl border border-piaud-terracotta-dark transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                                className="inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-xs font-bold px-5 py-3 rounded-md border border-piaud-terracotta-dark transition-all duration-150 shadow-sm hover:shadow"
                             >
                                 Hubungi CS PMB PIAUD
                             </a>
                             <Link
                                 href="/akademik#kurikulum"
-                                className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white text-sm font-semibold px-5 py-3.5 rounded-xl border border-white/20 transition-all duration-200 backdrop-blur-sm"
+                                className="inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white text-xs font-semibold px-5 py-3 rounded-md border border-white/20 transition-all duration-150"
                             >
                                 Pelajari Kurikulum
                             </Link>
@@ -72,7 +72,7 @@ export const Footer: React.FC = () => {
                     {/* Brand & Address Column (2 cols) */}
                     <div className="lg:col-span-2 space-y-4">
                         <div className="flex items-center gap-3">
-                            <div className="w-11 h-11 bg-white text-piaud-emerald font-serif font-bold text-xl flex items-center justify-center rounded-xl shrink-0 shadow-sm">
+                            <div className="w-10 h-10 bg-piaud-ivory text-piaud-emerald font-serif font-bold text-lg flex items-center justify-center rounded-md shrink-0 shadow-sm">
                                 P
                             </div>
                             <div>

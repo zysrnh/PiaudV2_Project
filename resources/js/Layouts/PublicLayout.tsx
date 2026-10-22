@@ -11,7 +11,7 @@ export default function PublicLayout({
     className = '',
 }: PropsWithChildren<PublicLayoutProps>) {
     return (
-        <div className="min-h-screen bg-slate-50/60 text-piaud-slate flex flex-col font-sans selection:bg-piaud-emerald selection:text-white">
+        <div className="min-h-screen bg-piaud-ivory text-piaud-slate flex flex-col font-sans selection:bg-piaud-emerald selection:text-white">
             {/* Top Bar & Main Navbar */}
             <Navbar />
 

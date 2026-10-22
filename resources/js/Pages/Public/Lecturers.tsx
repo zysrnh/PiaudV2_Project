@@ -74,12 +74,12 @@ export default function Lecturers() {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 space-y-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 space-y-10">
                 {/* Search Bar & Counter */}
-                <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="bg-piaud-ivory-dark rounded-lg p-4 sm:p-5 border border-piaud-border shadow-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-2 text-sm text-piaud-slate">
                         <span className="font-bold text-piaud-emerald text-base">{filtered.length}</span>
-                        <span className="text-piaud-slate-muted">Dosen &amp; Pakar Tersedia</span>
+                        <span className="text-piaud-slate-muted text-xs sm:text-sm">Dosen &amp; Pakar Tersedia</span>
                     </div>
 
                     <div className="relative w-full sm:w-72">
@@ -88,29 +88,29 @@ export default function Lecturers() {
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Cari nama atau keahlian dosen..."
-                            className="w-full text-xs sm:text-sm pl-9 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-piaud-emerald focus:border-transparent transition-all"
+                            className="w-full text-xs sm:text-sm pl-9 pr-4 py-2 rounded-md border border-piaud-border bg-piaud-ivory focus:outline-none focus:ring-1 focus:ring-piaud-emerald transition-all"
                         />
-                        <span className="absolute left-3 top-2.5 text-slate-400 text-sm">🔍</span>
+                        <span className="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
                     </div>
                 </div>
 
-                {/* Lecturers Grid with 3D Elevation */}
+                {/* Lecturers Grid with Clean rounded-lg Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {filtered.map((lecturer, index) => (
                         <article
                             key={index}
-                            className="bg-white rounded-2xl p-5 border border-slate-100 shadow-card hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300 group flex flex-col justify-between"
+                            className="bg-piaud-ivory rounded-lg p-4 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all duration-200 group flex flex-col justify-between"
                         >
                             <div>
                                 <Photo
                                     src={lecturer.photoUrl}
                                     alt={`Foto ${lecturer.name}`}
                                     aspectRatio="1/1"
-                                    className="w-full h-auto rounded-xl shadow-soft group-hover:scale-[1.02] transition-transform duration-200"
+                                    className="w-full h-auto rounded-md shadow-soft"
                                 />
 
-                                <div className="mt-4 space-y-1.5">
-                                    <span className="inline-block text-[11px] font-bold tracking-wider text-piaud-terracotta uppercase bg-amber-50 px-2 py-0.5 rounded-md">
+                                <div className="mt-3.5 space-y-1.5">
+                                    <span className="inline-block text-[11px] font-bold tracking-wider text-piaud-terracotta uppercase bg-amber-100/70 px-2 py-0.5 rounded border border-amber-200/60">
                                         {lecturer.role}
                                     </span>
                                     <h3 className="font-serif font-bold text-base text-piaud-slate leading-snug group-hover:text-piaud-emerald transition-colors">
@@ -119,7 +119,7 @@ export default function Lecturers() {
                                 </div>
                             </div>
 
-                            <div className="mt-4 pt-3 border-t border-slate-100 text-xs space-y-1">
+                            <div className="mt-4 pt-3 border-t border-piaud-border/70 text-xs space-y-1">
                                 <p className="font-mono text-[11px] text-slate-500">
                                     NIP: {lecturer.nip}
                                 </p>
@@ -132,31 +132,31 @@ export default function Lecturers() {
                 </div>
 
                 {/* Research Focus Card */}
-                <section className="bg-gradient-to-r from-emerald-50 via-white to-amber-50 rounded-3xl p-8 sm:p-12 border border-slate-200/80 shadow-soft">
-                    <div className="max-w-2xl space-y-3">
-                        <span className="inline-block bg-piaud-emerald text-white text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-soft">
+                <section className="bg-piaud-ivory-dark rounded-lg p-6 sm:p-10 border border-piaud-border shadow-card">
+                    <div className="max-w-2xl space-y-2">
+                        <span className="inline-block bg-piaud-emerald text-piaud-ivory text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded shadow-soft">
                             Riset &amp; Publikasi
                         </span>
                         <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate leading-tight">
                             Fokus Penelitian Unggulan Civitas Akademika
                         </h2>
-                        <p className="text-sm text-piaud-slate-muted leading-relaxed">
+                        <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
                             Riset dosen PIAUD IAI Persis menitikberatkan pada integrasi kurikulum Islam, rekayasa alat peraga edukatif ramah anak, dan kesehatan psikososial anak di satuan PAUD.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
-                        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-soft">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
+                        <div className="bg-piaud-ivory rounded-md p-5 border border-piaud-border shadow-soft">
                             <span className="text-2xl">🌱</span>
                             <h4 className="font-serif font-bold text-base text-piaud-slate mt-2">Parenting &amp; Fitrah Tauhid</h4>
                             <p className="text-xs text-piaud-slate-muted mt-1 leading-relaxed">Metodologi pengasuhan berbasis Al-Qur'an dan sunnah untuk keluarga muda muslim.</p>
                         </div>
-                        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-soft">
+                        <div className="bg-piaud-ivory rounded-md p-5 border border-piaud-border shadow-soft">
                             <span className="text-2xl">🧩</span>
                             <h4 className="font-serif font-bold text-base text-piaud-slate mt-2">Inovasi APE Loose Parts</h4>
                             <p className="text-xs text-piaud-slate-muted mt-1 leading-relaxed">Eksplorasi bahan alam dan daur ulang ramah lingkungan untuk stimulasi sensori motorik.</p>
                         </div>
-                        <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-soft">
+                        <div className="bg-piaud-ivory rounded-md p-5 border border-piaud-border shadow-soft">
                             <span className="text-2xl">📊</span>
                             <h4 className="font-serif font-bold text-base text-piaud-slate mt-2">Deteksi Dini Tumbuh Kembang</h4>
                             <p className="text-xs text-piaud-slate-muted mt-1 leading-relaxed">Instrumen asesmen perkembangan bahasa, motorik, dan emosi anak usia 0-6 tahun.</p>
