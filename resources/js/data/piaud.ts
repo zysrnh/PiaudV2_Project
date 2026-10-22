@@ -134,29 +134,30 @@ export const siteConfig: SiteConfig = {
         validUntil: "2027",
     },
 
-    // Struktur Menu disesuaikan 100% dengan database dan navigasi lama
+    // Struktur Menu disesuaikan dengan routing aplikasi multi-halaman
     navigation: [
-        { label: "Beranda", href: "#" },
+        { label: "Beranda", href: "/" },
         {
             label: "Profil",
-            href: "#profil",
+            href: "/profil",
             submenu: [
-                { label: "Sambutan Kaprodi", href: "#profil" },
-                { label: "Visi & Misi", href: "#profil" },
+                { label: "Visi & Misi", href: "/profil#visi-misi" },
+                { label: "Sambutan Kaprodi", href: "/profil#sambutan" },
             ],
         },
         {
             label: "Akademik",
-            href: "#kurikulum",
+            href: "/akademik",
             submenu: [
-                { label: "Kurikulum & SKS", href: "#kurikulum" },
-                { label: "Profil Lulusan", href: "#kurikulum" },
+                { label: "Kurikulum & SKS", href: "/akademik#kurikulum" },
+                { label: "Profil Lulusan", href: "/akademik#profil-lulusan" },
+                { label: "Laboratorium APE", href: "/akademik#lab" },
             ],
         },
-        { label: "Dosen", href: "#dosen" },
-        { label: "Artikel & Parenting", href: "#artikel" },
-        { label: "Galeri", href: "#galeri" },
-        { label: "Hubungi Kami", href: "#kontak" },
+        { label: "Dosen", href: "/dosen" },
+        { label: "Artikel & Parenting", href: "/artikel" },
+        { label: "Galeri", href: "/galeri" },
+        { label: "Hubungi Kami", href: "/kontak" },
     ],
 
     hero: {
@@ -326,21 +327,21 @@ export const siteConfig: SiteConfig = {
 
     footerLinks: {
         academic: [
-            { label: "Kurikulum & SKS", href: "#kurikulum" },
-            { label: "Laboratorium APE & Microteaching", href: "#kurikulum" },
-            { label: "Profil Lulusan & Karir", href: "#kurikulum" },
-            { label: "Direktori Dosen", href: "#dosen" },
+            { label: "Kurikulum & SKS", href: "/akademik#kurikulum" },
+            { label: "Laboratorium APE & Microteaching", href: "/akademik#lab" },
+            { label: "Profil Lulusan & Karir", href: "/akademik#profil-lulusan" },
+            { label: "Direktori Dosen", href: "/dosen" },
         ],
         institutional: [
             { label: "Institut Agama Islam Persatuan Islam", href: "https://iaipibandung.ac.id" },
             { label: "Fakultas Tarbiyah", href: "https://iaipibandung.ac.id" },
-            { label: "Status Akreditasi LAMDIK", href: "#" },
-            { label: "Jurnal Ilmiah PIAUD", href: "#" },
+            { label: "Status Akreditasi LAMDIK", href: "/profil" },
+            { label: "Visi & Misi Prodi", href: "/profil#visi-misi" },
         ],
         portal: [
             { label: "Penerimaan Mahasiswa Baru (PMB)", href: createWhatsAppLink("Halo Admin, saya ingin info pendaftaran PMB PIAUD") },
             { label: "Sistem Informasi Akademik", href: "/login" },
-            { label: "Kontak & Layanan Mahasiswa", href: "#kontak" },
+            { label: "Kontak & Lokasi Kampus", href: "/kontak" },
         ],
     },
 };

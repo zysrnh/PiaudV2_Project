@@ -1,5 +1,5 @@
 import React from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import { Navbar } from '@/Components/Public/Navbar';
 import { Footer } from '@/Components/Public/Footer';
 import { Photo } from '@/Components/Public/Photo';
@@ -9,7 +9,7 @@ export default function Welcome() {
     const waPmbLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
 
     return (
-        <div className="min-h-screen bg-piaud-ivory text-piaud-slate flex flex-col font-sans">
+        <div className="min-h-screen bg-slate-50/60 text-piaud-slate flex flex-col font-sans selection:bg-piaud-emerald selection:text-white">
             {/* SEO & Meta Tags */}
             <Head>
                 <title>{`${siteConfig.programName} - ${siteConfig.institutionName}`}</title>
@@ -25,80 +25,78 @@ export default function Welcome() {
             {/* Sections 1 & 2: Top Bar & Navigation */}
             <Navbar />
 
-            <main className="flex-1 w-full">
-                {/* 3. HERO SECTION (Asymmetric 7/5 Grid) */}
-                <section className="border-b border-piaud-border bg-piaud-ivory">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 lg:py-24">
+            <main className="flex-1 w-full animate-fade-in-up">
+                {/* 3. HERO SECTION (Smooth & Attractive with 3D Elements) */}
+                <section className="relative overflow-hidden bg-gradient-to-b from-emerald-50/40 via-white to-slate-50/40 border-b border-piaud-border">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20 lg:py-24">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
                             {/* Left Column (7 cols): Direct Misi & Accreditation Badge */}
                             <div className="lg:col-span-7 space-y-6">
-                                {/* Accreditation Badge */}
-                                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-piaud-ivory-dark border border-piaud-border text-xs text-piaud-slate font-semibold rounded-sm">
-                                    <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+                                {/* Accreditation Badge (Pill with Soft 3D Shadow) */}
+                                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200/80 text-xs text-piaud-slate font-semibold rounded-full shadow-soft hover:shadow-md transition-shadow">
+                                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                     <span>{siteConfig.accreditation.status} · {siteConfig.accreditation.institution}</span>
                                     <span className="text-piaud-slate-muted hidden sm:inline">
                                         ({siteConfig.accreditation.certificateNumber})
                                     </span>
                                 </div>
 
-                                <h1 className="font-serif font-bold text-piaud-slate tracking-tight">
+                                <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-tight">
                                     {siteConfig.hero.heading}
                                 </h1>
 
-                                {/* Line length restrained to max-w-[65ch] for optimal readability */}
                                 <p className="text-base sm:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch]">
                                     {siteConfig.hero.description}
                                 </p>
 
-                                {/* Two CTAs (High Contrast Terracotta + Ivory Secondary) */}
+                                {/* Two CTAs (3D Elevation + Rounded XL) */}
                                 <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                                     <a
                                         href={waPmbLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-sm font-bold px-7 py-3.5 rounded-sm border border-piaud-terracotta-dark transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta"
+                                        className="inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-sm font-bold px-7 py-3.5 rounded-xl border border-piaud-terracotta-dark transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta"
                                     >
                                         {siteConfig.hero.ctaPrimaryText}
                                     </a>
-                                    <a
-                                        href="#kurikulum"
-                                        className="inline-flex items-center justify-center bg-piaud-ivory-dark hover:bg-slate-100 text-piaud-slate text-sm font-semibold px-6 py-3.5 rounded-sm border border-piaud-border transition-colors duration-150"
+                                    <Link
+                                        href="/akademik"
+                                        className="inline-flex items-center justify-center bg-white hover:bg-slate-50 text-piaud-slate text-sm font-semibold px-6 py-3.5 rounded-xl border border-slate-200 shadow-soft hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
                                     >
                                         {siteConfig.hero.ctaSecondaryText}
-                                    </a>
+                                    </Link>
                                 </div>
 
-                                <div className="pt-5 border-t border-piaud-border flex items-center gap-6 text-xs text-piaud-slate-muted flex-wrap">
-                                    <div>
-                                        <span className="font-bold text-piaud-slate block">Gelar Lulusan</span>
-                                        <span className="text-piaud-slate-muted">Sarjana Pendidikan (S.Pd.)</span>
+                                {/* Stats & Features Cards Row */}
+                                <div className="pt-4 grid grid-cols-3 gap-3 sm:gap-4 text-xs">
+                                    <div className="bg-white/90 backdrop-blur-sm border border-slate-100 rounded-2xl p-3.5 shadow-card hover:shadow-card-hover transition-all">
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Sarjana (S.Pd.)</span>
+                                        <span className="text-piaud-slate-muted text-[11px]">Gelar Lulusan</span>
                                     </div>
-                                    <div className="w-px h-8 bg-piaud-border"></div>
-                                    <div>
-                                        <span className="font-bold text-piaud-slate block">Masa Studi</span>
-                                        <span className="text-piaud-slate-muted">8 Semester (144 SKS)</span>
+                                    <div className="bg-white/90 backdrop-blur-sm border border-slate-100 rounded-2xl p-3.5 shadow-card hover:shadow-card-hover transition-all">
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm">144 SKS (8 Sem)</span>
+                                        <span className="text-piaud-slate-muted text-[11px]">Masa Studi</span>
                                     </div>
-                                    <div className="w-px h-8 bg-piaud-border"></div>
-                                    <div>
-                                        <span className="font-bold text-piaud-slate block">Kelas Perkuliahan</span>
-                                        <span className="text-piaud-slate-muted">Reguler &amp; Guru Mengajar</span>
+                                    <div className="bg-white/90 backdrop-blur-sm border border-slate-100 rounded-2xl p-3.5 shadow-card hover:shadow-card-hover transition-all">
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Reguler &amp; Guru</span>
+                                        <span className="text-piaud-slate-muted text-[11px]">Kelas Kuliah</span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Right Column (5 cols): Direct clean figure without nested card boxes */}
+                            {/* Right Column (5 cols): 3D Elevated Image Card */}
                             <div className="lg:col-span-5">
-                                <figure className="relative">
+                                <figure className="relative bg-white p-3 rounded-3xl border border-slate-100 shadow-card-hover transition-transform duration-300 hover:scale-[1.01]">
                                     <Photo
                                         src={siteConfig.hero.photoUrl}
                                         alt={siteConfig.hero.photoAlt}
                                         priority={true}
                                         aspectRatio="4/3"
-                                        className="w-full h-auto rounded-sm shadow-sm"
+                                        className="w-full h-auto rounded-2xl shadow-soft"
                                     />
-                                    <figcaption className="mt-3 px-1 text-xs text-piaud-slate-muted flex items-center justify-between font-medium">
-                                        <span>Dokumentasi Laboratorium PAUD</span>
-                                        <span>IAI Persis Bandung</span>
+                                    <figcaption className="mt-3 px-2 text-xs text-piaud-slate-muted flex items-center justify-between font-medium">
+                                        <span>Dokumentasi Praktikum Mahasiswa PIAUD</span>
+                                        <span className="text-piaud-emerald font-semibold">IAI Persis Bandung</span>
                                     </figcaption>
                                 </figure>
                             </div>
@@ -106,46 +104,44 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 4. SAMBUTAN KAPRODI (Editorial Layout: Relaxed Line Height Pullquote) */}
-                <section id="profil" className="border-b border-piaud-border bg-piaud-ivory-dark">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-                            {/* Kaprodi Photo & Profile (Direct Figure without nested cards) */}
+                {/* 4. SAMBUTAN KAPRODI (Attractive Card Container with 3D Depth) */}
+                <section id="profil" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+                    <div className="bg-white rounded-3xl border border-slate-100 p-8 sm:p-12 lg:p-14 shadow-card hover:shadow-card-hover transition-all duration-300">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+                            {/* Kaprodi Photo & Profile */}
                             <div className="lg:col-span-4 space-y-4">
-                                <figure className="relative">
+                                <figure className="relative bg-slate-50 p-2.5 rounded-2xl border border-slate-100 shadow-soft">
                                     <Photo
                                         src={siteConfig.kaprodi.photoUrl}
                                         alt={`Foto ${siteConfig.kaprodi.name}`}
                                         aspectRatio="3/4"
-                                        className="w-full h-auto rounded-sm shadow-sm"
+                                        className="w-full h-auto rounded-xl shadow-soft"
                                     />
-                                    <figcaption className="mt-3 space-y-1">
+                                    <figcaption className="mt-3.5 space-y-1 px-1">
                                         <p className="font-serif font-bold text-lg text-piaud-slate">
                                             {siteConfig.kaprodi.name}
                                         </p>
                                         <p className="text-xs text-piaud-terracotta font-bold">
                                             {siteConfig.kaprodi.title}
                                         </p>
-                                        <p className="text-xs text-piaud-slate-muted pt-1 border-t border-piaud-border">
+                                        <p className="text-xs text-piaud-slate-muted pt-1.5 border-t border-slate-100">
                                             Fakultas Tarbiyah · IAI Persis Bandung
                                         </p>
                                     </figcaption>
                                 </figure>
                             </div>
 
-                            {/* Editorial Content (Leading-relaxed on Pullquote to fix tight line-height) */}
+                            {/* Editorial Content */}
                             <div className="lg:col-span-8 space-y-6">
                                 <div>
-                                    <h2 className="text-xs font-bold uppercase tracking-wider text-piaud-emerald mb-3">
+                                    <span className="inline-block bg-emerald-50 text-piaud-emerald text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-3">
                                         Sambutan Ketua Program Studi
-                                    </h2>
-                                    {/* Relaxed line height avoids tight line height warnings */}
+                                    </span>
                                     <blockquote className="font-serif text-2xl sm:text-3xl text-piaud-slate font-bold leading-relaxed">
                                         &ldquo;{siteConfig.kaprodi.pullQuote}&rdquo;
                                     </blockquote>
                                 </div>
 
-                                {/* Line length restrained to max-w-[65ch] */}
                                 <div className="space-y-4 text-sm sm:text-base text-piaud-slate leading-relaxed max-w-[65ch]">
                                     {siteConfig.kaprodi.content.map((paragraph, index) => (
                                         <p key={index} className="text-piaud-slate-muted">
@@ -154,117 +150,132 @@ export default function Welcome() {
                                     ))}
                                 </div>
 
-                                <div className="pt-4 border-t border-piaud-border flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-sm bg-piaud-emerald text-piaud-ivory flex items-center justify-center font-serif text-xs font-bold shrink-0">
-                                        PS
+                                <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-9 h-9 rounded-xl bg-piaud-emerald text-white flex items-center justify-center font-serif text-xs font-bold shrink-0 shadow-sm">
+                                            PS
+                                        </div>
+                                        <p className="text-xs text-piaud-slate-muted font-medium">
+                                            Komitmen kurikulum berbasis Al-Qur'an, As-Sunnah, dan standar keilmuan PAUD modern.
+                                        </p>
                                     </div>
-                                    <p className="text-xs text-piaud-slate-muted font-medium">
-                                        Komitmen kurikulum berbasis Al-Qur'an, As-Sunnah, dan standar keilmuan PAUD modern.
+                                    <Link
+                                        href="/profil"
+                                        className="inline-flex items-center gap-1.5 text-xs font-bold text-piaud-emerald hover:text-piaud-emerald-dark transition-colors shrink-0"
+                                    >
+                                        <span>Selengkapnya di Profil Prodi</span>
+                                        <span>&rarr;</span>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 5. PILAR KEUNGGULAN (3D Elevated Interactive Cards Grid) */}
+                <section id="kurikulum" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+                    <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                        <span className="inline-block bg-amber-50 text-piaud-terracotta text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+                            Diferensiasi Akademik
+                        </span>
+                        <h2 className="font-serif text-3xl sm:text-4xl font-bold text-piaud-slate leading-tight">
+                            Tiga Pilar Pendidikan Holistik Calon Guru AUD
+                        </h2>
+                        <p className="text-sm text-piaud-slate-muted leading-relaxed">
+                            Memastikan setiap lulusan memiliki integritas aqidah yang kokoh, kompetensi pedagogik mutakhir, dan keahlian media belajar aplikatif.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                        {siteConfig.pillars.map((pillar) => (
+                            <div
+                                key={pillar.number}
+                                className="bg-white rounded-2xl p-7 border border-slate-100 shadow-card hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
+                            >
+                                <div className="space-y-4">
+                                    <div className="w-12 h-12 rounded-xl bg-emerald-50 text-piaud-emerald font-serif text-xl font-bold flex items-center justify-center shadow-soft group-hover:bg-piaud-emerald group-hover:text-white transition-colors duration-200">
+                                        {pillar.number}
+                                    </div>
+                                    <h3 className="font-serif text-lg font-bold text-piaud-slate group-hover:text-piaud-emerald transition-colors">
+                                        {pillar.title}
+                                    </h3>
+                                    <p className="text-sm text-piaud-slate-muted leading-relaxed">
+                                        {pillar.description}
                                     </p>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
-                {/* 5. PILAR KEUNGGULAN (Asymmetric 2-Column with Restrained Line Length) */}
-                <section id="kurikulum" className="border-b border-piaud-border bg-piaud-ivory">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                            {/* Sticky Left Column (5 cols) */}
-                            <div className="lg:col-span-5 lg:sticky lg:top-24 self-start space-y-4">
-                                <span className="text-xs font-bold uppercase tracking-wider text-piaud-terracotta block">
-                                    Diferensiasi Akademik
-                                </span>
-                                <h2 className="font-serif text-3xl font-bold text-piaud-slate leading-tight">
-                                    Tiga Pilar Pendidikan Holistik Calon Guru AUD
-                                </h2>
-                                <p className="text-sm text-piaud-slate-muted leading-relaxed max-w-[55ch]">
-                                    Struktur kurikulum dan fasilitas dirancang untuk memastikan setiap lulusan memiliki kemampuan mendidik, membimbing adab, dan menciptakan media ajar interaktif secara mandiri.
-                                </p>
-                                <div className="pt-2">
-                                    <a
-                                        href={waPmbLink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 text-sm font-bold text-piaud-emerald hover:text-piaud-emerald-dark underline underline-offset-4"
-                                    >
-                                        <span>Unduh Rencana Pembelajaran Semester (RPS) via WA</span>
-                                        <span>&rarr;</span>
-                                    </a>
+                                <div className="pt-6 mt-6 border-t border-slate-100 space-y-2">
+                                    <span className="text-xs font-bold text-piaud-slate block">Fokus Capaian:</span>
+                                    <ul className="space-y-1.5 text-xs text-piaud-slate-muted">
+                                        {pillar.deliverables.map((item, idx) => (
+                                            <li key={idx} className="flex items-center gap-2">
+                                                <span className="w-1.5 h-1.5 bg-piaud-terracotta rounded-full shrink-0"></span>
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
+                        ))}
+                    </div>
 
-                            {/* Numbered Right Column (7 cols) */}
-                            <div className="lg:col-span-7 divide-y divide-piaud-border border-t lg:border-t-0 border-piaud-border">
-                                {siteConfig.pillars.map((pillar) => (
-                                    <div key={pillar.number} className="py-8 first:pt-0 last:pb-0 space-y-4">
-                                        <div className="flex items-baseline gap-4">
-                                            <span className="font-serif text-3xl sm:text-4xl font-bold text-piaud-emerald shrink-0">
-                                                {pillar.number}
-                                            </span>
-                                            <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate">
-                                                {pillar.title}
-                                            </h3>
-                                        </div>
-                                        <p className="text-sm text-piaud-slate-muted leading-relaxed pl-12 max-w-[65ch]">
-                                            {pillar.description}
-                                        </p>
-                                        <ul className="pl-12 space-y-2 text-xs text-piaud-slate font-medium">
-                                            {pillar.deliverables.map((item, idx) => (
-                                                <li key={idx} className="flex items-center gap-2">
-                                                    <span className="w-1.5 h-1.5 bg-piaud-terracotta rounded-full shrink-0"></span>
-                                                    <span>{item}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                    <div className="mt-10 text-center">
+                        <Link
+                            href="/akademik"
+                            className="inline-flex items-center gap-2 text-sm font-bold text-piaud-emerald hover:text-piaud-emerald-dark bg-white px-6 py-3 rounded-xl border border-slate-200 shadow-soft hover:shadow-md transition-all"
+                        >
+                            <span>Lihat Struktur Kurikulum &amp; Sebaran Mata Kuliah</span>
+                            <span>&rarr;</span>
+                        </Link>
                     </div>
                 </section>
 
-                {/* 6. DOSEN & TENAGA PENGAJAR (Editorial Directory Layout - No Nested Cards) */}
-                <section id="dosen" className="border-b border-piaud-border bg-piaud-ivory-dark">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
+                {/* 6. DOSEN & TENAGA PENGAJAR (Interactive 3D Cards) */}
+                <section id="dosen" className="bg-white border-y border-piaud-border py-16 md:py-24">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 pb-4 border-b border-slate-100">
                             <div>
-                                <span className="text-xs font-bold uppercase tracking-wider text-piaud-emerald block mb-1">
+                                <span className="inline-block bg-emerald-50 text-piaud-emerald text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2">
                                     Tenaga Pendidik
                                 </span>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Dosen Pengampu &amp; Pakar Tumbuh Kembang
                                 </h2>
                             </div>
-                            <p className="text-xs text-piaud-slate-muted max-w-md leading-relaxed">
-                                Praktisi dan akademisi tersertifikasi di bidang pendidikan Islam, psikologi anak usia dini, dan perancangan media belajar kreatif.
-                            </p>
+                            <Link
+                                href="/dosen"
+                                className="inline-flex items-center gap-1.5 text-xs font-bold text-piaud-emerald hover:text-piaud-emerald-dark transition-colors self-start md:self-auto"
+                            >
+                                <span>Lihat Semua Dosen</span>
+                                <span>&rarr;</span>
+                            </Link>
                         </div>
 
-                        {/* Open Editorial Grid (No outer card boxes, un-crowded heading with mt-3.5) */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
+                        {/* Elevated 3D Cards Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.lecturers.map((lecturer, index) => (
-                                <article key={index} className="space-y-4">
+                                <article
+                                    key={index}
+                                    className="bg-slate-50/70 hover:bg-white rounded-2xl p-4 border border-slate-100 shadow-soft hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300 group"
+                                >
                                     <Photo
                                         src={lecturer.photoUrl}
                                         alt={`Foto ${lecturer.name}`}
                                         aspectRatio="1/1"
-                                        className="w-full h-auto rounded-sm shadow-sm"
+                                        className="w-full h-auto rounded-xl shadow-soft group-hover:scale-[1.02] transition-transform duration-200"
                                     />
-                                    <div>
-                                        <span className="text-xs font-bold tracking-wider text-piaud-terracotta block">
+                                    <div className="mt-4 space-y-1.5">
+                                        <span className="text-[11px] font-bold tracking-wider text-piaud-terracotta uppercase block">
                                             {lecturer.role}
                                         </span>
-                                        {/* mt-3.5 resolves 'Heading Crowded against Previous Block' */}
-                                        <h3 className="font-serif font-bold text-base text-piaud-slate mt-3.5 leading-snug">
+                                        <h3 className="font-serif font-bold text-base text-piaud-slate leading-snug group-hover:text-piaud-emerald transition-colors">
                                             {lecturer.name}
                                         </h3>
-                                        <div className="mt-3 pt-2.5 border-t border-piaud-border text-xs text-piaud-slate-muted space-y-1">
-                                            <p className="font-mono text-xs text-piaud-slate-muted">
+                                        <div className="pt-2 border-t border-slate-200/60 text-xs text-piaud-slate-muted space-y-1">
+                                            <p className="font-mono text-[11px] text-slate-500">
                                                 NIP: {lecturer.nip}
                                             </p>
-                                            <p className="text-piaud-slate font-semibold">
+                                            <p className="text-piaud-slate font-semibold text-xs">
                                                 {lecturer.expertise}
                                             </p>
                                         </div>
@@ -275,98 +286,108 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* GALERI DOKUMENTASI (Clean Open Figures - No Nested Cards) */}
-                <section id="galeri" className="border-b border-piaud-border bg-piaud-ivory">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
-                            <div>
-                                <span className="text-xs font-bold uppercase tracking-wider text-piaud-emerald block mb-1">
-                                    Dokumentasi Kegiatan
-                                </span>
-                                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
-                                    Galeri Praktikum &amp; Observasi Lapangan
-                                </h2>
-                            </div>
-                            <p className="text-xs text-piaud-slate-muted max-w-md leading-relaxed">
-                                Dokumentasi nyata kegiatan mahasiswa dalam pembuatan alat permainan edukatif, pentas kreativitas anak, dan simulasi microteaching.
-                            </p>
+                {/* GALERI DOKUMENTASI (Elevated Cards with Hover Glow) */}
+                <section id="galeri" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+                    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 pb-4 border-b border-slate-200">
+                        <div>
+                            <span className="inline-block bg-emerald-50 text-piaud-emerald text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2">
+                                Dokumentasi Kegiatan
+                            </span>
+                            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
+                                Galeri Praktikum &amp; Observasi Lapangan
+                            </h2>
                         </div>
+                        <Link
+                            href="/galeri"
+                            className="inline-flex items-center gap-1.5 text-xs font-bold text-piaud-emerald hover:text-piaud-emerald-dark transition-colors self-start md:self-auto"
+                        >
+                            <span>Buka Galeri Lengkap</span>
+                            <span>&rarr;</span>
+                        </Link>
+                    </div>
 
-                        {/* Open Figure Grid (Direct image + caption, no double wrapper boxes) */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {siteConfig.gallery.map((item, index) => (
-                                <figure key={index} className="space-y-3">
-                                    <Photo
-                                        src={item.photoUrl}
-                                        alt={item.title}
-                                        aspectRatio="4/3"
-                                        className="w-full h-auto rounded-sm shadow-sm"
-                                    />
-                                    <figcaption className="space-y-1">
-                                        <span className="text-xs font-bold uppercase tracking-wider text-piaud-terracotta block">
-                                            {item.category}
-                                        </span>
-                                        <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug">
-                                            {item.title}
-                                        </h3>
-                                    </figcaption>
-                                </figure>
-                            ))}
-                        </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {siteConfig.gallery.map((item, index) => (
+                            <figure
+                                key={index}
+                                className="bg-white rounded-2xl p-3 border border-slate-100 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 group overflow-hidden"
+                            >
+                                <Photo
+                                    src={item.photoUrl}
+                                    alt={item.title}
+                                    aspectRatio="4/3"
+                                    className="w-full h-auto rounded-xl shadow-soft group-hover:scale-105 transition-transform duration-300"
+                                />
+                                <figcaption className="mt-3 px-1 space-y-1">
+                                    <span className="text-[11px] font-bold uppercase tracking-wider text-piaud-terracotta block">
+                                        {item.category}
+                                    </span>
+                                    <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug group-hover:text-piaud-emerald transition-colors">
+                                        {item.title}
+                                    </h3>
+                                </figcaption>
+                            </figure>
+                        ))}
                     </div>
                 </section>
 
-                {/* 7. ARTIKEL PARENTING ISLAMI (Open Editorial Column + Divided Story Feed) */}
-                <section id="artikel" className="border-b border-piaud-border bg-piaud-ivory-dark">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 border-b border-piaud-border pb-4">
+                {/* 7. ARTIKEL PARENTING ISLAMI */}
+                <section id="artikel" className="bg-white border-t border-piaud-border py-16 md:py-24">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 pb-4 border-b border-slate-100">
                             <div>
-                                <span className="text-xs font-bold uppercase tracking-wider text-piaud-terracotta block mb-1">
+                                <span className="inline-block bg-amber-50 text-piaud-terracotta text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2">
                                     Wawasan &amp; Edukasi
                                 </span>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Artikel Parenting Islami &amp; Khazanah AUD
                                 </h2>
                             </div>
-                            <span className="text-xs text-piaud-slate-muted">
-                                Publikasi riset terapan dan panduan pengasuhan dari civitas akademika PIAUD.
-                            </span>
+                            <Link
+                                href="/artikel"
+                                className="inline-flex items-center gap-1.5 text-xs font-bold text-piaud-emerald hover:text-piaud-emerald-dark transition-colors self-start md:self-auto"
+                            >
+                                <span>Lihat Semua Artikel</span>
+                                <span>&rarr;</span>
+                            </Link>
                         </div>
 
-                        {/* 1 Open Featured Column + 1 Divided Story Feed (No Nested Card Boxes) */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-                            {/* Featured Article: Direct editorial layout without card wrapper */}
-                            <article className="lg:col-span-6 space-y-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                            {/* Featured Article Card */}
+                            <article className="lg:col-span-6 bg-slate-50/70 rounded-2xl p-4 sm:p-5 border border-slate-100 shadow-card hover:shadow-card-hover transition-all duration-300 space-y-4 group">
                                 <Photo
                                     src={siteConfig.articles.featured.photoUrl}
                                     alt={siteConfig.articles.featured.title}
                                     aspectRatio="16/9"
-                                    className="w-full h-auto rounded-sm shadow-sm"
+                                    className="w-full h-auto rounded-xl shadow-soft group-hover:scale-[1.01] transition-transform duration-200"
                                 />
-                                <div className="space-y-2.5">
-                                    <div className="flex items-center gap-3 text-xs text-piaud-slate-muted flex-wrap">
-                                        <span className="bg-piaud-emerald text-piaud-ivory px-2.5 py-0.5 rounded-sm font-bold text-xs">
+                                <div className="space-y-2.5 px-1">
+                                    <div className="flex items-center gap-2.5 text-xs text-piaud-slate-muted flex-wrap">
+                                        <span className="bg-piaud-emerald text-white px-2.5 py-0.5 rounded-full font-bold text-xs shadow-soft">
                                             {siteConfig.articles.featured.category}
                                         </span>
                                         <span>{siteConfig.articles.featured.publishedAt}</span>
                                         <span>&bull;</span>
                                         <span>{siteConfig.articles.featured.readTime}</span>
                                     </div>
-                                    <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug">
+                                    <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug group-hover:text-piaud-emerald transition-colors">
                                         {siteConfig.articles.featured.title}
                                     </h3>
-                                    <p className="text-sm text-piaud-slate-muted leading-relaxed max-w-[65ch]">
+                                    <p className="text-sm text-piaud-slate-muted leading-relaxed">
                                         {siteConfig.articles.featured.excerpt}
                                     </p>
                                 </div>
                             </article>
 
-                            {/* 3 List Articles: Clean divided feed with single horizontal separator lines */}
-                            <div className="lg:col-span-6 divide-y divide-piaud-border">
+                            {/* List Articles (Elevated Cards Stack) */}
+                            <div className="lg:col-span-6 space-y-4">
                                 {siteConfig.articles.list.map((article) => (
-                                    <article key={article.id} className="py-5 first:pt-0 last:pb-0 space-y-2">
+                                    <article
+                                        key={article.id}
+                                        className="bg-slate-50/70 hover:bg-white rounded-2xl p-4 sm:p-5 border border-slate-100 shadow-soft hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200 space-y-2 group"
+                                    >
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
-                                            <span className="text-piaud-terracotta font-bold text-xs">
+                                            <span className="text-piaud-terracotta font-bold text-xs bg-amber-50 px-2 py-0.5 rounded-full">
                                                 {article.category}
                                             </span>
                                             <span>&bull;</span>
@@ -374,10 +395,10 @@ export default function Welcome() {
                                             <span>&bull;</span>
                                             <span>{article.readTime}</span>
                                         </div>
-                                        <h3 className="font-serif text-base font-bold text-piaud-slate leading-snug">
+                                        <h3 className="font-serif text-base font-bold text-piaud-slate leading-snug group-hover:text-piaud-emerald transition-colors">
                                             {article.title}
                                         </h3>
-                                        <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed line-clamp-2 max-w-[65ch]">
+                                        <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed line-clamp-2">
                                             {article.excerpt}
                                         </p>
                                     </article>
@@ -393,3 +414,4 @@ export default function Welcome() {
         </div>
     );
 }
+
