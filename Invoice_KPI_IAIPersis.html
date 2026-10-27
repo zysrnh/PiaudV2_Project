@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - Pembuatan Website Prodi KPI Fakultas Dakwah IAI Persis Bandung</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #1e293b;
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 24px 12px;
+        }
+        .invoice-card {
+            max-width: 780px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 34px 38px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+        @page {
+            size: A4 portrait;
+            margin: 8mm 10mm;
+        }
+        @media print {
+            html, body {
+                background-color: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .invoice-card {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 auto !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 py-6 print:py-0 print:bg-white text-slate-800">
+
+<div class="invoice-card max-w-3xl mx-auto bg-white p-8 sm:p-10 shadow-sm border border-slate-200 rounded-sm">
+    
+    <!-- Tombol Print (Sembunyi saat diprint / cetak PDF) -->
+    <div class="flex justify-end mb-5 pb-3 border-b border-slate-100 print:hidden no-print">
+        <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2 px-5 rounded-sm shadow-xs transition flex items-center gap-2 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            <span>Print to PDF (1 Halaman A4)</span>
+        </button>
+    </div>
+
+    <!-- Header Section -->
+    <div class="flex justify-between items-start mb-5 pb-4 border-b border-slate-200">
+        <div>
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-wider uppercase">INVOICE</h1>
+            
+            <div class="text-xs text-slate-600 space-y-0.5 mt-2">
+                <p class="font-bold text-slate-900 text-sm">Zaki Yusron Hasyimmi</p>
+                <p>naooolaf@gmail.com &bull; 0838-6166-9565</p>
+            </div>
+
+            <!-- BILL TO -->
+            <div class="mt-4">
+                <p class="font-bold text-slate-400 uppercase text-[10px] tracking-wider mb-0.5">BILL TO:</p>
+                <div class="text-xs text-slate-800 space-y-0.5">
+                    <p class="font-bold text-sm text-slate-900">Program Studi S1 Komunikasi dan Penyiaran Islam (KPI)</p>
+                    <p class="text-slate-600 font-medium">Fakultas Dakwah &ndash; Institut Agama Islam Persatuan Islam (IAI Persis) Bandung</p>
+                    <p class="text-slate-500 text-[11px]">Jl. Ciganitri No. 2, Cipagalo, Bojongsoang, Kab. Bandung 40287</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right flex flex-col items-end pt-1">
+            <div class="text-xs text-slate-700 space-y-1.5 min-w-[210px]">
+                <div class="flex justify-between gap-4">
+                    <span class="font-medium text-slate-500">Invoice #:</span>
+                    <span class="font-mono font-bold text-slate-900">INV/KPI-DAKWAH/2026/001</span>
+                </div>
+                <div class="flex justify-between gap-4">
+                    <span class="font-medium text-slate-500">Project:</span>
+                    <span class="font-semibold text-slate-800 text-right">Website Prodi KPI</span>
+                </div>
+                <div class="flex justify-between gap-4">
+                    <span class="font-medium text-slate-500">Keperluan:</span>
+                    <span class="text-slate-700 text-right font-medium">Akreditasi Lapangan</span>
+                </div>
+                <div class="flex justify-between gap-4">
+                    <span class="font-medium text-slate-500">Date:</span>
+                    <span class="text-slate-800 font-medium">27 Oct 2026</span>
+                </div>
+                <div class="flex justify-between gap-4">
+                    <span class="font-medium text-slate-500">Due Date:</span>
+                    <span class="text-slate-800 font-medium">03 Nov 2026</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="mb-5">
+        <table class="w-full text-left border border-slate-200 text-xs">
+            <thead>
+                <tr class="bg-slate-50 text-slate-800 font-bold border-b border-slate-200">
+                    <th class="py-2.5 px-3 w-8 text-center">No.</th>
+                    <th class="py-2.5 px-4">Description</th>
+                    <th class="py-2.5 px-2 w-16 text-center">Qty</th>
+                    <th class="py-2.5 px-4 w-32 text-right">Unit Price</th>
+                    <th class="py-2.5 px-4 w-32 text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody class="text-slate-700 divide-y divide-slate-200">
+                <!-- Item: Pembuatan Website Program Studi KPI -->
+                <tr>
+                    <td class="py-3.5 px-3 text-center font-medium text-slate-500 align-top">1</td>
+                    <td class="py-3.5 px-4">
+                        <span class="font-bold text-slate-900 block text-xs">Pembuatan Website Resmi Program Studi S1 Komunikasi &amp; Penyiaran Islam (KPI)</span>
+                        <span class="text-[10.5px] text-emerald-800 font-semibold block mt-0.5">Fakultas Dakwah IAI Persis Bandung (Persiapan Akreditasi Lapangan)</span>
+                        
+                        <div class="text-[11px] text-slate-500 leading-relaxed mt-2 space-y-1">
+                            <p class="text-slate-600">Pengembangan website resmi dan sistem informasi terpadu sesuai Rencana Anggaran Biaya (RAB) Proposal Pengajuan, mencakup 12 lingkup pekerjaan:</p>
+                            <ul class="list-disc list-inside mt-1 space-y-1 text-slate-600 pl-0.5">
+                                <li><strong class="text-slate-800">Perencanaan &amp; Identitas Visual:</strong> Analisis kebutuhan sistem, struktur informasi, dan desain UI responsif modern (optimal di desktop, tablet, dan smartphone).</li>
+                                <li><strong class="text-slate-800">Sistem Pengelolaan Konten (CMS):</strong> Konfigurasi sistem CMS administrator &amp; operator prodi untuk pengelolaan berita, artikel, galeri media, dan arsip dokumen.</li>
+                                <li><strong class="text-slate-800">Modul Profil &amp; Organisasi:</strong> Halaman Sejarah, Visi, Misi, Tujuan, Sasaran, Profil Lulusan, serta Struktur Organisasi Fakultas Dakwah &amp; Pengelola Prodi KPI.</li>
+                                <li><strong class="text-slate-800">Modul Akademik &amp; Kemahasiswaan:</strong> Kurikulum, Capaian Pembelajaran (CPL), Direktori Dosen &amp; Tenaga Kependidikan, Informasi Mahasiswa, serta Jejaring Alumni.</li>
+                                <li><strong class="text-slate-800">Instrumen Akreditasi &amp; Penjaminan Mutu:</strong> Halaman khusus informasi mutu prodi, instrumen evaluasi, dan penyediaan bukti pendukung akreditasi lapangan yang terstruktur.</li>
+                                <li><strong class="text-slate-800">Tridarma &amp; Fasilitas Penyiaran:</strong> Dokumentasi penelitian dosen/mahasiswa, pengabdian masyarakat (dakwah &amp; literasi media), kerja sama institusi, serta Lab Praktik Penyiaran &amp; Media Digital.</li>
+                                <li><strong class="text-slate-800">Pengisian Konten Awal:</strong> Penataan dan input dokumen awal, profil pengajar, serta publikasi kegiatan tridarma.</li>
+                                <li><strong class="text-slate-800">Konfigurasi Keamanan &amp; Backup:</strong> Pemasangan sertifikat SSL HTTPS, pengamanan akses admin, sistem pencadangan berkala, dan optimasi SEO.</li>
+                                <li><strong class="text-slate-800">Pelatihan &amp; Serah Terima:</strong> Panduan/pelatihan operator program studi serta garansi pemeliharaan teknis sistem.</li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="py-3.5 px-2 text-center font-medium align-top">1 Paket</td>
+                    <td class="py-3.5 px-4 text-right font-mono align-top">Rp 2.850.000</td>
+                    <td class="py-3.5 px-4 text-right font-mono font-semibold text-slate-900 align-top">Rp 2.850.000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Total Section & Payment Method -->
+    <div class="flex flex-row justify-between items-start gap-6 mb-5 pt-1">
+        <!-- Payment Details -->
+        <div class="w-7/12 text-xs space-y-2">
+            <p class="font-bold text-slate-800 uppercase text-[10.5px] tracking-wide mb-1.5">Metode Pembayaran (Transfer Bank):</p>
+            
+            <!-- Bank BCA -->
+            <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-sm">
+                <div class="flex items-center justify-between">
+                    <span class="font-bold text-blue-900 text-xs">Bank BCA</span>
+                    <span class="text-[10px] text-slate-500 font-medium">Transfer / Virtual</span>
+                </div>
+                <p class="mt-1 text-slate-700">No. Rekening: <span class="font-mono font-bold text-slate-900 text-sm tracking-wider">3372730886</span></p>
+                <p class="text-slate-600 text-[11px]">Atas Nama: <span class="font-semibold text-slate-800">Zaki Yusron Hasyimmi</span></p>
+            </div>
+
+            <!-- Bank SeaBank -->
+            <div class="bg-slate-50 border border-slate-200 p-2.5 rounded-sm">
+                <div class="flex items-center justify-between">
+                    <span class="font-bold text-amber-600 text-xs">SeaBank</span>
+                    <span class="text-[10px] text-slate-500 font-medium">Transfer / Virtual</span>
+                </div>
+                <p class="mt-1 text-slate-700">No. Rekening: <span class="font-mono font-bold text-slate-900 text-sm tracking-wider">901005496052</span></p>
+                <p class="text-slate-600 text-[11px]">Atas Nama: <span class="font-semibold text-slate-800">Zaki Yusron Hasyimmi</span></p>
+            </div>
+        </div>
+
+        <!-- Price Calculation -->
+        <div class="w-5/12 space-y-2 text-xs text-slate-700 self-end">
+            <div class="flex justify-between text-slate-600 pb-1">
+                <span>Subtotal:</span>
+                <span class="font-mono font-medium text-slate-900">Rp 2.850.000</span>
+            </div>
+            <div class="flex justify-between text-slate-500 text-[11px]">
+                <span>Pajak (PPN):</span>
+                <span class="font-mono text-slate-600">Rp 0 (Termasuk)</span>
+            </div>
+            <div class="flex justify-between border-t-2 border-slate-900 pt-2 font-bold text-slate-900 text-sm">
+                <span>Total Biaya:</span>
+                <span class="font-mono font-bold text-base text-emerald-800">Rp 2.850.000</span>
+            </div>
+            <p class="text-[10px] text-slate-500 italic text-right mt-1">Terbilang: Dua juta delapan ratus lima puluh ribu rupiah.</p>
+        </div>
+    </div>
+
+    <!-- Footer Note -->
+    <div class="border-t border-slate-200 pt-3 text-[11px] text-slate-500 flex flex-row justify-between items-end gap-4">
+        <div>
+            <p class="font-semibold text-slate-700">Terima kasih atas kerja samanya.</p>
+            <p class="text-[10px] text-slate-400 mt-0.5">Garansi pemeliharaan, keamanan sistem, dan pendampingan 30 hari.</p>
+        </div>
+        <div class="text-right">
+            <p class="text-[10px] text-slate-400">Bandung, 27 Oktober 2026</p>
+            <p class="mt-4 font-bold text-slate-800 text-xs">Zaki Yusron Hasyimmi</p>
+            <p class="text-[10px] text-slate-500">Unit Teknologi Informasi (IT) / Web Developer</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
