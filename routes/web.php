@@ -27,6 +27,14 @@ Route::get('/akademik', function () {
     return Inertia::render('Public/Academic');
 })->name('academic');
 
+Route::get('/profil-lulusan', function () {
+    return Inertia::render('Public/GraduateProfile');
+})->name('graduate.profile');
+
+Route::get('/laboratorium-ape', function () {
+    return Inertia::render('Public/LaboratoriumApe');
+})->name('lab.ape');
+
 Route::get('/dosen', function () {
     return Inertia::render('Public/Lecturers');
 })->name('lecturers');

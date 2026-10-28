@@ -310,6 +310,16 @@ export default function Academic() {
                             </div>
                         ))}
                     </div>
+
+                    <div className="flex justify-center pt-2">
+                        <Link
+                            href="/profil-lulusan"
+                            className="neu-btn text-piaud-slate text-xs font-bold px-6 py-3 rounded-xl transition-all hover:text-[#0F4C3A] flex items-center gap-2 cursor-pointer"
+                        >
+                            <span>Eksplorasi Detail CPL &amp; Prospek Karir Selengkapnya</span>
+                            <span className="text-[#0F4C3A]">→</span>
+                        </Link>
+                    </div>
                 </section>
 
                 {/* 5. Laboratorium & Fasilitas Pendukung (.neu-card-emerald) */}
@@ -346,6 +356,19 @@ export default function Academic() {
                                     Ruang observasi perilaku dan simulasi deteksi dini tumbuh kembang anak usia dini berkebutuhan khusus secara profesional.
                                 </p>
                             </div>
+                        </div>
+
+                        <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/15">
+                            <p className="text-xs text-white/80">
+                                Ingin melihat katalog produk APE karya mahasiswa dan alur riset praktikum?
+                            </p>
+                            <Link
+                                href="/laboratorium-ape"
+                                className="bg-white text-[#0F4C3A] hover:bg-[#E3DAC7] text-xs font-bold px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 cursor-pointer shadow-soft"
+                            >
+                                <span>Katalog Karya APE &amp; Detail Studio</span>
+                                <span>→</span>
+                            </Link>
                         </div>
                     </div>
                 </section>

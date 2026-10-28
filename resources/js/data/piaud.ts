@@ -150,8 +150,8 @@ export const siteConfig: SiteConfig = {
             href: "/akademik",
             submenu: [
                 { label: "Kurikulum & SKS", href: "/akademik#kurikulum" },
-                { label: "Profil Lulusan", href: "/akademik#profil-lulusan" },
-                { label: "Laboratorium APE", href: "/akademik#lab" },
+                { label: "Profil Lulusan & Karir", href: "/profil-lulusan" },
+                { label: "Laboratorium & Studio APE", href: "/laboratorium-ape" },
             ],
         },
         { label: "Dosen", href: "/dosen" },
@@ -328,8 +328,8 @@ export const siteConfig: SiteConfig = {
     footerLinks: {
         academic: [
             { label: "Kurikulum & SKS", href: "/akademik#kurikulum" },
-            { label: "Laboratorium APE & Microteaching", href: "/akademik#lab" },
-            { label: "Profil Lulusan & Karir", href: "/akademik#profil-lulusan" },
+            { label: "Laboratorium APE & Microteaching", href: "/laboratorium-ape" },
+            { label: "Profil Lulusan & Karir", href: "/profil-lulusan" },
             { label: "Direktori Dosen", href: "/dosen" },
         ],
         institutional: [
