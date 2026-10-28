@@ -47,17 +47,22 @@ export default function Contact() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 space-y-12">
                 {/* 1. Contact Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="bg-piaud-ivory rounded-lg p-6 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all space-y-2">
-                        <div className="w-10 h-10 rounded-md bg-piaud-emerald/10 text-piaud-emerald border border-piaud-emerald/20 flex items-center justify-center text-xl shadow-soft">
-                            📍
+                    <div className="bg-piaud-ivory rounded-lg p-6 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all space-y-2 group">
+                        <div className="w-10 h-10 rounded-md bg-[#0F4C3A]/10 text-[#0F4C3A] border border-[#0F4C3A]/20 flex items-center justify-center shadow-soft group-hover:scale-105 transition-transform">
+                            <svg className="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
                         </div>
                         <h3 className="font-serif font-bold text-base text-piaud-slate">Lokasi Kampus</h3>
                         <p className="text-xs text-piaud-slate-muted leading-relaxed">{siteConfig.campusAddress}</p>
                     </div>
 
-                    <div className="bg-piaud-ivory rounded-lg p-6 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all space-y-2">
-                        <div className="w-10 h-10 rounded-md bg-piaud-emerald/10 text-piaud-emerald border border-piaud-emerald/20 flex items-center justify-center text-xl shadow-soft">
-                            💬
+                    <div className="bg-piaud-ivory rounded-lg p-6 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all space-y-2 group">
+                        <div className="w-10 h-10 rounded-md bg-[#0F4C3A]/10 text-[#0F4C3A] border border-[#0F4C3A]/20 flex items-center justify-center shadow-soft group-hover:scale-105 transition-transform">
+                            <svg className="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                            </svg>
                         </div>
                         <h3 className="font-serif font-bold text-base text-piaud-slate">WhatsApp PMB</h3>
                         <p className="text-xs text-piaud-slate-muted">Respon cepat via admin resmi prodi</p>
@@ -65,28 +70,33 @@ export default function Contact() {
                             href={createWhatsAppLink("Halo Admin, saya ingin konsultasi pendaftaran")}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block text-xs font-bold text-piaud-emerald hover:text-piaud-emerald-dark hover:underline pt-1 transition-colors"
+                            className="inline-block text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] hover:underline pt-1 transition-colors"
                         >
                             +{siteConfig.whatsappNumber} &rarr;
                         </a>
                     </div>
 
-                    <div className="bg-piaud-ivory rounded-lg p-6 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all space-y-2">
-                        <div className="w-10 h-10 rounded-md bg-piaud-emerald/10 text-piaud-emerald border border-piaud-emerald/20 flex items-center justify-center text-xl shadow-soft">
-                            📞
+                    <div className="bg-piaud-ivory rounded-lg p-6 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all space-y-2 group">
+                        <div className="w-10 h-10 rounded-md bg-[#0F4C3A]/10 text-[#0F4C3A] border border-[#0F4C3A]/20 flex items-center justify-center shadow-soft group-hover:scale-105 transition-transform">
+                            <svg className="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+                            </svg>
                         </div>
                         <h3 className="font-serif font-bold text-base text-piaud-slate">Telepon Kantor</h3>
                         <p className="text-xs text-piaud-slate-muted">Layanan kantor fakultas tarbiyah</p>
                         <p className="text-xs font-bold text-piaud-slate pt-1">{siteConfig.phone}</p>
                     </div>
 
-                    <div className="bg-piaud-ivory rounded-lg p-6 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all space-y-2">
-                        <div className="w-10 h-10 rounded-md bg-piaud-emerald/10 text-piaud-emerald border border-piaud-emerald/20 flex items-center justify-center text-xl shadow-soft">
-                            ⏰
+                    <div className="bg-piaud-ivory rounded-lg p-6 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all space-y-2 group">
+                        <div className="w-10 h-10 rounded-md bg-[#0F4C3A]/10 text-[#0F4C3A] border border-[#0F4C3A]/20 flex items-center justify-center shadow-soft group-hover:scale-105 transition-transform">
+                            <svg className="w-5 h-5 stroke-current" fill="none" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
                         </div>
                         <h3 className="font-serif font-bold text-base text-piaud-slate">Jam Kerja</h3>
                         <p className="text-xs text-piaud-slate-muted leading-relaxed">{siteConfig.officeHours}</p>
-                        <span className="inline-block text-[11px] font-semibold text-emerald-800 bg-emerald-100/60 border border-emerald-300/60 px-2 py-0.5 rounded">
+                        <span className="inline-block text-[11px] font-bold text-[#0F4C3A] uppercase tracking-wider">
                             Layanan Terbuka
                         </span>
                     </div>

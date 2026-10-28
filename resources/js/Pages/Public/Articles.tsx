@@ -111,24 +111,40 @@ export default function Articles() {
                                 placeholder="Cari topik artikel..."
                                 className="w-full text-xs sm:text-sm pl-9 pr-4 py-2 rounded-md border border-piaud-border bg-piaud-ivory focus:bg-white focus:outline-none focus:ring-1 focus:ring-piaud-emerald focus:border-piaud-emerald transition-all"
                             />
-                            <span className="absolute left-3 top-2 text-piaud-slate-muted text-xs">🔍</span>
+                            <svg
+                                className="w-4 h-4 text-piaud-slate-muted absolute left-3 top-2.5 pointer-events-none stroke-current"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth="2.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                            </svg>
                         </div>
                     </div>
                 </div>
 
-                {/* Articles Grid */}
+                {/* Articles Grid with Staggered Entrance Animation */}
                 {filtered.length === 0 ? (
                     <div className="bg-piaud-ivory rounded-lg p-12 text-center border border-piaud-border shadow-soft">
-                        <span className="text-4xl">🔍</span>
+                        <div className="w-14 h-14 mx-auto rounded-xl bg-[#F2ECE0] flex items-center justify-center text-piaud-slate-muted mb-3 border border-[#E3DAC7]">
+                            <svg className="w-7 h-7 stroke-current" fill="none" viewBox="0 0 24 24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.35-4.35" />
+                            </svg>
+                        </div>
                         <p className="text-base font-bold text-piaud-slate mt-3">Tidak ada artikel ditemukan</p>
                         <p className="text-xs text-piaud-slate-muted mt-1">Coba gunakan kata kunci pencarian lain atau pilih kategori Semua.</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filtered.map((article) => (
+                    <div key={`${selectedCategory}-${searchQuery}`} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {filtered.map((article, idx) => (
                             <article
                                 key={article.id}
-                                className="bg-piaud-ivory rounded-lg p-5 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                                style={{ animationDelay: `${idx * 45}ms` }}
+                                className="animate-table-row bg-piaud-ivory rounded-lg p-5 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
                             >
                                 <div className="space-y-4">
                                     <div className="overflow-hidden rounded-md border border-piaud-border/60">
@@ -142,7 +158,7 @@ export default function Articles() {
 
                                     <div className="space-y-2">
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted flex-wrap">
-                                            <span className="bg-piaud-emerald/10 text-piaud-emerald px-2 py-0.5 rounded text-[11px] font-bold border border-piaud-emerald/20">
+                                            <span className="text-[#0F4C3A] text-[11px] font-bold uppercase tracking-wider">
                                                 {article.category}
                                             </span>
                                             <span>&bull;</span>
