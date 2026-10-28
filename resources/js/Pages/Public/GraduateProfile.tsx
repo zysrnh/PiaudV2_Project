@@ -160,9 +160,6 @@ export default function GraduateProfile() {
                         <span className="text-white/40">/</span>
                         <span className="text-white font-medium">Profil Lulusan &amp; Karir</span>
                     </nav>
-                    <div className="inline-block px-3 py-1 bg-white/10 rounded-lg text-xs font-semibold text-[#E3DAC7] tracking-wider uppercase mb-3">
-                        Relevansi &amp; Daya Saing Kerja
-                    </div>
                     <h1 className={`font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight ${inView.header ? 'animate-slide-left' : ''}`}>
                         Profil Lulusan &amp; Peluang Karir Masa Depan
                     </h1>
@@ -220,13 +217,8 @@ export default function GraduateProfile() {
                             <div key={idx} className={inView.profiles ? `animate-slide-up delay-${(idx % 2) + 1}` : ''}>
                                 <div className="neu-card card-interactive rounded-2xl p-7 sm:p-8 border border-[#E3DAC7] space-y-6 h-full flex flex-col justify-between group">
                                     <div className="space-y-5">
-                                        <div className="flex items-start justify-between gap-4">
-                                            <div className="w-14 h-14 rounded-2xl bg-[#F2ECE0] flex items-center justify-center text-3xl shadow-soft group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
-                                                {p.icon}
-                                            </div>
-                                            <span className="inline-block px-3 py-1 bg-[#F2ECE0] border border-[#E3DAC7] rounded-lg text-[10px] font-bold text-[#0F4C3A] tracking-wider uppercase">
-                                                {p.badge}
-                                            </span>
+                                        <div className="w-14 h-14 rounded-2xl bg-[#F2ECE0] flex items-center justify-center text-3xl shadow-soft group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+                                            {p.icon}
                                         </div>
 
                                         <div>
@@ -262,10 +254,11 @@ export default function GraduateProfile() {
                                         <span className="text-[11px] font-bold text-piaud-slate-muted uppercase tracking-wider block">
                                             Prospek Penempatan &amp; Karir:
                                         </span>
-                                        <div className="flex flex-wrap gap-2">
+                                        <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-piaud-slate font-medium">
                                             {p.careerTracks.map((track, i) => (
-                                                <span key={i} className="px-2.5 py-1 bg-[#FAF6EC] border border-[#E3DAC7] rounded-md text-[11px] font-medium text-piaud-slate">
-                                                    {track}
+                                                <span key={i} className="flex items-center gap-1.5">
+                                                    <span className="w-1 h-1 rounded-full bg-[#0F4C3A]"></span>
+                                                    <span>{track}</span>
                                                 </span>
                                             ))}
                                         </div>

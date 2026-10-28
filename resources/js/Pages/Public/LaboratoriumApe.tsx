@@ -160,9 +160,6 @@ export default function LaboratoriumApe() {
                         <span className="text-white/40">/</span>
                         <span className="text-white font-medium">Laboratorium &amp; Studio APE</span>
                     </nav>
-                    <div className="inline-block px-3 py-1 bg-white/10 rounded-lg text-xs font-semibold text-[#E3DAC7] tracking-wider uppercase mb-3">
-                        Pusat Riset &amp; Inkubasi Praktikum
-                    </div>
                     <h1 className={`font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight ${inView.header ? 'animate-slide-left' : ''}`}>
                         Laboratorium Microteaching &amp; Studio APE Terpadu
                     </h1>
@@ -305,7 +302,7 @@ export default function LaboratoriumApe() {
                                             <div className="w-12 h-12 rounded-xl bg-[#F2ECE0] flex items-center justify-center text-2xl shadow-soft group-hover:scale-110 transition-transform duration-300">
                                                 {prod.icon}
                                             </div>
-                                            <span className="px-2.5 py-1 bg-[#F2ECE0] border border-[#E3DAC7] rounded-md text-[10px] font-bold text-[#0F4C3A] uppercase tracking-wider">
+                                            <span className="text-[11px] font-bold text-[#0F4C3A] uppercase tracking-wider">
                                                 {prod.category}
                                             </span>
                                         </div>
