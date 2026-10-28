@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
     
     <!-- FontAwesome & SweetAlert2 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -20,8 +20,8 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Public Sans"', 'sans-serif'],
-                        serif: ['"Source Serif 4"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Lora"', 'serif'],
                     },
                     colors: {
                         piaud: {
@@ -51,7 +51,7 @@
         body {
             background-color: var(--bg-base);
             color: #1B2A2F;
-            font-family: 'Public Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         /* Neumorphic Tokens */

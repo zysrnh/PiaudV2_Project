@@ -13,8 +13,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['"Public Sans"', 'Inter', ...defaultTheme.fontFamily.sans],
-                serif: ['"Source Serif 4"', 'Georgia', ...defaultTheme.fontFamily.serif],
+                sans: ['"Plus Jakarta Sans"', 'Inter', ...defaultTheme.fontFamily.sans],
+                serif: ['"Lora"', 'Georgia', ...defaultTheme.fontFamily.serif],
             },
             colors: {
                 piaud: {
