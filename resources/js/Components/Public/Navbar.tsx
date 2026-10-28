@@ -121,7 +121,7 @@ export const Navbar: React.FC = () => {
                 {/* Brand Identity with Official Campus Logo */}
                 <Link
                     href="/"
-                    className="flex items-center gap-2.5 sm:gap-3.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta rounded-md py-1 min-w-0 tactile-press"
+                    className="flex items-center gap-2.5 sm:gap-3.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta rounded-md py-1 min-w-0"
                 >
                     <img
                         src="/images/logo_kampus.png"
@@ -138,33 +138,44 @@ export const Navbar: React.FC = () => {
                     </div>
                 </Link>
 
-                {/* Desktop Nav Links */}
-                <div className="hidden lg:flex items-center gap-1.5">
+                {/* Desktop Nav Links + Primary Action Button */}
+                <div className="hidden lg:flex items-center gap-1 xl:gap-1.5">
                     {siteConfig.navigation.map((item) => {
                         const active = isActive(item.href);
                         return (
                             <div key={item.label} className="relative group">
                                 {item.submenu ? (
-                                    <div className="flex items-center">
+                                    <div>
                                         <Link
                                             href={item.href}
-                                            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 tactile-press ${
+                                            className={`relative inline-flex items-center gap-1.5 px-3 py-2 rounded-md text-[13px] font-semibold transition-all duration-150 ${
                                                 active
-                                                    ? 'text-piaud-emerald bg-piaud-ivory-dark border border-piaud-border font-bold shadow-sm'
-                                                    : 'text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark'
+                                                    ? 'text-[#0F4C3A] font-bold bg-[#F2ECE0]'
+                                                    : 'text-piaud-slate hover:text-[#0F4C3A] hover:bg-[#F2ECE0]/70'
                                             }`}
                                         >
                                             <span>{item.label}</span>
-                                            <span className="text-xs text-piaud-slate-muted group-hover:text-piaud-emerald transition-transform duration-200 group-hover:rotate-180">▾</span>
+                                            <svg
+                                                className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 stroke-current"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                                strokeWidth="2.2"
+                                            >
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                            {active && (
+                                                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0F4C3A] rounded-full" />
+                                            )}
                                         </Link>
 
                                         {/* Desktop Dropdown Submenu */}
-                                        <div className="absolute top-full left-0 mt-2 w-60 bg-[#FAF6EC] border border-[#E3DAC7] rounded-xl shadow-card-hover p-2 transform origin-top scale-95 translate-y-1 invisible group-hover:visible group-hover:scale-100 group-hover:translate-y-0 transition-transform duration-200 z-50">
+                                        <div className="absolute top-full left-0 mt-1.5 w-60 bg-[#FAF6EC] border border-[#E3DAC7] rounded-xl shadow-[0_12px_28px_rgba(31,41,51,0.12)] p-2 transform origin-top scale-95 translate-y-1 invisible group-hover:visible group-hover:scale-100 group-hover:translate-y-0 transition-all duration-200 z-50">
                                             {item.submenu.map((sub) => (
                                                 <Link
                                                     key={sub.label}
                                                     href={sub.href}
-                                                    className="block px-3.5 py-2.5 text-xs text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark rounded-lg transition-colors duration-150 font-medium active:translate-x-1"
+                                                    className="block px-3.5 py-2.5 text-xs text-piaud-slate hover:text-[#0F4C3A] hover:bg-[#F2ECE0] rounded-lg transition-colors font-medium"
                                                 >
                                                     {sub.label}
                                                 </Link>
@@ -174,18 +185,34 @@ export const Navbar: React.FC = () => {
                                 ) : (
                                     <Link
                                         href={item.href}
-                                        className={`inline-flex items-center px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 tactile-press ${
+                                        className={`relative inline-flex items-center px-3 py-2 rounded-md text-[13px] font-semibold transition-all duration-150 ${
                                             active
-                                                ? 'text-piaud-emerald bg-piaud-ivory-dark border border-piaud-border font-bold shadow-sm'
-                                                : 'text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark'
+                                                ? 'text-[#0F4C3A] font-bold bg-[#F2ECE0]'
+                                                : 'text-piaud-slate hover:text-[#0F4C3A] hover:bg-[#F2ECE0]/70'
                                         }`}
                                     >
-                                        {item.label}
+                                        <span>{item.label}</span>
+                                        {active && (
+                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0F4C3A] rounded-full" />
+                                        )}
                                     </Link>
                                 )}
                             </div>
                         );
                     })}
+
+                    {/* Desktop CTA Action Button */}
+                    <div className="ml-2.5 pl-3 border-l border-[#E3DAC7]">
+                        <a
+                            href={waLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 bg-[#0F4C3A] hover:bg-[#0A3427] text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow-sm hover:shadow transition-all duration-200 active:scale-95"
+                        >
+                            <span>Daftar PMB</span>
+                            <span className="text-[11px]">→</span>
+                        </a>
+                    </div>
                 </div>
 
                 {/* Mobile Menu Button with Animated Rotating Icon */}
@@ -195,7 +222,7 @@ export const Navbar: React.FC = () => {
                         onClick={() => setIsMobileOpen(!isMobileOpen)}
                         aria-expanded={isMobileOpen}
                         aria-label={isMobileOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
-                        className="p-2 text-piaud-slate hover:bg-piaud-ivory-dark border border-piaud-border rounded-md transition-all duration-200 active:scale-90"
+                        className="p-2 text-piaud-slate hover:bg-[#F2ECE0] border border-[#E3DAC7] rounded-lg transition-all duration-200 active:scale-90"
                     >
                         <svg
                             className={`w-5 h-5 transform transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
@@ -246,11 +273,19 @@ export const Navbar: React.FC = () => {
                                                 type="button"
                                                 onClick={() => toggleSubmenu(item.label)}
                                                 className={`w-full flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-lg transition-all active:scale-[0.98] ${
-                                                    active ? 'text-piaud-emerald bg-[#FAF6EC] font-bold shadow-sm' : 'text-piaud-slate hover:bg-[#FAF6EC]'
+                                                    active ? 'text-[#0F4C3A] bg-[#FAF6EC] font-bold shadow-sm' : 'text-piaud-slate hover:bg-[#FAF6EC]'
                                                 }`}
                                             >
                                                 <span>{item.label}</span>
-                                                <span className={`text-xs transition-transform duration-250 ${openSubmenu === item.label ? 'rotate-180' : ''}`}>▼</span>
+                                                <svg
+                                                    className={`w-4 h-4 transition-transform duration-250 stroke-current ${openSubmenu === item.label ? 'rotate-180' : ''}`}
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2.2"
+                                                >
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                                </svg>
                                             </button>
                                             {openSubmenu === item.label && (
                                                 <div className="pl-4 py-1.5 space-y-1 bg-[#FAF6EC] rounded-md mt-1 border border-[#E3DAC7] animate-spring-down">
@@ -259,7 +294,7 @@ export const Navbar: React.FC = () => {
                                                             key={sub.label}
                                                             href={sub.href}
                                                             onClick={() => setIsMobileOpen(false)}
-                                                            className="block py-2 px-3 text-xs text-piaud-slate hover:text-piaud-emerald font-medium rounded active:translate-x-1"
+                                                            className="block py-2 px-3 text-xs text-piaud-slate hover:text-[#0F4C3A] font-medium rounded active:translate-x-1"
                                                         >
                                                             {sub.label}
                                                         </Link>
@@ -272,7 +307,7 @@ export const Navbar: React.FC = () => {
                                             href={item.href}
                                             onClick={() => setIsMobileOpen(false)}
                                             className={`block py-2.5 px-3 text-sm font-semibold rounded-lg transition-all active:scale-[0.98] ${
-                                                active ? 'text-piaud-emerald bg-[#FAF6EC] font-bold shadow-sm' : 'text-piaud-slate hover:bg-[#FAF6EC]'
+                                                active ? 'text-[#0F4C3A] bg-[#FAF6EC] font-bold shadow-sm' : 'text-piaud-slate hover:bg-[#FAF6EC]'
                                             }`}
                                         >
                                             {item.label}
@@ -281,6 +316,19 @@ export const Navbar: React.FC = () => {
                                 </div>
                             );
                         })}
+
+                        {/* Mobile Drawer CTA Button */}
+                        <div className="pt-3">
+                            <a
+                                href={waLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full flex items-center justify-center gap-2 bg-[#0F4C3A] hover:bg-[#0A3427] text-white text-xs font-bold py-3 px-4 rounded-xl shadow-sm transition-colors"
+                            >
+                                <span>Konsultasi &amp; Pendaftaran PMB</span>
+                                <span>→</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
