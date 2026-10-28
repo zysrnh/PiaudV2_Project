@@ -148,10 +148,10 @@ export const Navbar: React.FC = () => {
                                     <div>
                                         <Link
                                             href={item.href}
-                                            className={`relative inline-flex items-center gap-1.5 px-3 py-2 rounded-md text-[13px] font-semibold transition-all duration-150 ${
+                                            className={`relative inline-flex items-center gap-1.5 px-3 py-2 text-[13px] font-semibold transition-colors duration-150 ${
                                                 active
-                                                    ? 'text-[#0F4C3A] font-bold bg-[#F2ECE0]'
-                                                    : 'text-piaud-slate hover:text-[#0F4C3A] hover:bg-[#F2ECE0]/70'
+                                                    ? 'text-[#0F4C3A] font-bold'
+                                                    : 'text-piaud-slate hover:text-[#0F4C3A]'
                                             }`}
                                         >
                                             <span>{item.label}</span>
@@ -165,7 +165,7 @@ export const Navbar: React.FC = () => {
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                                             </svg>
                                             {active && (
-                                                <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0F4C3A] rounded-full" />
+                                                <span className="absolute bottom-0 left-2.5 right-2.5 h-[2px] bg-[#0F4C3A]" />
                                             )}
                                         </Link>
 
@@ -185,15 +185,15 @@ export const Navbar: React.FC = () => {
                                 ) : (
                                     <Link
                                         href={item.href}
-                                        className={`relative inline-flex items-center px-3 py-2 rounded-md text-[13px] font-semibold transition-all duration-150 ${
+                                        className={`relative inline-flex items-center px-3 py-2 text-[13px] font-semibold transition-colors duration-150 ${
                                             active
-                                                ? 'text-[#0F4C3A] font-bold bg-[#F2ECE0]'
-                                                : 'text-piaud-slate hover:text-[#0F4C3A] hover:bg-[#F2ECE0]/70'
+                                                ? 'text-[#0F4C3A] font-bold'
+                                                : 'text-piaud-slate hover:text-[#0F4C3A]'
                                         }`}
                                     >
                                         <span>{item.label}</span>
                                         {active && (
-                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0F4C3A] rounded-full" />
+                                            <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#0F4C3A]" />
                                         )}
                                     </Link>
                                 )}
@@ -272,8 +272,8 @@ export const Navbar: React.FC = () => {
                                             <button
                                                 type="button"
                                                 onClick={() => toggleSubmenu(item.label)}
-                                                className={`w-full flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-lg transition-all active:scale-[0.98] ${
-                                                    active ? 'text-[#0F4C3A] bg-[#FAF6EC] font-bold shadow-sm' : 'text-piaud-slate hover:bg-[#FAF6EC]'
+                                                className={`w-full flex items-center justify-between py-2.5 px-3 text-sm font-semibold transition-colors ${
+                                                    active ? 'text-[#0F4C3A] font-bold' : 'text-piaud-slate hover:text-[#0F4C3A]'
                                                 }`}
                                             >
                                                 <span>{item.label}</span>
@@ -306,8 +306,8 @@ export const Navbar: React.FC = () => {
                                         <Link
                                             href={item.href}
                                             onClick={() => setIsMobileOpen(false)}
-                                            className={`block py-2.5 px-3 text-sm font-semibold rounded-lg transition-all active:scale-[0.98] ${
-                                                active ? 'text-[#0F4C3A] bg-[#FAF6EC] font-bold shadow-sm' : 'text-piaud-slate hover:bg-[#FAF6EC]'
+                                            className={`block py-2.5 px-3 text-sm font-semibold transition-colors ${
+                                                active ? 'text-[#0F4C3A] font-bold' : 'text-piaud-slate hover:text-[#0F4C3A]'
                                             }`}
                                         >
                                             {item.label}
