@@ -17,7 +17,7 @@ export default function Welcome() {
         return () => clearTimeout(timer);
     }, []);
 
-    // Bidirectional Scroll In/Out Observer for Component Animations
+    // Stable In-View Scroll Observer (Bold Entrance & Solid Visibility on Scroll Up)
     const [inViewSections, setInViewSections] = useState<Record<string, boolean>>({});
 
     useEffect(() => {
@@ -25,17 +25,12 @@ export default function Welcome() {
             (entries) => {
                 entries.forEach((entry) => {
                     const sectionId = entry.target.getAttribute('data-section');
-                    if (sectionId) {
-                        if (entry.isIntersecting) {
-                            setInViewSections((prev) => ({ ...prev, [sectionId]: true }));
-                        } else if (entry.boundingClientRect.top > 0) {
-                            // When user scrolls back up/away, reset state so scrolling down triggers animation again
-                            setInViewSections((prev) => ({ ...prev, [sectionId]: false }));
-                        }
+                    if (sectionId && entry.isIntersecting) {
+                        setInViewSections((prev) => ({ ...prev, [sectionId]: true }));
                     }
                 });
             },
-            { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+            { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
         );
 
         const observedElements = document.querySelectorAll('[data-section]');
@@ -66,7 +61,7 @@ export default function Welcome() {
                 <section className="bg-[#FAF6EC] border-b border-[#E3DAC7] overflow-hidden">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 md:py-18 lg:py-20">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-stretch">
-                            {/* Left Column (7 cols): Direct Misi & Content with Animated Mount Entrance */}
+                            {/* Left Column (7 cols): Bold Slide-Left Entrance on Mount */}
                             <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
                                 <div className="space-y-5 sm:space-y-6">
                                     <h1
@@ -85,7 +80,7 @@ export default function Welcome() {
                                         {siteConfig.hero.description}
                                     </p>
 
-                                    {/* Two CTAs with Animated Mount & Interactive Hover/Active Physics */}
+                                    {/* Two CTAs with Animated Mount & Tactile Hover Physics */}
                                     <div
                                         className={`pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 scroll-item stagger-2 ${
                                             isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
@@ -98,43 +93,43 @@ export default function Welcome() {
                                             className="group inline-flex items-center justify-center gap-2 neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-150 tactile-press"
                                         >
                                             <span>{siteConfig.hero.ctaPrimaryText}</span>
-                                            <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">→</span>
+                                            <span className="transform group-hover:translate-x-2 transition-transform duration-200">→</span>
                                         </a>
                                         <Link
                                             href="/akademik"
                                             className="group inline-flex items-center justify-center gap-2 neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-150 tactile-press"
                                         >
                                             <span>{siteConfig.hero.ctaSecondaryText}</span>
-                                            <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">→</span>
+                                            <span className="transform group-hover:translate-x-2 transition-transform duration-200">→</span>
                                         </Link>
                                     </div>
                                 </div>
 
-                                {/* Stats & Features Cards Row with Staggered Mount Spring */}
+                                {/* Stats & Features Cards Row with Interactive Hover & Stagger */}
                                 <div className="pt-4 grid grid-cols-3 gap-2.5 sm:gap-4 text-xs">
                                     <div
-                                        className={`neu-card neu-card-hover interactive-hover-lift rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default scroll-item stagger-1 ${
+                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group scroll-item stagger-1 ${
                                             isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
                                         }`}
                                     >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Sarjana (S.Pd.)</span>
-                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px]">Gelar Lulusan</span>
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Sarjana (S.Pd.)</span>
+                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Gelar Lulusan</span>
                                     </div>
                                     <div
-                                        className={`neu-card neu-card-hover interactive-hover-lift rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default scroll-item stagger-2 ${
+                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group scroll-item stagger-2 ${
                                             isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
                                         }`}
                                     >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm">144 SKS (8 Sem)</span>
-                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px]">Masa Studi</span>
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">144 SKS (8 Sem)</span>
+                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Masa Studi</span>
                                     </div>
                                     <div
-                                        className={`neu-card neu-card-hover interactive-hover-lift rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default scroll-item stagger-3 ${
+                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group scroll-item stagger-3 ${
                                             isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
                                         }`}
                                     >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Reguler &amp; Guru</span>
-                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px]">Kelas Kuliah</span>
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Reguler &amp; Guru</span>
+                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Kelas Kuliah</span>
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +137,7 @@ export default function Welcome() {
                             {/* Right Column (5 cols): Photo Frame with Slide-Right Entrance & Zoom Hover */}
                             <div className="lg:col-span-5 h-full flex flex-col">
                                 <figure
-                                    className={`relative neu-card rounded-2xl p-3 sm:p-3.5 h-full flex flex-col justify-center group overflow-hidden scroll-item ${
+                                    className={`relative neu-card card-interactive rounded-2xl p-3 sm:p-3.5 h-full flex flex-col justify-center group overflow-hidden scroll-item ${
                                         isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-right'
                                     }`}
                                 >
@@ -161,7 +156,7 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 4. SAMBUTAN KAPRODI (Warm Cream Alternating Section with Bidirectional Scroll) */}
+                {/* 4. SAMBUTAN KAPRODI (Warm Cream Alternating Section) */}
                 <section
                     id="profil"
                     data-section="kaprodi"
@@ -169,13 +164,13 @@ export default function Welcome() {
                 >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
-                            {/* Kaprodi Photo & Profile with Slide-Left on Scroll */}
+                            {/* Kaprodi Photo & Profile with Bold Slide-Left */}
                             <div
                                 className={`lg:col-span-4 space-y-4 scroll-item ${
                                     inViewSections.kaprodi ? 'scroll-item-visible' : 'scroll-item-hidden-left'
                                 }`}
                             >
-                                <figure className="neu-card neu-card-hover interactive-hover-lift rounded-2xl p-4 group">
+                                <figure className="neu-card card-interactive rounded-2xl p-4 group">
                                     <div className="overflow-hidden rounded-xl">
                                         <Photo
                                             src={siteConfig.kaprodi.photoUrl}
@@ -185,7 +180,7 @@ export default function Welcome() {
                                         />
                                     </div>
                                     <figcaption className="mt-3.5 space-y-1 px-1">
-                                        <p className="font-serif font-bold text-base sm:text-lg text-piaud-slate">
+                                        <p className="font-serif font-bold text-base sm:text-lg text-piaud-slate group-hover:text-[#0F4C3A] transition-colors">
                                             {siteConfig.kaprodi.name}
                                         </p>
                                         <p className="text-xs text-[#C2613A] font-bold">
@@ -198,7 +193,7 @@ export default function Welcome() {
                                 </figure>
                             </div>
 
-                            {/* Editorial Content with Slide-Right on Scroll */}
+                            {/* Editorial Content with Bold Slide-Right */}
                             <div
                                 className={`lg:col-span-8 space-y-5 scroll-item stagger-1 ${
                                     inViewSections.kaprodi ? 'scroll-item-visible' : 'scroll-item-hidden-right'
@@ -232,7 +227,7 @@ export default function Welcome() {
                                         className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors shrink-0 tactile-press"
                                     >
                                         <span>Selengkapnya di Profil Prodi</span>
-                                        <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">&rarr;</span>
+                                        <span className="transform group-hover:translate-x-2 transition-transform duration-200">&rarr;</span>
                                     </Link>
                                 </div>
                             </div>
@@ -264,12 +259,12 @@ export default function Welcome() {
                             {siteConfig.pillars.map((pillar, idx) => (
                                 <div
                                     key={pillar.number}
-                                    className={`neu-card neu-card-hover interactive-hover-lift rounded-2xl p-6 flex flex-col justify-between group cursor-default scroll-item stagger-${idx + 1} ${
+                                    className={`neu-card card-interactive rounded-2xl p-6 flex flex-col justify-between group scroll-item stagger-${idx + 1} ${
                                         inViewSections.pillars ? 'scroll-item-visible' : 'scroll-item-hidden-up'
                                     }`}
                                 >
                                     <div className="space-y-3.5">
-                                        <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-200">
+                                        <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-115 group-hover:rotate-6 transition-transform duration-250">
                                             {pillar.number}
                                         </div>
                                         <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate group-hover:text-[#0F4C3A] transition-colors">
@@ -284,7 +279,7 @@ export default function Welcome() {
                                         <span className="text-xs font-bold text-piaud-slate block">Fokus Capaian:</span>
                                         <ul className="space-y-1.5 text-xs text-piaud-slate-muted">
                                             {pillar.deliverables.map((item, dIdx) => (
-                                                <li key={dIdx} className="flex items-center gap-2 transform group-hover:translate-x-1.5 transition-transform duration-150">
+                                                <li key={dIdx} className="flex items-center gap-2 transform group-hover:translate-x-2 transition-transform duration-150">
                                                     <span className="w-1.5 h-1.5 bg-[#C2613A] rounded-full shrink-0"></span>
                                                     <span>{item}</span>
                                                 </li>
@@ -333,7 +328,7 @@ export default function Welcome() {
                                 className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto tactile-press"
                             >
                                 <span>Lihat Semua Dosen</span>
-                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">&rarr;</span>
+                                <span className="transform group-hover:translate-x-2 transition-transform duration-200">&rarr;</span>
                             </Link>
                         </div>
 
@@ -342,7 +337,7 @@ export default function Welcome() {
                             {siteConfig.lecturers.map((lecturer, index) => (
                                 <article
                                     key={index}
-                                    className={`neu-card neu-card-hover interactive-hover-lift rounded-2xl p-4 group cursor-default scroll-item stagger-${index + 1} ${
+                                    className={`neu-card card-interactive rounded-2xl p-4 group scroll-item stagger-${index + 1} ${
                                         inViewSections.lecturers ? 'scroll-item-visible' : 'scroll-item-hidden-up'
                                     }`}
                                 >
@@ -356,7 +351,7 @@ export default function Welcome() {
                                     </div>
 
                                     <div className="mt-3.5 space-y-1.5">
-                                        <span className="text-[11px] font-bold tracking-wider text-[#C2613A] uppercase block">
+                                        <span className="text-[11px] font-bold tracking-wider text-[#C2613A] uppercase block transform group-hover:translate-x-1 transition-transform">
                                             {lecturer.role}
                                         </span>
                                         <h3 className="font-serif font-bold text-base text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
@@ -366,7 +361,7 @@ export default function Welcome() {
                                             <p className="font-mono text-[11px] text-slate-500">
                                                 NIP: {lecturer.nip}
                                             </p>
-                                            <p className="text-piaud-slate font-semibold text-xs">
+                                            <p className="text-piaud-slate font-semibold text-xs group-hover:text-[#0F4C3A] transition-colors">
                                                 {lecturer.expertise}
                                             </p>
                                         </div>
@@ -399,7 +394,7 @@ export default function Welcome() {
                                 className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto tactile-press"
                             >
                                 <span>Buka Galeri Lengkap</span>
-                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">&rarr;</span>
+                                <span className="transform group-hover:translate-x-2 transition-transform duration-200">&rarr;</span>
                             </Link>
                         </div>
 
@@ -407,7 +402,7 @@ export default function Welcome() {
                             {siteConfig.gallery.map((item, index) => (
                                 <figure
                                     key={index}
-                                    className={`neu-card neu-card-hover interactive-hover-lift rounded-2xl p-3.5 group overflow-hidden cursor-default scroll-item stagger-${index + 1} ${
+                                    className={`neu-card card-interactive rounded-2xl p-3.5 group overflow-hidden scroll-item stagger-${index + 1} ${
                                         inViewSections.gallery ? 'scroll-item-visible' : 'scroll-item-hidden-up'
                                     }`}
                                 >
@@ -420,7 +415,7 @@ export default function Welcome() {
                                         />
                                     </div>
                                     <figcaption className="mt-2.5 px-1 space-y-1">
-                                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#C2613A] block">
+                                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#C2613A] block transform group-hover:translate-x-1 transition-transform">
                                             {item.category}
                                         </span>
                                         <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug group-hover:text-[#0F4C3A] transition-colors">
@@ -455,14 +450,14 @@ export default function Welcome() {
                                 className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto tactile-press"
                             >
                                 <span>Lihat Semua Artikel</span>
-                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">&rarr;</span>
+                                <span className="transform group-hover:translate-x-2 transition-transform duration-200">&rarr;</span>
                             </Link>
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                             {/* Featured Article Card */}
                             <article
-                                className={`lg:col-span-6 neu-card neu-card-hover interactive-hover-lift rounded-2xl p-5 flex flex-col justify-between group h-full cursor-default scroll-item ${
+                                className={`lg:col-span-6 neu-card card-interactive rounded-2xl p-5 flex flex-col justify-between group h-full scroll-item ${
                                     inViewSections.articles ? 'scroll-item-visible' : 'scroll-item-hidden-left'
                                 }`}
                             >
@@ -477,7 +472,7 @@ export default function Welcome() {
                                     </div>
                                     <div className="space-y-2 px-1">
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted flex-wrap">
-                                            <span className="bg-[#0F4C3A] text-white px-2.5 py-0.5 rounded-md font-bold text-[11px]">
+                                            <span className="bg-[#0F4C3A] text-white px-2.5 py-0.5 rounded-md font-bold text-[11px] group-hover:bg-[#0A3427] transition-colors">
                                                 {siteConfig.articles.featured.category}
                                             </span>
                                             <span>{siteConfig.articles.featured.publishedAt}</span>
@@ -499,12 +494,12 @@ export default function Welcome() {
                                 {siteConfig.articles.list.map((article, idx) => (
                                     <article
                                         key={article.id}
-                                        className={`neu-card neu-card-hover interactive-hover-lift rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group cursor-default scroll-item stagger-${idx + 1} ${
+                                        className={`neu-card card-interactive rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group scroll-item stagger-${idx + 1} ${
                                             inViewSections.articles ? 'scroll-item-visible' : 'scroll-item-hidden-right'
                                         }`}
                                     >
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
-                                            <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7]">
+                                            <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7] transform group-hover:translate-x-1 transition-transform">
                                                 {article.category}
                                             </span>
                                             <span>&bull;</span>

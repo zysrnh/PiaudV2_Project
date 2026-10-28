@@ -78,131 +78,139 @@ h2 {
 }
 
 /* ========================================================
-   NEUMORPHISM (SOLID SOFT UI) TOKENS FOR PIAUD
+   CLEAN CRISP SOFT UI TOKENS (ZERO WHITE AURA / ZERO GLOW)
    ======================================================== */
 .neu-card {
     background-color: #FAF6EC;
     border: 1px solid #E3DAC7;
-    box-shadow: 6px 6px 14px #d8d1c4, -6px -6px 14px #ffffff;
-    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+    box-shadow: 0 4px 16px -2px rgba(31, 41, 51, 0.08), 0 2px 6px -1px rgba(31, 41, 51, 0.04);
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.2s ease;
     will-change: transform;
 }
 
 .neu-card-hover:hover {
-    transform: translateY(-5px) scale(1.008);
-    box-shadow: 10px 10px 22px #cec7ba, -10px -10px 22px #ffffff;
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 18px 36px -4px rgba(15, 76, 58, 0.13), 0 8px 16px -2px rgba(31, 41, 51, 0.06);
+    border-color: rgba(15, 76, 58, 0.35);
 }
 
 .neu-card-hover:active {
-    transform: translateY(1px) scale(0.99);
+    transform: translateY(1.5px) scale(0.99);
 }
 
 .neu-btn {
     background-color: #FAF6EC;
     border: 1px solid #E3DAC7;
-    box-shadow: 4px 4px 10px #d8d1c4, -4px -4px 10px #ffffff;
-    transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.16s ease, background-color 0.16s ease;
+    box-shadow: 0 3px 8px -1px rgba(31, 41, 51, 0.08);
+    transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
     will-change: transform;
+    cursor: pointer;
 }
 
 .neu-btn:hover {
-    box-shadow: 6px 6px 14px #cec7ba, -6px -6px 14px #ffffff;
-    transform: translateY(-2px);
+    box-shadow: 0 8px 18px -2px rgba(15, 76, 58, 0.15);
+    transform: translateY(-3px);
     background-color: #F2ECE0;
+    border-color: #0F4C3A;
 }
 
 .neu-btn:active, .neu-btn.active {
-    box-shadow: inset 3px 3px 6px #d8d1c4, inset -3px -3px 6px #ffffff;
-    transform: translateY(1.5px) scale(0.97);
+    box-shadow: inset 0 2px 4px rgba(31, 41, 51, 0.12);
+    transform: translateY(2px) scale(0.96);
 }
 
 .neu-btn-primary {
     background-color: #0F4C3A;
     color: #FFFFFF;
     border: 1px solid #0A3427;
-    box-shadow: 5px 5px 12px rgba(10, 52, 39, 0.45), -3px -3px 8px rgba(255, 255, 255, 0.6);
-    transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.16s ease, background-color 0.16s ease;
+    box-shadow: 0 6px 18px -2px rgba(10, 52, 39, 0.35);
+    transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, background-color 0.18s ease;
     will-change: transform;
+    cursor: pointer;
 }
 
 .neu-btn-primary:hover {
     background-color: #0A3427;
-    box-shadow: 7px 7px 16px rgba(10, 52, 39, 0.55), -4px -4px 10px rgba(255, 255, 255, 0.8);
-    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -2px rgba(10, 52, 39, 0.45);
+    transform: translateY(-3px);
 }
 
 .neu-btn-primary:active {
-    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.5), inset -2px -2px 4px rgba(255, 255, 255, 0.15);
-    transform: translateY(1.5px) scale(0.97);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4);
+    transform: translateY(2px) scale(0.96);
 }
 
 .neu-inset {
     background-color: #F2ECE0;
-    box-shadow: inset 3px 3px 7px #d8d1c4, inset -3px -3px 7px #ffffff;
+    box-shadow: inset 0 2px 6px rgba(31, 41, 51, 0.08);
     border: 1px solid #E3DAC7;
 }
 
 .neu-input {
     background-color: #FAF6EC;
     border: 1px solid #E3DAC7;
-    box-shadow: inset 2px 2px 5px #d8d1c4, inset -2px -2px 5px #ffffff;
+    box-shadow: inset 0 2px 4px rgba(31, 41, 51, 0.06);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .neu-input:focus {
     outline: none;
     border-color: #0F4C3A;
-    box-shadow: inset 2px 2px 5px #cec7ba, inset -2px -2px 5px #ffffff, 0 0 0 2px rgba(15, 76, 58, 0.2);
+    box-shadow: inset 0 2px 4px rgba(31, 41, 51, 0.08), 0 0 0 2px rgba(15, 76, 58, 0.2);
 }
 
 /* ========================================================
-   PHYSICAL MOTION, SCROLL REVEALS & COMPONENT INTERACTIONS
-   (Zero Opacity/Fade — Pure Transforms & Spring Easing)
+   PHYSICAL MOTION, BOLD SCROLL REVEALS & COMPONENT INTERACTIONS
+   (Bold 60px Distance, Smooth Spring Easing, Zero Fade)
    ======================================================== */
 .tactile-press {
-    transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.14s ease;
+    transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.14s ease;
     will-change: transform;
+    cursor: pointer;
 }
 .tactile-press:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 .tactile-press:active {
-    transform: translateY(2px) scale(0.97);
+    transform: translateY(2px) scale(0.96);
 }
 
-/* Scroll Motion Classes (Transform Only) */
+/* Bold Scroll Motion Classes */
 .scroll-item {
-    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.25s ease;
     will-change: transform;
 }
 .scroll-item-hidden-up {
-    transform: translateY(40px) scale(0.97);
+    transform: translateY(60px) scale(0.94);
 }
 .scroll-item-hidden-left {
-    transform: translateX(-40px);
+    transform: translateX(-60px);
 }
 .scroll-item-hidden-right {
-    transform: translateX(40px);
+    transform: translateX(60px);
 }
 .scroll-item-visible {
     transform: translateY(0) translateX(0) scale(1) !important;
 }
 
-/* Interactive Card Lift */
-.interactive-hover-lift {
-    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+/* Rich Interactive Card Hover (Card Lift + Border Highlight + Cursor Pointer) */
+.card-interactive {
+    cursor: pointer;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.22s ease;
     will-change: transform;
 }
-.interactive-hover-lift:hover {
-    transform: translateY(-6px) scale(1.01);
+.card-interactive:hover {
+    transform: translateY(-8px) scale(1.01);
+    border-color: rgba(15, 76, 58, 0.4) !important;
+    box-shadow: 0 18px 36px -4px rgba(15, 76, 58, 0.12), 0 8px 16px -2px rgba(31, 41, 51, 0.06) !important;
 }
-.interactive-hover-lift:active {
+.card-interactive:active {
     transform: translateY(2px) scale(0.98);
 }
 
-/* Photo Hover Zoom */
+/* Photo Hover Zoom with Crisp Frame */
 .img-hover-zoom {
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
 }
 .group:hover .img-hover-zoom {
@@ -215,7 +223,7 @@ h2 {
         transform: scale(1) translateY(0);
     }
     50% {
-        transform: scale(1.08) translateY(-3px);
+        transform: scale(1.08) translateY(-4px);
     }
 }
 .wa-spring-pulse {
@@ -223,9 +231,9 @@ h2 {
 }
 
 /* Stagger Delays for Grid Elements */
-.stagger-1 { transition-delay: 50ms; }
-.stagger-2 { transition-delay: 110ms; }
-.stagger-3 { transition-delay: 170ms; }
-.stagger-4 { transition-delay: 230ms; }
-.stagger-5 { transition-delay: 290ms; }
-.stagger-6 { transition-delay: 350ms; }
+.stagger-1 { transition-delay: 60ms; }
+.stagger-2 { transition-delay: 130ms; }
+.stagger-3 { transition-delay: 200ms; }
+.stagger-4 { transition-delay: 270ms; }
+.stagger-5 { transition-delay: 340ms; }
+.stagger-6 { transition-delay: 410ms; }
