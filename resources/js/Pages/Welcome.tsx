@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { Navbar } from '@/Components/Public/Navbar';
 import { Footer } from '@/Components/Public/Footer';
@@ -10,24 +10,32 @@ import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 export default function Welcome() {
     const waPmbLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
 
-    // Senior Front-End Scroll Reveal Observer (Pure Physical Transforms - Zero Fade)
-    const [revealedSections, setRevealedSections] = useState<Record<string, boolean>>({
-        hero: true,
-    });
+    // Mount state for initial page load animation
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => {
+        const timer = setTimeout(() => setIsMounted(true), 60);
+        return () => clearTimeout(timer);
+    }, []);
+
+    // Bidirectional Scroll In/Out Observer for Component Animations
+    const [inViewSections, setInViewSections] = useState<Record<string, boolean>>({});
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const sectionId = entry.target.getAttribute('data-section');
-                        if (sectionId) {
-                            setRevealedSections((prev) => ({ ...prev, [sectionId]: true }));
+                    const sectionId = entry.target.getAttribute('data-section');
+                    if (sectionId) {
+                        if (entry.isIntersecting) {
+                            setInViewSections((prev) => ({ ...prev, [sectionId]: true }));
+                        } else if (entry.boundingClientRect.top > 0) {
+                            // When user scrolls back up/away, reset state so scrolling down triggers animation again
+                            setInViewSections((prev) => ({ ...prev, [sectionId]: false }));
                         }
                     }
                 });
             },
-            { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+            { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
         );
 
         const observedElements = document.querySelectorAll('[data-section]');
@@ -53,91 +61,129 @@ export default function Welcome() {
             {/* Sections 1 & 2: Top Bar & Navigation */}
             <Navbar />
 
-            <main className="flex-1 w-full animate-spring-up">
+            <main className="flex-1 w-full">
                 {/* 3. HERO SECTION (Warm Ivory & Structured Proportional Layout) */}
-                <section data-section="hero" className="bg-[#FAF6EC] border-b border-[#E3DAC7]">
+                <section className="bg-[#FAF6EC] border-b border-[#E3DAC7] overflow-hidden">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 md:py-18 lg:py-20">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-stretch">
-                            {/* Left Column (7 cols): Direct Misi & Content */}
+                            {/* Left Column (7 cols): Direct Misi & Content with Animated Mount Entrance */}
                             <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
                                 <div className="space-y-5 sm:space-y-6">
-                                    <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-tight">
+                                    <h1
+                                        className={`font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-tight scroll-item ${
+                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-left'
+                                        }`}
+                                    >
                                         {siteConfig.hero.heading}
                                     </h1>
 
-                                    <p className="text-sm sm:text-base md:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch]">
+                                    <p
+                                        className={`text-sm sm:text-base md:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch] scroll-item stagger-1 ${
+                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-left'
+                                        }`}
+                                    >
                                         {siteConfig.hero.description}
                                     </p>
 
-                                    {/* Two CTAs (Solid Crisp Buttons with Tactile Physics) */}
-                                    <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+                                    {/* Two CTAs with Animated Mount & Interactive Hover/Active Physics */}
+                                    <div
+                                        className={`pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 scroll-item stagger-2 ${
+                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
+                                        }`}
+                                    >
                                         <a
                                             href={waPmbLink}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center justify-center neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-150 tactile-press"
+                                            className="group inline-flex items-center justify-center gap-2 neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-150 tactile-press"
                                         >
-                                            {siteConfig.hero.ctaPrimaryText}
+                                            <span>{siteConfig.hero.ctaPrimaryText}</span>
+                                            <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">→</span>
                                         </a>
                                         <Link
                                             href="/akademik"
-                                            className="inline-flex items-center justify-center neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-150 tactile-press"
+                                            className="group inline-flex items-center justify-center gap-2 neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-150 tactile-press"
                                         >
-                                            {siteConfig.hero.ctaSecondaryText}
+                                            <span>{siteConfig.hero.ctaSecondaryText}</span>
+                                            <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">→</span>
                                         </Link>
                                     </div>
                                 </div>
 
-                                {/* Stats & Features Cards Row (Interactive Spring Cards) */}
+                                {/* Stats & Features Cards Row with Staggered Mount Spring */}
                                 <div className="pt-4 grid grid-cols-3 gap-2.5 sm:gap-4 text-xs">
-                                    <div className="neu-card neu-card-hover rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default">
+                                    <div
+                                        className={`neu-card neu-card-hover interactive-hover-lift rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default scroll-item stagger-1 ${
+                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
+                                        }`}
+                                    >
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Sarjana (S.Pd.)</span>
                                         <span className="text-piaud-slate-muted text-[10px] sm:text-[11px]">Gelar Lulusan</span>
                                     </div>
-                                    <div className="neu-card neu-card-hover rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default">
+                                    <div
+                                        className={`neu-card neu-card-hover interactive-hover-lift rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default scroll-item stagger-2 ${
+                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
+                                        }`}
+                                    >
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">144 SKS (8 Sem)</span>
                                         <span className="text-piaud-slate-muted text-[10px] sm:text-[11px]">Masa Studi</span>
                                     </div>
-                                    <div className="neu-card neu-card-hover rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default">
+                                    <div
+                                        className={`neu-card neu-card-hover interactive-hover-lift rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default scroll-item stagger-3 ${
+                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
+                                        }`}
+                                    >
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Reguler &amp; Guru</span>
                                         <span className="text-piaud-slate-muted text-[10px] sm:text-[11px]">Kelas Kuliah</span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Right Column (5 cols): Crisp Rounded Photo Frame */}
+                            {/* Right Column (5 cols): Photo Frame with Slide-Right Entrance & Zoom Hover */}
                             <div className="lg:col-span-5 h-full flex flex-col">
-                                <figure className="relative neu-card rounded-2xl p-3 sm:p-3.5 transition-all duration-200 h-full flex flex-col justify-center group overflow-hidden">
-                                    <Photo
-                                        src={siteConfig.hero.photoUrl}
-                                        alt={siteConfig.hero.photoAlt}
-                                        priority={true}
-                                        aspectRatio="auto"
-                                        className="w-full h-full min-h-[280px] sm:min-h-[340px] lg:min-h-full object-cover rounded-xl shadow-soft group-hover:scale-103 transition-transform duration-300"
-                                    />
+                                <figure
+                                    className={`relative neu-card rounded-2xl p-3 sm:p-3.5 h-full flex flex-col justify-center group overflow-hidden scroll-item ${
+                                        isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-right'
+                                    }`}
+                                >
+                                    <div className="w-full h-full min-h-[280px] sm:min-h-[340px] lg:min-h-full overflow-hidden rounded-xl">
+                                        <Photo
+                                            src={siteConfig.hero.photoUrl}
+                                            alt={siteConfig.hero.photoAlt}
+                                            priority={true}
+                                            aspectRatio="auto"
+                                            className="w-full h-full object-cover rounded-xl shadow-soft img-hover-zoom"
+                                        />
+                                    </div>
                                 </figure>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* 4. SAMBUTAN KAPRODI (Warm Cream Alternating Section) */}
+                {/* 4. SAMBUTAN KAPRODI (Warm Cream Alternating Section with Bidirectional Scroll) */}
                 <section
                     id="profil"
                     data-section="kaprodi"
-                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20"
+                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20 overflow-hidden"
                 >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center ${revealedSections.kaprodi ? 'spring-reveal' : ''}`}>
-                            {/* Kaprodi Photo & Profile */}
-                            <div className="lg:col-span-4 space-y-4">
-                                <figure className="neu-card rounded-2xl p-4 group">
-                                    <Photo
-                                        src={siteConfig.kaprodi.photoUrl}
-                                        alt={`Foto ${siteConfig.kaprodi.name}`}
-                                        aspectRatio="3/4"
-                                        className="w-full h-auto rounded-xl shadow-soft group-hover:scale-102 transition-transform duration-200"
-                                    />
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
+                            {/* Kaprodi Photo & Profile with Slide-Left on Scroll */}
+                            <div
+                                className={`lg:col-span-4 space-y-4 scroll-item ${
+                                    inViewSections.kaprodi ? 'scroll-item-visible' : 'scroll-item-hidden-left'
+                                }`}
+                            >
+                                <figure className="neu-card neu-card-hover interactive-hover-lift rounded-2xl p-4 group">
+                                    <div className="overflow-hidden rounded-xl">
+                                        <Photo
+                                            src={siteConfig.kaprodi.photoUrl}
+                                            alt={`Foto ${siteConfig.kaprodi.name}`}
+                                            aspectRatio="3/4"
+                                            className="w-full h-auto rounded-xl shadow-soft img-hover-zoom"
+                                        />
+                                    </div>
                                     <figcaption className="mt-3.5 space-y-1 px-1">
                                         <p className="font-serif font-bold text-base sm:text-lg text-piaud-slate">
                                             {siteConfig.kaprodi.name}
@@ -152,8 +198,12 @@ export default function Welcome() {
                                 </figure>
                             </div>
 
-                            {/* Editorial Content */}
-                            <div className="lg:col-span-8 space-y-5">
+                            {/* Editorial Content with Slide-Right on Scroll */}
+                            <div
+                                className={`lg:col-span-8 space-y-5 scroll-item stagger-1 ${
+                                    inViewSections.kaprodi ? 'scroll-item-visible' : 'scroll-item-hidden-right'
+                                }`}
+                            >
                                 <div>
                                     <blockquote className="font-serif text-xl sm:text-2xl text-piaud-slate font-bold leading-relaxed border-l-4 border-[#C2613A] pl-4">
                                         &ldquo;{siteConfig.kaprodi.pullQuote}&rdquo;
@@ -179,10 +229,10 @@ export default function Welcome() {
                                     </div>
                                     <Link
                                         href="/profil"
-                                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transform hover:translate-x-1.5 active:translate-x-0 transition-transform shrink-0"
+                                        className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors shrink-0 tactile-press"
                                     >
                                         <span>Selengkapnya di Profil Prodi</span>
-                                        <span>&rarr;</span>
+                                        <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">&rarr;</span>
                                     </Link>
                                 </div>
                             </div>
@@ -190,14 +240,18 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 5. PILAR KEUNGGULAN (Clean Ivory Section with Crisp Cards) */}
+                {/* 5. PILAR KEUNGGULAN (Clean Ivory Section with Staggered Scroll Cards) */}
                 <section
                     id="kurikulum"
                     data-section="pillars"
-                    className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20"
+                    className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20 overflow-hidden"
                 >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+                        <div
+                            className={`text-center max-w-2xl mx-auto mb-10 space-y-2 scroll-item ${
+                                inViewSections.pillars ? 'scroll-item-visible' : 'scroll-item-hidden-up'
+                            }`}
+                        >
                             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate leading-tight">
                                 Tiga Pilar Pendidikan Holistik Calon Guru AUD
                             </h2>
@@ -210,8 +264,8 @@ export default function Welcome() {
                             {siteConfig.pillars.map((pillar, idx) => (
                                 <div
                                     key={pillar.number}
-                                    className={`neu-card neu-card-hover rounded-2xl p-6 flex flex-col justify-between group cursor-default ${
-                                        revealedSections.pillars ? `spring-reveal stagger-${idx + 1}` : ''
+                                    className={`neu-card neu-card-hover interactive-hover-lift rounded-2xl p-6 flex flex-col justify-between group cursor-default scroll-item stagger-${idx + 1} ${
+                                        inViewSections.pillars ? 'scroll-item-visible' : 'scroll-item-hidden-up'
                                     }`}
                                 >
                                     <div className="space-y-3.5">
@@ -230,7 +284,7 @@ export default function Welcome() {
                                         <span className="text-xs font-bold text-piaud-slate block">Fokus Capaian:</span>
                                         <ul className="space-y-1.5 text-xs text-piaud-slate-muted">
                                             {pillar.deliverables.map((item, dIdx) => (
-                                                <li key={dIdx} className="flex items-center gap-2 transform group-hover:translate-x-1 transition-transform duration-150">
+                                                <li key={dIdx} className="flex items-center gap-2 transform group-hover:translate-x-1.5 transition-transform duration-150">
                                                     <span className="w-1.5 h-1.5 bg-[#C2613A] rounded-full shrink-0"></span>
                                                     <span>{item}</span>
                                                 </li>
@@ -241,26 +295,34 @@ export default function Welcome() {
                             ))}
                         </div>
 
-                        <div className="mt-8 text-center">
+                        <div
+                            className={`mt-8 text-center scroll-item stagger-4 ${
+                                inViewSections.pillars ? 'scroll-item-visible' : 'scroll-item-hidden-up'
+                            }`}
+                        >
                             <Link
                                 href="/akademik"
-                                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F4C3A] hover:text-[#0A3427] neu-btn px-6 py-3.5 rounded-xl transition-all tactile-press"
+                                className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F4C3A] hover:text-[#0A3427] neu-btn px-6 py-3.5 rounded-xl transition-all tactile-press"
                             >
                                 <span>Lihat Struktur Kurikulum &amp; Sebaran Mata Kuliah</span>
-                                <span className="transform group-hover:translate-x-1 transition-transform">&rarr;</span>
+                                <span className="transform group-hover:translate-x-2 transition-transform duration-200">&rarr;</span>
                             </Link>
                         </div>
                     </div>
                 </section>
 
-                {/* 6. DOSEN & TENAGA PENGAJAR (Warm Cream Grid) */}
+                {/* 6. DOSEN & TENAGA PENGAJAR (Warm Cream Grid with Staggered Scroll Cards) */}
                 <section
                     id="dosen"
                     data-section="lecturers"
-                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20"
+                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20 overflow-hidden"
                 >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7]">
+                        <div
+                            className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item ${
+                                inViewSections.lecturers ? 'scroll-item-visible' : 'scroll-item-hidden-left'
+                            }`}
+                        >
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Dosen Pengampu &amp; Pakar Tumbuh Kembang
@@ -268,20 +330,20 @@ export default function Welcome() {
                             </div>
                             <Link
                                 href="/dosen"
-                                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transform hover:translate-x-1.5 active:translate-x-0 transition-transform self-start md:self-auto"
+                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto tactile-press"
                             >
                                 <span>Lihat Semua Dosen</span>
-                                <span>&rarr;</span>
+                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">&rarr;</span>
                             </Link>
                         </div>
 
-                        {/* Crisp Responsive Cards Grid with Spring Dynamics */}
+                        {/* Crisp Responsive Cards Grid with Staggered Motion */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.lecturers.map((lecturer, index) => (
                                 <article
                                     key={index}
-                                    className={`neu-card neu-card-hover rounded-2xl p-4 group cursor-default ${
-                                        revealedSections.lecturers ? `spring-reveal stagger-${index + 1}` : ''
+                                    className={`neu-card neu-card-hover interactive-hover-lift rounded-2xl p-4 group cursor-default scroll-item stagger-${index + 1} ${
+                                        inViewSections.lecturers ? 'scroll-item-visible' : 'scroll-item-hidden-up'
                                     }`}
                                 >
                                     <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
@@ -289,7 +351,7 @@ export default function Welcome() {
                                             src={lecturer.photoUrl}
                                             alt={`Foto ${lecturer.name}`}
                                             aspectRatio="1/1"
-                                            className="w-full h-auto rounded-xl shadow-soft group-hover:scale-106 transition-transform duration-300"
+                                            className="w-full h-auto rounded-xl shadow-soft img-hover-zoom"
                                         />
                                     </div>
 
@@ -315,14 +377,18 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* GALERI DOKUMENTASI (Warm Ivory Grid) */}
+                {/* GALERI DOKUMENTASI (Warm Ivory Grid with Staggered Scroll Motion) */}
                 <section
                     id="galeri"
                     data-section="gallery"
-                    className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20"
+                    className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20 overflow-hidden"
                 >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7]">
+                        <div
+                            className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item ${
+                                inViewSections.gallery ? 'scroll-item-visible' : 'scroll-item-hidden-left'
+                            }`}
+                        >
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Galeri Praktikum &amp; Observasi Lapangan
@@ -330,10 +396,10 @@ export default function Welcome() {
                             </div>
                             <Link
                                 href="/galeri"
-                                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transform hover:translate-x-1.5 active:translate-x-0 transition-transform self-start md:self-auto"
+                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto tactile-press"
                             >
                                 <span>Buka Galeri Lengkap</span>
-                                <span>&rarr;</span>
+                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">&rarr;</span>
                             </Link>
                         </div>
 
@@ -341,8 +407,8 @@ export default function Welcome() {
                             {siteConfig.gallery.map((item, index) => (
                                 <figure
                                     key={index}
-                                    className={`neu-card neu-card-hover rounded-2xl p-3.5 group overflow-hidden cursor-default ${
-                                        revealedSections.gallery ? `spring-reveal stagger-${index + 1}` : ''
+                                    className={`neu-card neu-card-hover interactive-hover-lift rounded-2xl p-3.5 group overflow-hidden cursor-default scroll-item stagger-${index + 1} ${
+                                        inViewSections.gallery ? 'scroll-item-visible' : 'scroll-item-hidden-up'
                                     }`}
                                 >
                                     <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
@@ -350,7 +416,7 @@ export default function Welcome() {
                                             src={item.photoUrl}
                                             alt={item.title}
                                             aspectRatio="4/3"
-                                            className="w-full h-auto rounded-xl shadow-soft group-hover:scale-106 transition-transform duration-300"
+                                            className="w-full h-auto rounded-xl shadow-soft img-hover-zoom"
                                         />
                                     </div>
                                     <figcaption className="mt-2.5 px-1 space-y-1">
@@ -367,14 +433,18 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 7. ARTIKEL PARENTING ISLAMI (Warm Cream Alternating Section) */}
+                {/* 7. ARTIKEL PARENTING ISLAMI (Warm Cream Alternating Section with Staggered Scroll Motion) */}
                 <section
                     id="artikel"
                     data-section="articles"
-                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20"
+                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20 overflow-hidden"
                 >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7]">
+                        <div
+                            className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item ${
+                                inViewSections.articles ? 'scroll-item-visible' : 'scroll-item-hidden-left'
+                            }`}
+                        >
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Artikel Parenting Islami &amp; Khazanah AUD
@@ -382,23 +452,27 @@ export default function Welcome() {
                             </div>
                             <Link
                                 href="/artikel"
-                                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transform hover:translate-x-1.5 active:translate-x-0 transition-transform self-start md:self-auto"
+                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto tactile-press"
                             >
                                 <span>Lihat Semua Artikel</span>
-                                <span>&rarr;</span>
+                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">&rarr;</span>
                             </Link>
                         </div>
 
-                        <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch ${revealedSections.articles ? 'spring-reveal' : ''}`}>
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                             {/* Featured Article Card */}
-                            <article className="lg:col-span-6 neu-card neu-card-hover rounded-2xl p-5 flex flex-col justify-between group h-full cursor-default">
+                            <article
+                                className={`lg:col-span-6 neu-card neu-card-hover interactive-hover-lift rounded-2xl p-5 flex flex-col justify-between group h-full cursor-default scroll-item ${
+                                    inViewSections.articles ? 'scroll-item-visible' : 'scroll-item-hidden-left'
+                                }`}
+                            >
                                 <div className="space-y-3.5">
                                     <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
                                         <Photo
                                             src={siteConfig.articles.featured.photoUrl}
                                             alt={siteConfig.articles.featured.title}
                                             aspectRatio="16/9"
-                                            className="w-full h-auto rounded-xl shadow-soft group-hover:scale-104 transition-transform duration-300"
+                                            className="w-full h-auto rounded-xl shadow-soft img-hover-zoom"
                                         />
                                     </div>
                                     <div className="space-y-2 px-1">
@@ -425,8 +499,8 @@ export default function Welcome() {
                                 {siteConfig.articles.list.map((article, idx) => (
                                     <article
                                         key={article.id}
-                                        className={`neu-card neu-card-hover rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group cursor-default ${
-                                            revealedSections.articles ? `stagger-${idx + 1}` : ''
+                                        className={`neu-card neu-card-hover interactive-hover-lift rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group cursor-default scroll-item stagger-${idx + 1} ${
+                                            inViewSections.articles ? 'scroll-item-visible' : 'scroll-item-hidden-right'
                                         }`}
                                     >
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">

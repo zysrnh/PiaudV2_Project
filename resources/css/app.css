@@ -79,7 +79,6 @@ h2 {
 
 /* ========================================================
    NEUMORPHISM (SOLID SOFT UI) TOKENS FOR PIAUD
-   (Zero Glassmorphism / Zero Translucent Blurs)
    ======================================================== */
 .neu-card {
     background-color: #FAF6EC;
@@ -90,7 +89,7 @@ h2 {
 }
 
 .neu-card-hover:hover {
-    transform: translateY(-4px) scale(1.006);
+    transform: translateY(-5px) scale(1.008);
     box-shadow: 10px 10px 22px #cec7ba, -10px -10px 22px #ffffff;
 }
 
@@ -156,15 +155,9 @@ h2 {
     box-shadow: inset 2px 2px 5px #cec7ba, inset -2px -2px 5px #ffffff, 0 0 0 2px rgba(15, 76, 58, 0.2);
 }
 
-.neu-chip {
-    background-color: #FAF6EC;
-    border: 1px solid #E3DAC7;
-    box-shadow: 2px 2px 5px #d8d1c4, -2px -2px 5px #ffffff;
-}
-
 /* ========================================================
-   SENIOR FRONT-END INTERACTIVE PHYSICS ANIMATIONS
-   (Pure Physical Transform & Spring Dynamics - Zero Opacity Fading)
+   PHYSICAL MOTION, SCROLL REVEALS & COMPONENT INTERACTIONS
+   (Zero Opacity/Fade — Pure Transforms & Spring Easing)
    ======================================================== */
 .tactile-press {
     transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.14s ease;
@@ -177,37 +170,43 @@ h2 {
     transform: translateY(2px) scale(0.97);
 }
 
-/* Physics Slide-Up Reveal (No Fade) */
-.spring-reveal {
-    animation: springRevealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+/* Scroll Motion Classes (Transform Only) */
+.scroll-item {
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    will-change: transform;
+}
+.scroll-item-hidden-up {
+    transform: translateY(40px) scale(0.97);
+}
+.scroll-item-hidden-left {
+    transform: translateX(-40px);
+}
+.scroll-item-hidden-right {
+    transform: translateX(40px);
+}
+.scroll-item-visible {
+    transform: translateY(0) translateX(0) scale(1) !important;
 }
 
-@keyframes springRevealUp {
-    0% {
-        transform: translateY(32px) scale(0.98);
-    }
-    70% {
-        transform: translateY(-3px) scale(1.004);
-    }
-    100% {
-        transform: translateY(0) scale(1);
-    }
+/* Interactive Card Lift */
+.interactive-hover-lift {
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.28s ease;
+    will-change: transform;
+}
+.interactive-hover-lift:hover {
+    transform: translateY(-6px) scale(1.01);
+}
+.interactive-hover-lift:active {
+    transform: translateY(2px) scale(0.98);
 }
 
-/* Mobile Slide Down Drawer */
-@keyframes drawerSlideDown {
-    0% {
-        transform: translateY(-100%);
-    }
-    75% {
-        transform: translateY(4px);
-    }
-    100% {
-        transform: translateY(0);
-    }
+/* Photo Hover Zoom */
+.img-hover-zoom {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
 }
-.animate-drawer-spring {
-    animation: drawerSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.group:hover .img-hover-zoom {
+    transform: scale(1.08);
 }
 
 /* WhatsApp Icon Spring Pulse */
@@ -224,9 +223,9 @@ h2 {
 }
 
 /* Stagger Delays for Grid Elements */
-.stagger-1 { animation-delay: 60ms; }
-.stagger-2 { animation-delay: 120ms; }
-.stagger-3 { animation-delay: 180ms; }
-.stagger-4 { animation-delay: 240ms; }
-.stagger-5 { animation-delay: 300ms; }
-.stagger-6 { animation-delay: 360ms; }
+.stagger-1 { transition-delay: 50ms; }
+.stagger-2 { transition-delay: 110ms; }
+.stagger-3 { transition-delay: 170ms; }
+.stagger-4 { transition-delay: 230ms; }
+.stagger-5 { transition-delay: 290ms; }
+.stagger-6 { transition-delay: 350ms; }

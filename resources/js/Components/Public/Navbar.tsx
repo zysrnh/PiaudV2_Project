@@ -158,7 +158,7 @@ export const Navbar: React.FC = () => {
                                             <span className="text-xs text-piaud-slate-muted group-hover:text-piaud-emerald transition-transform duration-200 group-hover:rotate-180">▾</span>
                                         </Link>
 
-                                        {/* Desktop Dropdown Submenu (Solid Cream, Spring Physics Reveal) */}
+                                        {/* Desktop Dropdown Submenu */}
                                         <div className="absolute top-full left-0 mt-2 w-60 bg-[#FAF6EC] border border-[#E3DAC7] rounded-xl shadow-card-hover p-2 transform origin-top scale-95 translate-y-1 invisible group-hover:visible group-hover:scale-100 group-hover:translate-y-0 transition-transform duration-200 z-50">
                                             {item.submenu.map((sub) => (
                                                 <Link
@@ -188,17 +188,19 @@ export const Navbar: React.FC = () => {
                     })}
                 </div>
 
-                {/* Mobile Menu Button with Animated Toggle */}
+                {/* Mobile Menu Button with Animated Rotating Icon */}
                 <div className="flex items-center lg:hidden">
                     <button
                         type="button"
                         onClick={() => setIsMobileOpen(!isMobileOpen)}
                         aria-expanded={isMobileOpen}
-                        aria-label="Buka menu navigasi"
-                        className="p-2 text-piaud-slate hover:bg-piaud-ivory-dark border border-piaud-border rounded-md transition-all duration-150 active:scale-90"
+                        aria-label={isMobileOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
+                        className="p-2 text-piaud-slate hover:bg-piaud-ivory-dark border border-piaud-border rounded-md transition-all duration-200 active:scale-90"
                     >
                         <svg
-                            className="w-5 h-5 transition-transform duration-200"
+                            className={`w-5 h-5 transform transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                                isMobileOpen ? 'rotate-90 scale-105' : 'rotate-0'
+                            }`}
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -214,28 +216,44 @@ export const Navbar: React.FC = () => {
                 </div>
             </nav>
 
-            {/* Mobile Drawer (Solid Cream, Spring Slide Down) */}
-            {isMobileOpen && (
-                <div className="lg:hidden border-t border-[#E3DAC7] bg-[#F2ECE0] px-4 pt-3 pb-6 space-y-2 animate-drawer-spring shadow-card">
+            {/* Mobile Drawer with Smooth Open (Slide Down) & Close (Slide Up) Animation */}
+            <div
+                className={`lg:hidden grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] bg-[#F2ECE0] ${
+                    isMobileOpen ? 'grid-rows-[1fr] border-t border-[#E3DAC7]' : 'grid-rows-[0fr] border-t-0'
+                }`}
+            >
+                <div
+                    className={`min-h-0 overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                        isMobileOpen ? 'translate-y-0 py-3.5 px-4' : '-translate-y-4 py-0 px-4'
+                    }`}
+                >
                     <div className="flex flex-col space-y-1">
-                        {siteConfig.navigation.map((item) => {
+                        {siteConfig.navigation.map((item, index) => {
                             const active = isActive(item.href);
                             return (
-                                <div key={item.label} className="pb-1 border-b border-[#E3DAC7]/60">
+                                <div
+                                    key={item.label}
+                                    style={{
+                                        transitionDelay: isMobileOpen ? `${index * 30}ms` : '0ms',
+                                    }}
+                                    className={`pb-1 border-b border-[#E3DAC7]/60 transform transition-transform duration-250 ease-out ${
+                                        isMobileOpen ? 'translate-x-0' : '-translate-x-3'
+                                    }`}
+                                >
                                     {item.submenu ? (
                                         <div>
                                             <button
                                                 type="button"
                                                 onClick={() => toggleSubmenu(item.label)}
-                                                className={`w-full flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-lg transition-colors active:scale-[0.98] ${
+                                                className={`w-full flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-lg transition-all active:scale-[0.98] ${
                                                     active ? 'text-piaud-emerald bg-[#FAF6EC] font-bold shadow-sm' : 'text-piaud-slate hover:bg-[#FAF6EC]'
                                                 }`}
                                             >
                                                 <span>{item.label}</span>
-                                                <span className={`text-xs transition-transform duration-200 ${openSubmenu === item.label ? 'rotate-180' : ''}`}>▼</span>
+                                                <span className={`text-xs transition-transform duration-250 ${openSubmenu === item.label ? 'rotate-180' : ''}`}>▼</span>
                                             </button>
                                             {openSubmenu === item.label && (
-                                                <div className="pl-4 py-1.5 space-y-1 bg-[#FAF6EC] rounded-md mt-1 border border-[#E3DAC7]">
+                                                <div className="pl-4 py-1.5 space-y-1 bg-[#FAF6EC] rounded-md mt-1 border border-[#E3DAC7] animate-spring-down">
                                                     {item.submenu.map((sub) => (
                                                         <Link
                                                             key={sub.label}
@@ -253,7 +271,7 @@ export const Navbar: React.FC = () => {
                                         <Link
                                             href={item.href}
                                             onClick={() => setIsMobileOpen(false)}
-                                            className={`block py-2.5 px-3 text-sm font-semibold rounded-lg transition-colors active:scale-[0.98] ${
+                                            className={`block py-2.5 px-3 text-sm font-semibold rounded-lg transition-all active:scale-[0.98] ${
                                                 active ? 'text-piaud-emerald bg-[#FAF6EC] font-bold shadow-sm' : 'text-piaud-slate hover:bg-[#FAF6EC]'
                                             }`}
                                         >
@@ -265,7 +283,7 @@ export const Navbar: React.FC = () => {
                         })}
                     </div>
                 </div>
-            )}
+            </div>
         </header>
     );
 };
