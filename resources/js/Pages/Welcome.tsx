@@ -3,6 +3,8 @@ import { Head, Link } from '@inertiajs/react';
 import { Navbar } from '@/Components/Public/Navbar';
 import { Footer } from '@/Components/Public/Footer';
 import { Photo } from '@/Components/Public/Photo';
+import { FloatingWhatsApp } from '@/Components/Public/FloatingWhatsApp';
+import { ScrollProgress } from '@/Components/Public/ScrollProgress';
 import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 
 export default function Welcome() {
@@ -391,6 +393,12 @@ export default function Welcome() {
 
             {/* Section 8: CTA Penutup & Institutional Footer */}
             <Footer />
+
+            {/* Floating Left: WhatsApp PMB */}
+            <FloatingWhatsApp />
+
+            {/* Floating Right: Scroll Progress & Back to Top */}
+            <ScrollProgress />
         </div>
     );
 }
