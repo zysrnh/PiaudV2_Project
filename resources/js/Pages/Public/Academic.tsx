@@ -209,7 +209,7 @@ export default function Academic() {
                                 key={tab.key}
                                 type="button"
                                 onClick={() => setActiveTab(tab.key as any)}
-                                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer active:scale-95 ${
                                     activeTab === tab.key
                                         ? 'bg-[#0F4C3A] text-white font-bold shadow-sm'
                                         : 'bg-[#FAF6EC] text-piaud-slate border border-[#E3DAC7] hover:bg-[#F2ECE0]'
@@ -220,7 +220,7 @@ export default function Academic() {
                         ))}
                     </div>
 
-                    {/* Table with Flat Clean Styling */}
+                    {/* Table with Flat Clean Styling & Staggered Row Animation on Tab Switch */}
                     <div className="overflow-x-auto rounded-xl border border-[#E3DAC7] bg-[#FAF6EC]">
                         <table className="w-full text-left text-sm">
                             <thead>
@@ -231,9 +231,13 @@ export default function Academic() {
                                     <th className="py-3.5 px-4 sm:px-5">Kategori</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-[#E3DAC7]/70 text-piaud-slate">
+                            <tbody key={activeTab} className="divide-y divide-[#E3DAC7]/70 text-piaud-slate">
                                 {curriculumData[activeTab].map((item, index) => (
-                                    <tr key={index} className="hover:bg-[#F2ECE0]/50 transition-colors">
+                                    <tr
+                                        key={item.code}
+                                        style={{ animationDelay: `${index * 45}ms` }}
+                                        className="hover:bg-[#F2ECE0]/60 transition-colors animate-table-row"
+                                    >
                                         <td className="py-3.5 px-4 sm:px-5 font-mono text-xs text-slate-500 font-semibold">{item.code}</td>
                                         <td className="py-3.5 px-4 sm:px-5 font-medium text-piaud-slate">{item.name}</td>
                                         <td className="py-3.5 px-4 sm:px-5 text-center font-bold text-[#0F4C3A]">{item.sks} SKS</td>

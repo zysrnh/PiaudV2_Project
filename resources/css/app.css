@@ -256,6 +256,21 @@ h2 {
 .delay-5 { animation-delay: 500ms; }
 .delay-6 { animation-delay: 600ms; }
 
+/* Table Row Staggered Slide on Tab Switch */
+@keyframes tableRowSlide {
+    0% {
+        transform: translateY(18px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.animate-table-row {
+    animation: tableRowSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    will-change: transform;
+}
+
 /* WhatsApp Icon Spring Pulse */
 @keyframes waPulseSpring {
     0%, 100% {
