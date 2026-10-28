@@ -11,10 +11,14 @@ use Throwable;
 class TerminalController extends Controller
 {
     /**
-     * Tampilkan halaman terminal console admin.
+     * Tampilkan halaman terminal console admin (Hanya untuk Admin Dev).
      */
     public function index()
     {
+        if (!auth()->check() || !auth()->user()->isDev()) {
+            abort(403, 'Akses Ditolak: Fitur Terminal Artisan hanya diperuntukkan bagi Administrator Developer.');
+        }
+
         $dbStatus = 'Terhubung';
         $dbTablesCount = 0;
         try {
@@ -42,10 +46,18 @@ class TerminalController extends Controller
     }
 
     /**
-     * Eksekusi perintah artisan via AJAX terminal.
+     * Eksekusi perintah artisan via AJAX terminal (Hanya untuk Admin Dev).
      */
     public function execute(Request $request)
     {
+        if (!auth()->check() || !auth()->user()->isDev()) {
+            return response()->json([
+                'success' => false,
+                'output' => "⛔ Akses Ditolak: Anda login sebagai Admin Konten biasa. Hanya akun Admin Developer yang memiliki izin eksekusi terminal.",
+                'execution_time' => '0.00s',
+                'exit_code' => 403,
+            ], 403);
+        }
         $rawCommand = trim((string) $request->input('command', ''));
 
         if (empty($rawCommand)) {

@@ -16,12 +16,23 @@ class PiaudDataSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Admin Default
+        // 1. Akun Developer (Akses Penuh + Terminal)
+        User::updateOrCreate(
+            ['email' => 'dev@piaud.iaipibandung.ac.id'],
+            [
+                'name' => 'Admin Developer',
+                'password' => Hash::make('DevPersis2026!'),
+                'role' => 'dev',
+            ]
+        );
+
+        // Akun Admin Biasa (Pengelola Konten Tanpa Akses Terminal)
         User::updateOrCreate(
             ['email' => 'admin@piaud.iaipibandung.ac.id'],
             [
-                'name' => 'Admin PIAUD',
+                'name' => 'Admin Konten',
                 'password' => Hash::make('PiaudPersis2026!'),
+                'role' => 'admin',
             ]
         );
 

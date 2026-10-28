@@ -16,7 +16,7 @@
                 <h3 class="font-serif text-lg font-bold text-[#0F4C3A]">{{ $dbStatus }}</h3>
                 <span class="text-[11px] text-[#5C6B73]">{{ $dbTablesCount }} Tabel Terdeteksi</span>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-[#0F4C3A] text-lg shadow-[inset_2px_2px_4px_#d8d1c4,inset_-2px_-2px_4px_#ffffff]">
+            <div class="w-10 h-10 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-[#0F4C3A] text-lg">
                 <i class="fa-solid fa-database"></i>
             </div>
         </div>
@@ -31,7 +31,7 @@
                 </div>
                 <span class="text-[11px] text-[#5C6B73]">public/storage</span>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-[#C2613A] text-lg shadow-[inset_2px_2px_4px_#d8d1c4,inset_-2px_-2px_4px_#ffffff]">
+            <div class="w-10 h-10 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-[#C2613A] text-lg">
                 <i class="fa-solid fa-link"></i>
             </div>
         </div>
@@ -43,7 +43,7 @@
                 <h3 class="font-serif text-lg font-bold text-[#0F4C3A]">PHP {{ $phpVersion }}</h3>
                 <span class="text-[11px] text-[#5C6B73]">Laravel v{{ $laravelVersion }}</span>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-[#0F4C3A] text-lg shadow-[inset_2px_2px_4px_#d8d1c4,inset_-2px_-2px_4px_#ffffff]">
+            <div class="w-10 h-10 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-[#0F4C3A] text-lg">
                 <i class="fa-brands fa-php"></i>
             </div>
         </div>
@@ -53,9 +53,9 @@
             <div class="space-y-1">
                 <p class="text-[11px] font-bold text-[#5C6B73] uppercase tracking-wider">Environment Mode</p>
                 <h3 class="font-serif text-lg font-bold text-[#C2613A] uppercase">{{ app()->environment() }}</h3>
-                <span class="text-[11px] text-[#5C6B73]">Security: Strict Auth</span>
+                <span class="text-[11px] text-[#5C6B73]">Security: Dev Role Only</span>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-[#C2613A] text-lg shadow-[inset_2px_2px_4px_#d8d1c4,inset_-2px_-2px_4px_#ffffff]">
+            <div class="w-10 h-10 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-[#C2613A] text-lg">
                 <i class="fa-solid fa-shield-halved"></i>
             </div>
         </div>
@@ -71,31 +71,31 @@
             <span class="text-[11px] text-[#5C6B73]">Klik tombol untuk langsung mengeksekusi di terminal</span>
         </div>
         <div class="flex flex-wrap gap-2 pt-1">
-            <button type="button" onclick="runCommandQuick('php artisan migrate')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#0F4C3A] hover:bg-[#FAF6EC] flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="runCommandQuick('php artisan migrate')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#0F4C3A] hover:bg-white flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-database text-[11px]"></i>
                 <span>migrate</span>
             </button>
-            <button type="button" onclick="runCommandQuick('php artisan db:seed')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#0F4C3A] hover:bg-[#FAF6EC] flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="runCommandQuick('php artisan db:seed')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#0F4C3A] hover:bg-white flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-seedling text-[11px]"></i>
                 <span>db:seed</span>
             </button>
-            <button type="button" onclick="runCommandQuick('php artisan storage:link')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#0F4C3A] hover:bg-[#FAF6EC] flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="runCommandQuick('php artisan storage:link')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#0F4C3A] hover:bg-white flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-link text-[11px]"></i>
                 <span>storage:link</span>
             </button>
-            <button type="button" onclick="runCommandQuick('php artisan optimize:clear')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#C2613A] hover:bg-[#FAF6EC] flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="runCommandQuick('php artisan optimize:clear')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#C2613A] hover:bg-white flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-broom text-[11px]"></i>
                 <span>optimize:clear</span>
             </button>
-            <button type="button" onclick="runCommandQuick('php artisan route:list')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#1B2A2F] hover:bg-[#FAF6EC] flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="runCommandQuick('php artisan route:list')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#1B2A2F] hover:bg-white flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-list-check text-[11px]"></i>
                 <span>route:list</span>
             </button>
-            <button type="button" onclick="runCommandQuick('php artisan migrate:status')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#1B2A2F] hover:bg-[#FAF6EC] flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="runCommandQuick('php artisan migrate:status')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#1B2A2F] hover:bg-white flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-circle-info text-[11px]"></i>
                 <span>migrate:status</span>
             </button>
-            <button type="button" onclick="runCommandQuick('help')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#5C6B73] hover:bg-[#FAF6EC] flex items-center gap-1.5 cursor-pointer">
+            <button type="button" onclick="runCommandQuick('help')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#5C6B73] hover:bg-white flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-circle-question text-[11px]"></i>
                 <span>help</span>
             </button>
