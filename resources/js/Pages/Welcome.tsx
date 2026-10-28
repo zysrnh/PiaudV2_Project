@@ -86,57 +86,47 @@ export default function Welcome() {
                                             href={waPmbLink}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="group inline-flex items-center justify-center gap-2 neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-200 tactile-press"
+                                            className="group inline-flex items-center justify-center gap-2.5 neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl cursor-pointer"
                                         >
                                             <span>{siteConfig.hero.ctaPrimaryText}</span>
-                                            <span className="transform group-hover:translate-x-2 transition-transform duration-200">→</span>
+                                            <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">→</span>
                                         </a>
                                         <Link
                                             href="/akademik"
-                                            className="group inline-flex items-center justify-center gap-2 neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-200 tactile-press"
+                                            className="group inline-flex items-center justify-center gap-2.5 neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl cursor-pointer"
                                         >
                                             <span>{siteConfig.hero.ctaSecondaryText}</span>
-                                            <span className="transform group-hover:translate-x-2 transition-transform duration-200">→</span>
+                                            <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">→</span>
                                         </Link>
                                     </div>
                                 </div>
 
-                                {/* Stats & Features Cards Row with Interactive Hover & Stagger */}
+                                {/* Stats & Features Cards Row with Decoupled Wrappers for Pure Smooth Hover */}
                                 <div className="pt-4 grid grid-cols-3 gap-2.5 sm:gap-4 text-xs">
-                                    <div
-                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group ${
-                                            inView.hero ? 'animate-slide-up delay-1' : ''
-                                        }`}
-                                    >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Sarjana (S.Pd.)</span>
-                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Gelar Lulusan</span>
+                                    <div className={inView.hero ? 'animate-slide-up delay-1' : ''}>
+                                        <div className="neu-card card-interactive-sm rounded-xl p-3 sm:p-4 flex flex-col justify-center group h-full">
+                                            <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Sarjana (S.Pd.)</span>
+                                            <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Gelar Lulusan</span>
+                                        </div>
                                     </div>
-                                    <div
-                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group ${
-                                            inView.hero ? 'animate-slide-up delay-2' : ''
-                                        }`}
-                                    >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">144 SKS (8 Sem)</span>
-                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Masa Studi</span>
+                                    <div className={inView.hero ? 'animate-slide-up delay-2' : ''}>
+                                        <div className="neu-card card-interactive-sm rounded-xl p-3 sm:p-4 flex flex-col justify-center group h-full">
+                                            <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">144 SKS (8 Sem)</span>
+                                            <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Masa Studi</span>
+                                        </div>
                                     </div>
-                                    <div
-                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group ${
-                                            inView.hero ? 'animate-slide-up delay-3' : ''
-                                        }`}
-                                    >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Reguler &amp; Guru</span>
-                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Kelas Kuliah</span>
+                                    <div className={inView.hero ? 'animate-slide-up delay-3' : ''}>
+                                        <div className="neu-card card-interactive-sm rounded-xl p-3 sm:p-4 flex flex-col justify-center group h-full">
+                                            <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Reguler &amp; Guru</span>
+                                            <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Kelas Kuliah</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Right Column (5 cols): Photo Card Smooth Hover Lift (Whole Card Floats) */}
-                            <div className="lg:col-span-5 h-full flex flex-col">
-                                <figure
-                                    className={`relative neu-card card-interactive rounded-2xl p-3 sm:p-3.5 h-full flex flex-col justify-center group overflow-hidden ${
-                                        inView.hero ? 'animate-slide-right' : ''
-                                    }`}
-                                >
+                            {/* Right Column (5 cols): Photo Card Decoupled Wrapper for Smooth Hover Float */}
+                            <div className={`lg:col-span-5 h-full flex flex-col ${inView.hero ? 'animate-slide-right' : ''}`}>
+                                <figure className="relative neu-card card-interactive rounded-2xl p-3 sm:p-3.5 h-full flex flex-col justify-center group overflow-hidden">
                                     <div className="w-full h-full min-h-[280px] sm:min-h-[340px] lg:min-h-full overflow-hidden rounded-xl">
                                         <Photo
                                             src={siteConfig.hero.photoUrl}
@@ -211,7 +201,7 @@ export default function Welcome() {
                                         className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors shrink-0 tactile-press"
                                     >
                                         <span>Selengkapnya di Profil Prodi</span>
-                                        <span className="transform group-hover:translate-x-2 transition-transform duration-200">&rarr;</span>
+                                        <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">&rarr;</span>
                                     </Link>
                                 </div>
                             </div>
@@ -235,32 +225,32 @@ export default function Welcome() {
                             {siteConfig.pillars.map((pillar, idx) => (
                                 <div
                                     key={pillar.number}
-                                    className={`neu-card card-interactive rounded-2xl p-6 flex flex-col justify-between group ${
-                                        inView.pillars ? `animate-slide-up delay-${idx + 1}` : ''
-                                    }`}
+                                    className={`h-full ${inView.pillars ? `animate-slide-up delay-${idx + 1}` : ''}`}
                                 >
-                                    <div className="space-y-3.5">
-                                        <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-115 group-hover:rotate-6 transition-transform duration-300">
-                                            {pillar.number}
+                                    <div className="neu-card card-interactive rounded-2xl p-6 flex flex-col justify-between group h-full">
+                                        <div className="space-y-3.5">
+                                            <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+                                                {pillar.number}
+                                            </div>
+                                            <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate group-hover:text-[#0F4C3A] transition-colors">
+                                                {pillar.title}
+                                            </h3>
+                                            <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
+                                                {pillar.description}
+                                            </p>
                                         </div>
-                                        <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate group-hover:text-[#0F4C3A] transition-colors">
-                                            {pillar.title}
-                                        </h3>
-                                        <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
-                                            {pillar.description}
-                                        </p>
-                                    </div>
 
-                                    <div className="pt-4 mt-5 border-t border-[#E3DAC7] space-y-2">
-                                        <span className="text-xs font-bold text-piaud-slate block">Fokus Capaian:</span>
-                                        <ul className="space-y-1.5 text-xs text-piaud-slate-muted">
-                                            {pillar.deliverables.map((item, dIdx) => (
-                                                <li key={dIdx} className="flex items-center gap-2 transform group-hover:translate-x-2 transition-transform duration-200">
-                                                    <span className="w-1.5 h-1.5 bg-[#C2613A] rounded-full shrink-0"></span>
-                                                    <span>{item}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                        <div className="pt-4 mt-5 border-t border-[#E3DAC7] space-y-2">
+                                            <span className="text-xs font-bold text-piaud-slate block">Fokus Capaian:</span>
+                                            <ul className="space-y-1.5 text-xs text-piaud-slate-muted">
+                                                {pillar.deliverables.map((item, dIdx) => (
+                                                    <li key={dIdx} className="flex items-center gap-2 transform group-hover:translate-x-1.5 transition-transform duration-200">
+                                                        <span className="w-1.5 h-1.5 bg-[#C2613A] rounded-full shrink-0"></span>
+                                                        <span>{item}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -269,10 +259,10 @@ export default function Welcome() {
                         <div className={`mt-8 text-center ${inView.pillars ? 'animate-slide-up delay-4' : ''}`}>
                             <Link
                                 href="/akademik"
-                                className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F4C3A] hover:text-[#0A3427] neu-btn px-6 py-3.5 rounded-xl transition-all tactile-press"
+                                className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F4C3A] hover:text-[#0A3427] neu-btn px-6 py-3.5 rounded-xl transition-all cursor-pointer"
                             >
                                 <span>Lihat Struktur Kurikulum &amp; Sebaran Mata Kuliah</span>
-                                <span className="transform group-hover:translate-x-2 transition-transform duration-200">&rarr;</span>
+                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">&rarr;</span>
                             </Link>
                         </div>
                     </div>
@@ -289,39 +279,42 @@ export default function Welcome() {
                             </div>
                             <Link
                                 href="/dosen"
-                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto tactile-press"
+                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto cursor-pointer"
                             >
                                 <span>Lihat Semua Dosen</span>
-                                <span className="transform group-hover:translate-x-2 transition-transform duration-200">&rarr;</span>
+                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">&rarr;</span>
                             </Link>
                         </div>
 
-                        {/* Crisp Responsive Cards Grid with Smooth Card Hover Lift */}
+                        {/* Crisp Responsive Cards Grid with Decoupled Wrappers for Smooth Hover Lift */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.lecturers.map((lecturer, index) => (
-                                <article
+                                <div
                                     key={index}
-                                    className={`neu-card card-interactive rounded-2xl p-4 group ${
-                                        inView.lecturers ? `animate-slide-up delay-${index + 1}` : ''
-                                    }`}
+                                    className={`h-full ${inView.lecturers ? `animate-slide-up delay-${index + 1}` : ''}`}
                                 >
-                                    <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
-                                        <Photo
-                                            src={lecturer.photoUrl}
-                                            alt={`Foto ${lecturer.name}`}
-                                            aspectRatio="1/1"
-                                            className="w-full h-auto rounded-xl shadow-soft"
-                                        />
-                                    </div>
+                                    <article className="neu-card card-interactive rounded-2xl p-4 group h-full flex flex-col justify-between">
+                                        <div>
+                                            <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
+                                                <Photo
+                                                    src={lecturer.photoUrl}
+                                                    alt={`Foto ${lecturer.name}`}
+                                                    aspectRatio="1/1"
+                                                    className="w-full h-auto rounded-xl shadow-soft"
+                                                />
+                                            </div>
 
-                                    <div className="mt-3.5 space-y-1.5">
-                                        <span className="text-[11px] font-bold tracking-wider text-[#C2613A] uppercase block transform group-hover:translate-x-1.5 transition-transform duration-200">
-                                            {lecturer.role}
-                                        </span>
-                                        <h3 className="font-serif font-bold text-base text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
-                                            {lecturer.name}
-                                        </h3>
-                                        <div className="pt-2 border-t border-[#E3DAC7] text-xs text-piaud-slate-muted space-y-1">
+                                            <div className="mt-3.5 space-y-1.5">
+                                                <span className="text-[11px] font-bold tracking-wider text-[#C2613A] uppercase block transform group-hover:translate-x-1.5 transition-transform duration-200">
+                                                    {lecturer.role}
+                                                </span>
+                                                <h3 className="font-serif font-bold text-base text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
+                                                    {lecturer.name}
+                                                </h3>
+                                            </div>
+                                        </div>
+
+                                        <div className="pt-2 mt-3 border-t border-[#E3DAC7] text-xs text-piaud-slate-muted space-y-1">
                                             <p className="font-mono text-[11px] text-slate-500">
                                                 NIP: {lecturer.nip}
                                             </p>
@@ -329,14 +322,14 @@ export default function Welcome() {
                                                 {lecturer.expertise}
                                             </p>
                                         </div>
-                                    </div>
-                                </article>
+                                    </article>
+                                </div>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                {/* GALERI DOKUMENTASI (Warm Ivory Grid with Card Hover Lift) */}
+                {/* 7. GALERI DOKUMENTASI (Warm Ivory Grid with Card Hover Lift) */}
                 <section id="galeri" data-section="gallery" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] ${inView.gallery ? 'animate-slide-left' : ''}`}>
@@ -347,44 +340,44 @@ export default function Welcome() {
                             </div>
                             <Link
                                 href="/galeri"
-                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto tactile-press"
+                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto cursor-pointer"
                             >
                                 <span>Buka Galeri Lengkap</span>
-                                <span className="transform group-hover:translate-x-2 transition-transform duration-200">&rarr;</span>
+                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">&rarr;</span>
                             </Link>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.gallery.map((item, index) => (
-                                <figure
+                                <div
                                     key={index}
-                                    className={`neu-card card-interactive rounded-2xl p-3.5 group overflow-hidden ${
-                                        inView.gallery ? `animate-slide-up delay-${index + 1}` : ''
-                                    }`}
+                                    className={`h-full ${inView.gallery ? `animate-slide-up delay-${index + 1}` : ''}`}
                                 >
-                                    <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
-                                        <Photo
-                                            src={item.photoUrl}
-                                            alt={item.title}
-                                            aspectRatio="4/3"
-                                            className="w-full h-auto rounded-xl shadow-soft"
-                                        />
-                                    </div>
-                                    <figcaption className="mt-2.5 px-1 space-y-1">
-                                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#C2613A] block transform group-hover:translate-x-1.5 transition-transform duration-200">
-                                            {item.category}
-                                        </span>
-                                        <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug group-hover:text-[#0F4C3A] transition-colors">
-                                            {item.title}
-                                        </h3>
-                                    </figcaption>
-                                </figure>
+                                    <figure className="neu-card card-interactive rounded-2xl p-3.5 group overflow-hidden h-full flex flex-col justify-between">
+                                        <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
+                                            <Photo
+                                                src={item.photoUrl}
+                                                alt={item.title}
+                                                aspectRatio="4/3"
+                                                className="w-full h-auto rounded-xl shadow-soft"
+                                            />
+                                        </div>
+                                        <figcaption className="mt-2.5 px-1 space-y-1">
+                                            <span className="text-[11px] font-bold uppercase tracking-wider text-[#C2613A] block transform group-hover:translate-x-1.5 transition-transform duration-200">
+                                                {item.category}
+                                            </span>
+                                            <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug group-hover:text-[#0F4C3A] transition-colors">
+                                                {item.title}
+                                            </h3>
+                                        </figcaption>
+                                    </figure>
+                                </div>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                {/* 7. ARTIKEL PARENTING ISLAMI (Warm Cream Alternating Section with Card Hover Lift) */}
+                {/* 8. ARTIKEL PARENTING ISLAMI (Warm Cream Alternating Section with Card Hover Lift) */}
                 <section id="artikel" data-section="articles" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] ${inView.articles ? 'animate-slide-left' : ''}`}>
@@ -395,71 +388,71 @@ export default function Welcome() {
                             </div>
                             <Link
                                 href="/artikel"
-                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto tactile-press"
+                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto cursor-pointer"
                             >
                                 <span>Lihat Semua Artikel</span>
-                                <span className="transform group-hover:translate-x-2 transition-transform duration-200">&rarr;</span>
+                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">&rarr;</span>
                             </Link>
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                            {/* Featured Article Card */}
-                            <article className={`lg:col-span-6 neu-card card-interactive rounded-2xl p-5 flex flex-col justify-between group h-full ${
-                                inView.articles ? 'animate-slide-left delay-1' : ''
-                            }`}>
-                                <div className="space-y-3.5">
-                                    <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
-                                        <Photo
-                                            src={siteConfig.articles.featured.photoUrl}
-                                            alt={siteConfig.articles.featured.title}
-                                            aspectRatio="16/9"
-                                            className="w-full h-auto rounded-xl shadow-soft"
-                                        />
-                                    </div>
-                                    <div className="space-y-2 px-1">
-                                        <div className="flex items-center gap-2 text-xs text-piaud-slate-muted flex-wrap">
-                                            <span className="bg-[#0F4C3A] text-white px-2.5 py-0.5 rounded-md font-bold text-[11px] group-hover:bg-[#0A3427] transition-colors">
-                                                {siteConfig.articles.featured.category}
-                                            </span>
-                                            <span>{siteConfig.articles.featured.publishedAt}</span>
-                                            <span>&bull;</span>
-                                            <span>{siteConfig.articles.featured.readTime}</span>
+                            {/* Featured Article Card Wrapper */}
+                            <div className={`lg:col-span-6 h-full ${inView.articles ? 'animate-slide-left delay-1' : ''}`}>
+                                <article className="neu-card card-interactive rounded-2xl p-5 flex flex-col justify-between group h-full">
+                                    <div className="space-y-3.5">
+                                        <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
+                                            <Photo
+                                                src={siteConfig.articles.featured.photoUrl}
+                                                alt={siteConfig.articles.featured.title}
+                                                aspectRatio="16/9"
+                                                className="w-full h-auto rounded-xl shadow-soft"
+                                            />
                                         </div>
-                                        <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
-                                            {siteConfig.articles.featured.title}
-                                        </h3>
-                                        <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
-                                            {siteConfig.articles.featured.excerpt}
-                                        </p>
+                                        <div className="space-y-2 px-1">
+                                            <div className="flex items-center gap-2 text-xs text-piaud-slate-muted flex-wrap">
+                                                <span className="bg-[#0F4C3A] text-white px-2.5 py-0.5 rounded-md font-bold text-[11px] group-hover:bg-[#0A3427] transition-colors">
+                                                    {siteConfig.articles.featured.category}
+                                                </span>
+                                                <span>{siteConfig.articles.featured.publishedAt}</span>
+                                                <span>&bull;</span>
+                                                <span>{siteConfig.articles.featured.readTime}</span>
+                                            </div>
+                                            <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
+                                                {siteConfig.articles.featured.title}
+                                            </h3>
+                                            <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
+                                                {siteConfig.articles.featured.excerpt}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </article>
+                                </article>
+                            </div>
 
                             {/* List Articles Stack (3-Card Stack Flushed Bottom) */}
                             <div className="lg:col-span-6 flex flex-col justify-between gap-4 h-full">
                                 {siteConfig.articles.list.map((article, idx) => (
-                                    <article
+                                    <div
                                         key={article.id}
-                                        className={`neu-card card-interactive rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group ${
-                                            inView.articles ? `animate-slide-right delay-${idx + 1}` : ''
-                                        }`}
+                                        className={`flex-1 flex flex-col ${inView.articles ? `animate-slide-right delay-${idx + 1}` : ''}`}
                                     >
-                                        <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
-                                            <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7] transform group-hover:translate-x-1.5 transition-transform duration-200">
-                                                {article.category}
-                                            </span>
-                                            <span>&bull;</span>
-                                            <span>{article.publishedAt}</span>
-                                            <span>&bull;</span>
-                                            <span>{article.readTime}</span>
-                                        </div>
-                                        <h3 className="font-serif text-sm sm:text-base font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
-                                            {article.title}
-                                        </h3>
-                                        <p className="text-xs text-piaud-slate-muted leading-relaxed line-clamp-2">
-                                            {article.excerpt}
-                                        </p>
-                                    </article>
+                                        <article className="neu-card card-interactive rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group">
+                                            <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
+                                                <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7] transform group-hover:translate-x-1.5 transition-transform duration-200">
+                                                    {article.category}
+                                                </span>
+                                                <span>&bull;</span>
+                                                <span>{article.publishedAt}</span>
+                                                <span>&bull;</span>
+                                                <span>{article.readTime}</span>
+                                            </div>
+                                            <h3 className="font-serif text-sm sm:text-base font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
+                                                {article.title}
+                                            </h3>
+                                            <p className="text-xs text-piaud-slate-muted leading-relaxed line-clamp-2">
+                                                {article.excerpt}
+                                            </p>
+                                        </article>
+                                    </div>
                                 ))}
                             </div>
                         </div>
