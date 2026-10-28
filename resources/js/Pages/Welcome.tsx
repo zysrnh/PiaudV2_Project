@@ -32,14 +32,6 @@ export default function Welcome() {
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
                             {/* Left Column (7 cols): Direct Misi & Accreditation Badge */}
                             <div className="lg:col-span-7 space-y-6">
-                                {/* Accreditation Badge (Crisp Rounded Badge) */}
-                                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-piaud-ivory-dark border border-piaud-border text-xs text-piaud-slate font-semibold rounded-md shadow-soft">
-                                    <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-                                    <span>{siteConfig.accreditation.status} · {siteConfig.accreditation.institution}</span>
-                                    <span className="text-piaud-slate-muted hidden sm:inline">
-                                        ({siteConfig.accreditation.certificateNumber})
-                                    </span>
-                                </div>
 
                                 <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-tight">
                                     {siteConfig.hero.heading}
@@ -94,10 +86,6 @@ export default function Welcome() {
                                         aspectRatio="4/3"
                                         className="w-full h-auto rounded-md shadow-soft"
                                     />
-                                    <figcaption className="mt-2.5 px-1 text-xs text-piaud-slate-muted flex items-center justify-between font-medium">
-                                        <span>Dokumentasi Praktikum APE Mahasiswa</span>
-                                        <span className="text-piaud-emerald font-semibold">IAI Persis Bandung</span>
-                                    </figcaption>
                                 </figure>
                             </div>
                         </div>

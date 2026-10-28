@@ -34,11 +34,6 @@ export const Navbar: React.FC = () => {
                         </span>
                     </div>
                     <div className="flex items-center gap-4 text-xs text-piaud-ivory/90 flex-wrap">
-                        <span className="inline-flex items-center gap-1.5 bg-black/15 px-2.5 py-0.5 rounded">
-                            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
-                            <span>{siteConfig.accreditation.status} ({siteConfig.accreditation.institution})</span>
-                        </span>
-                        <span className="hidden sm:inline text-piaud-ivory/40">|</span>
                         <span className="inline-flex items-center gap-1">
                             <span>Telp:</span>
                             <span className="font-semibold text-white">{siteConfig.phone}</span>
