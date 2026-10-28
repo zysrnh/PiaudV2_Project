@@ -17,8 +17,8 @@ export default function PublicLayout({
             {/* Top Bar & Main Navbar */}
             <Navbar />
 
-            {/* Main Content with Smooth Fade-in-up Entrance Animation */}
-            <main className={`flex-1 w-full animate-fade-in-up ${className}`}>
+            {/* Main Content with Physics Spring Entrance */}
+            <main className={`flex-1 w-full animate-spring-up ${className}`}>
                 {children}
             </main>
 

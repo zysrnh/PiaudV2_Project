@@ -43,18 +43,38 @@ export default {
                 'neu-terracotta': '5px 5px 12px #8c3917, -4px -4px 10px #e07952',
             },
             keyframes: {
-                fadeInUp: {
-                    '0%': { opacity: '0', transform: 'translateY(16px)' },
-                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                // Interactive Physics Springs (Zero Opacity/Fade)
+                springUp: {
+                    '0%': { transform: 'translateY(36px) scale(0.97)' },
+                    '68%': { transform: 'translateY(-4px) scale(1.006)' },
+                    '100%': { transform: 'translateY(0) scale(1)' },
                 },
-                fadeIn: {
-                    '0%': { opacity: '0' },
-                    '100%': { opacity: '1' },
+                springDown: {
+                    '0%': { transform: 'translateY(-24px)' },
+                    '68%': { transform: 'translateY(3px)' },
+                    '100%': { transform: 'translateY(0)' },
+                },
+                springPop: {
+                    '0%': { transform: 'scale(0.86)' },
+                    '65%': { transform: 'scale(1.05)' },
+                    '100%': { transform: 'scale(1)' },
+                },
+                springBounce: {
+                    '0%, 100%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-5px)' },
+                },
+                gentleWobble: {
+                    '0%, 100%': { transform: 'rotate(0deg)' },
+                    '25%': { transform: 'rotate(-5deg) scale(1.04)' },
+                    '75%': { transform: 'rotate(5deg) scale(1.04)' },
                 },
             },
             animation: {
-                'fade-in-up': 'fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                'fade-in': 'fadeIn 0.4s ease-out forwards',
+                'spring-up': 'springUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                'spring-down': 'springDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                'spring-pop': 'springPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
+                'spring-bounce': 'springBounce 2s ease-in-out infinite',
+                'wobble': 'gentleWobble 0.6s ease-in-out',
             },
         },
     },

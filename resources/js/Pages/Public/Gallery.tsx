@@ -69,7 +69,7 @@ export default function Gallery() {
             </Head>
 
             {/* Header Banner with Breadcrumb */}
-            <div className="bg-piaud-emerald-dark text-white py-10 md:py-12 border-b border-piaud-border/20">
+            <div className="bg-[#0A3427] text-white py-10 md:py-12 border-b border-[#17664F]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <nav className="flex items-center gap-2 text-xs text-piaud-ivory/70 mb-3">
                         <Link href="/" className="hover:text-white transition-colors">Beranda</Link>
@@ -87,16 +87,16 @@ export default function Gallery() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 space-y-10">
                 {/* Category Filter Pills */}
-                <div className="bg-piaud-ivory-dark rounded-lg p-4 border border-piaud-border shadow-soft flex items-center justify-between flex-wrap gap-3">
+                <div className="bg-[#F2ECE0] rounded-xl p-4 border border-[#E3DAC7] shadow-soft flex items-center justify-between flex-wrap gap-3">
                     <div className="flex flex-wrap gap-2">
                         {categories.map((cat) => (
                             <button
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat)}
-                                className={`px-3.5 py-1.5 rounded-md text-xs sm:text-sm font-semibold transition-all duration-200 border ${
+                                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-150 border tactile-press ${
                                     selectedCategory === cat
-                                        ? 'bg-piaud-emerald text-white border-piaud-emerald shadow-soft font-bold'
-                                        : 'bg-piaud-ivory text-piaud-slate hover:bg-white border-piaud-border'
+                                        ? 'bg-[#0F4C3A] text-white border-[#0A3427] shadow-soft font-bold'
+                                        : 'bg-[#FAF6EC] text-piaud-slate hover:bg-[#F2ECE0] border-[#E3DAC7]'
                                 }`}
                             >
                                 {cat}
@@ -114,24 +114,24 @@ export default function Gallery() {
                         <figure
                             key={index}
                             onClick={() => setActiveModalPhoto(item)}
-                            className="bg-piaud-ivory rounded-lg p-3.5 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+                            className="bg-[#FAF6EC] rounded-2xl p-4 border border-[#E3DAC7] neu-card neu-card-hover cursor-pointer group"
                         >
-                            <div className="overflow-hidden rounded-md relative border border-piaud-border/60">
+                            <div className="overflow-hidden rounded-xl relative border border-[#E3DAC7]">
                                 <Photo
                                     src={item.photoUrl}
                                     alt={item.title}
                                     aspectRatio="4/3"
                                     className="w-full h-auto group-hover:scale-105 transition-transform duration-300"
                                 />
-                                <div className="absolute inset-0 bg-piaud-emerald/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <span className="bg-piaud-ivory text-piaud-slate font-bold text-xs px-3 py-1.5 rounded-md shadow-md border border-piaud-border">
+                                <div className="absolute inset-0 bg-[#0F4C3A]/30 transform scale-90 invisible group-hover:visible group-hover:scale-100 transition-transform duration-200 flex items-center justify-center">
+                                    <span className="bg-[#FAF6EC] text-[#0F4C3A] font-bold text-xs px-3.5 py-1.5 rounded-lg shadow-md border border-[#E3DAC7]">
                                         Perbesar Foto 🔍
                                     </span>
                                 </div>
                             </div>
                             <figcaption className="mt-3.5 px-1 space-y-1.5">
                                 <div className="flex items-center justify-between text-[11px] text-piaud-slate-muted">
-                                    <span className="font-bold uppercase tracking-wider text-piaud-terracotta bg-piaud-terracotta/10 border border-piaud-terracotta/20 px-2 py-0.5 rounded">
+                                    <span className="font-bold uppercase tracking-wider text-[#C2613A] bg-[#F2ECE0] border border-[#E3DAC7] px-2 py-0.5 rounded">
                                         {item.category}
                                     </span>
                                     <span>{item.date}</span>
@@ -145,30 +145,30 @@ export default function Gallery() {
                 </div>
             </div>
 
-            {/* Lightbox / Modal */}
+            {/* Lightbox / Modal (Solid Background, Spring Pop In, Zero Blur) */}
             {activeModalPhoto && (
                 <div
-                    className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+                    className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
                     onClick={() => setActiveModalPhoto(null)}
                 >
                     <div
-                        className="bg-piaud-ivory rounded-lg max-w-2xl w-full p-6 space-y-4 shadow-card-hover border border-piaud-border animate-fade-in"
+                        className="bg-[#FAF6EC] rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-neu-raised border border-[#E3DAC7] animate-spring-pop"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="flex items-center justify-between pb-3 border-b border-piaud-border">
-                            <span className="text-xs font-bold uppercase text-piaud-terracotta bg-piaud-terracotta/10 border border-piaud-terracotta/20 px-2.5 py-1 rounded">
+                        <div className="flex items-center justify-between pb-3 border-b border-[#E3DAC7]">
+                            <span className="text-xs font-bold uppercase text-[#C2613A] bg-[#F2ECE0] border border-[#E3DAC7] px-2.5 py-1 rounded">
                                 {activeModalPhoto.category}
                             </span>
                             <button
                                 type="button"
                                 onClick={() => setActiveModalPhoto(null)}
-                                className="w-8 h-8 rounded-md bg-piaud-ivory-dark text-piaud-slate hover:bg-piaud-border border border-piaud-border flex items-center justify-center font-bold text-sm"
+                                className="w-8 h-8 rounded-lg bg-[#F2ECE0] text-piaud-slate hover:bg-[#E3DAC7] border border-[#E3DAC7] flex items-center justify-center font-bold text-sm active:scale-90 transition-transform"
                             >
                                 ✕
                             </button>
                         </div>
 
-                        <div className="rounded-md overflow-hidden border border-piaud-border shadow-soft">
+                        <div className="rounded-xl overflow-hidden border border-[#E3DAC7] shadow-soft">
                             <img
                                 src={activeModalPhoto.photoUrl}
                                 alt={activeModalPhoto.title}

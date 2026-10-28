@@ -11,7 +11,7 @@ export const ScrollProgress: React.FC = () => {
             const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
             
             setScrollPercent(Math.min(100, Math.max(0, Math.round(progress))));
-            setIsVisible(scrollTop > 120);
+            setIsVisible(scrollTop > 100);
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -27,8 +27,6 @@ export const ScrollProgress: React.FC = () => {
         });
     };
 
-    if (!isVisible) return null;
-
     // Radius & Circumference for circular progress ring
     const radius = 17;
     const circumference = 2 * Math.PI * radius;
@@ -37,13 +35,15 @@ export const ScrollProgress: React.FC = () => {
     return (
         <aside
             aria-label="Progress scroll dan tombol ke atas"
-            className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 animate-fade-in"
+            className={`fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 transform transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+                isVisible ? 'translate-y-0 scale-100 pointer-events-auto' : 'translate-y-16 scale-75 pointer-events-none'
+            }`}
         >
             <button
                 type="button"
                 onClick={scrollToTop}
                 title={`Sudah scroll ${scrollPercent}%. Klik untuk kembali ke atas`}
-                className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-full neu-card flex items-center justify-center bg-[#FAF6EC] border border-[#E3DAC7] text-[#0F4C3A] hover:text-[#0A3427] shadow-[3px_3px_8px_#D4CCC0,-3px_-3px_8px_#FFFFFF] hover:shadow-[5px_5px_12px_#c8bfb2,-5px_-5px_12px_#FFFFFF] transition-all duration-200 transform hover:-translate-y-1 active:translate-y-0"
+                className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-full neu-card flex items-center justify-center bg-[#FAF6EC] border border-[#E3DAC7] text-[#0F4C3A] hover:text-[#0A3427] shadow-[3px_3px_8px_#D4CCC0,-3px_-3px_8px_#FFFFFF] hover:shadow-[5px_5px_14px_#c8bfb2,-5px_-5px_14px_#FFFFFF] transition-all duration-200 transform hover:-translate-y-1.5 active:translate-y-1 active:scale-90"
             >
                 {/* SVG Progress Circle */}
                 <svg className="w-11 h-11 sm:w-12 sm:h-12 -rotate-90 transform" viewBox="0 0 44 44">
@@ -55,7 +55,6 @@ export const ScrollProgress: React.FC = () => {
                         fill="transparent"
                         stroke="#E3DAC7"
                         strokeWidth="2.5"
-                        className="opacity-40"
                     />
                     {/* Active Progress Ring */}
                     <circle
@@ -74,7 +73,7 @@ export const ScrollProgress: React.FC = () => {
 
                 {/* Inner Content: Upward Arrow (Default) / Percentage (Hover) */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span className="group-hover:hidden text-[#0F4C3A] font-bold text-xs sm:text-sm transition-opacity">
+                    <span className="group-hover:hidden text-[#0F4C3A] font-bold text-xs sm:text-sm transform group-hover:-translate-y-0.5 transition-transform">
                         ↑
                     </span>
                     <span className="hidden group-hover:block font-mono text-[9px] sm:text-[10px] font-bold text-[#0F4C3A] tracking-tighter">

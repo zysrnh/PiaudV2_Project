@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 
 export const Navbar: React.FC = () => {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+    const [isScrolled, setIsScrolled] = useState(false);
     const { url } = usePage();
 
     const waLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 40);
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const toggleSubmenu = (label: string) => {
         setOpenSubmenu(openSubmenu === label ? null : label);
@@ -20,9 +29,9 @@ export const Navbar: React.FC = () => {
     };
 
     return (
-        <header className="w-full bg-piaud-ivory/95 backdrop-blur-sm border-b border-piaud-border sticky top-0 z-40 shadow-soft">
-            {/* 1. Top Bar */}
-            <div className="bg-piaud-emerald text-piaud-ivory border-b border-piaud-emerald-dark text-xs leading-normal py-1.5 sm:py-2">
+        <header className="w-full bg-[#FAF6EC] border-b border-[#E3DAC7] sticky top-0 z-40 shadow-soft">
+            {/* 1. Top Bar (Solid Deep Forest Emerald) */}
+            <div className={`bg-piaud-emerald text-piaud-ivory border-b border-piaud-emerald-dark text-xs leading-normal transition-all duration-200 ${isScrolled ? 'py-1' : 'py-1.5 sm:py-2'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
                     {/* Left: Institution & Program Identity */}
                     <div className="flex items-center gap-2 truncate">
@@ -39,7 +48,7 @@ export const Navbar: React.FC = () => {
                     <div className="flex items-center gap-3 sm:gap-4 text-xs text-white/90 shrink-0">
                         <a 
                             href={`tel:${siteConfig.phone.replace(/[^0-9]/g, '')}`} 
-                            className="hidden sm:inline-flex items-center gap-1.5 text-white/90 hover:text-white transition-colors"
+                            className="hidden sm:inline-flex items-center gap-1.5 text-white/90 hover:text-white transition-colors tactile-press"
                         >
                             <svg className="w-3.5 h-3.5 fill-current opacity-80" viewBox="0 0 24 24">
                                 <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
@@ -49,14 +58,14 @@ export const Navbar: React.FC = () => {
 
                         <span className="hidden sm:inline text-white/40">|</span>
 
-                        {/* White SVG Social Icons */}
+                        {/* White SVG Social Icons with Interactive Spring Hover */}
                         <div className="flex items-center gap-3">
                             {/* Instagram */}
                             <a
                                 href="https://instagram.com/piaud_iaipersis"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white/80 hover:text-white hover:scale-110 transition-all"
+                                className="text-white/80 hover:text-white transform hover:scale-125 hover:-translate-y-0.5 active:scale-95 transition-all duration-150"
                                 title="Instagram PIAUD"
                             >
                                 <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -69,7 +78,7 @@ export const Navbar: React.FC = () => {
                                 href="https://youtube.com/@piaudiaipersis"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white/80 hover:text-white hover:scale-110 transition-all"
+                                className="text-white/80 hover:text-white transform hover:scale-125 hover:-translate-y-0.5 active:scale-95 transition-all duration-150"
                                 title="YouTube PIAUD"
                             >
                                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -82,7 +91,7 @@ export const Navbar: React.FC = () => {
                                 href="https://facebook.com/piaud.iaipersis"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white/80 hover:text-white hover:scale-110 transition-all"
+                                className="text-white/80 hover:text-white transform hover:scale-125 hover:-translate-y-0.5 active:scale-95 transition-all duration-150"
                                 title="Facebook PIAUD"
                             >
                                 <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -95,7 +104,7 @@ export const Navbar: React.FC = () => {
                                 href={waLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white/80 hover:text-white hover:scale-110 transition-all"
+                                className="text-white/80 hover:text-white transform hover:scale-125 hover:-translate-y-0.5 active:scale-95 transition-all duration-150"
                                 title="WhatsApp Resmi"
                             >
                                 <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -107,17 +116,17 @@ export const Navbar: React.FC = () => {
                 </div>
             </div>
 
-            {/* 2. Main Navbar */}
-            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 py-3 flex items-center justify-between">
+            {/* 2. Main Navbar with Dynamic Responsive Height */}
+            <nav className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-16 py-2' : 'h-18 sm:h-20 py-3'}`}>
                 {/* Brand Identity with Official Campus Logo */}
                 <Link
                     href="/"
-                    className="flex items-center gap-2.5 sm:gap-3.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta rounded-md py-1 min-w-0"
+                    className="flex items-center gap-2.5 sm:gap-3.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta rounded-md py-1 min-w-0 tactile-press"
                 >
                     <img
                         src="/images/logo_kampus.png"
                         alt="Logo IAI Persis Bandung"
-                        className="h-9 sm:h-11 md:h-12 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform duration-150"
+                        className={`w-auto object-contain shrink-0 group-hover:scale-105 transition-all duration-200 ${isScrolled ? 'h-8 sm:h-10' : 'h-9 sm:h-11 md:h-12'}`}
                     />
                     <div className="flex flex-col min-w-0">
                         <span className="font-bold text-sm sm:text-base md:text-lg leading-tight text-piaud-slate tracking-tight group-hover:text-piaud-emerald transition-colors font-sans truncate">
@@ -129,7 +138,7 @@ export const Navbar: React.FC = () => {
                     </div>
                 </Link>
 
-                {/* Desktop Nav Links (Balanced & Spacious across center/right) */}
+                {/* Desktop Nav Links */}
                 <div className="hidden lg:flex items-center gap-1.5">
                     {siteConfig.navigation.map((item) => {
                         const active = isActive(item.href);
@@ -139,23 +148,23 @@ export const Navbar: React.FC = () => {
                                     <div className="flex items-center">
                                         <Link
                                             href={item.href}
-                                            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 ${
+                                            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 tactile-press ${
                                                 active
                                                     ? 'text-piaud-emerald bg-piaud-ivory-dark border border-piaud-border font-bold shadow-sm'
-                                                    : 'text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark/70'
+                                                    : 'text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark'
                                             }`}
                                         >
                                             <span>{item.label}</span>
-                                            <span className="text-xs text-piaud-slate-muted group-hover:text-piaud-emerald transition-transform group-hover:rotate-180">▾</span>
+                                            <span className="text-xs text-piaud-slate-muted group-hover:text-piaud-emerald transition-transform duration-200 group-hover:rotate-180">▾</span>
                                         </Link>
 
-                                        {/* Desktop Dropdown Submenu */}
-                                        <div className="absolute top-full left-0 mt-2 w-60 bg-piaud-ivory border border-piaud-border rounded-xl shadow-lg p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+                                        {/* Desktop Dropdown Submenu (Solid Cream, Spring Physics Reveal) */}
+                                        <div className="absolute top-full left-0 mt-2 w-60 bg-[#FAF6EC] border border-[#E3DAC7] rounded-xl shadow-card-hover p-2 transform origin-top scale-95 translate-y-1 invisible group-hover:visible group-hover:scale-100 group-hover:translate-y-0 transition-transform duration-200 z-50">
                                             {item.submenu.map((sub) => (
                                                 <Link
                                                     key={sub.label}
                                                     href={sub.href}
-                                                    className="block px-3.5 py-2.5 text-xs text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark rounded-lg transition-colors duration-150 font-medium"
+                                                    className="block px-3.5 py-2.5 text-xs text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark rounded-lg transition-colors duration-150 font-medium active:translate-x-1"
                                                 >
                                                     {sub.label}
                                                 </Link>
@@ -165,10 +174,10 @@ export const Navbar: React.FC = () => {
                                 ) : (
                                     <Link
                                         href={item.href}
-                                        className={`inline-flex items-center px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 ${
+                                        className={`inline-flex items-center px-3.5 py-2 rounded-lg text-sm font-semibold transition-all duration-150 tactile-press ${
                                             active
                                                 ? 'text-piaud-emerald bg-piaud-ivory-dark border border-piaud-border font-bold shadow-sm'
-                                                : 'text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark/70'
+                                                : 'text-piaud-slate hover:text-piaud-emerald hover:bg-piaud-ivory-dark'
                                         }`}
                                     >
                                         {item.label}
@@ -179,17 +188,17 @@ export const Navbar: React.FC = () => {
                     })}
                 </div>
 
-                {/* Mobile Menu Button */}
+                {/* Mobile Menu Button with Animated Toggle */}
                 <div className="flex items-center lg:hidden">
                     <button
                         type="button"
                         onClick={() => setIsMobileOpen(!isMobileOpen)}
                         aria-expanded={isMobileOpen}
                         aria-label="Buka menu navigasi"
-                        className="p-2 text-piaud-slate hover:bg-piaud-ivory-dark border border-piaud-border rounded-md transition-colors duration-150"
+                        className="p-2 text-piaud-slate hover:bg-piaud-ivory-dark border border-piaud-border rounded-md transition-all duration-150 active:scale-90"
                     >
                         <svg
-                            className="w-5 h-5"
+                            className="w-5 h-5 transition-transform duration-200"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -205,34 +214,34 @@ export const Navbar: React.FC = () => {
                 </div>
             </nav>
 
-            {/* Mobile Drawer */}
+            {/* Mobile Drawer (Solid Cream, Spring Slide Down) */}
             {isMobileOpen && (
-                <div className="lg:hidden border-t border-piaud-border bg-piaud-ivory-dark px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-card">
+                <div className="lg:hidden border-t border-[#E3DAC7] bg-[#F2ECE0] px-4 pt-3 pb-6 space-y-2 animate-drawer-spring shadow-card">
                     <div className="flex flex-col space-y-1">
                         {siteConfig.navigation.map((item) => {
                             const active = isActive(item.href);
                             return (
-                                <div key={item.label} className="pb-1 border-b border-piaud-border/40">
+                                <div key={item.label} className="pb-1 border-b border-[#E3DAC7]/60">
                                     {item.submenu ? (
                                         <div>
                                             <button
                                                 type="button"
                                                 onClick={() => toggleSubmenu(item.label)}
-                                                className={`w-full flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-lg transition-colors ${
-                                                    active ? 'text-piaud-emerald bg-piaud-ivory font-bold shadow-sm' : 'text-piaud-slate hover:bg-piaud-ivory/60'
+                                                className={`w-full flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-lg transition-colors active:scale-[0.98] ${
+                                                    active ? 'text-piaud-emerald bg-[#FAF6EC] font-bold shadow-sm' : 'text-piaud-slate hover:bg-[#FAF6EC]'
                                                 }`}
                                             >
                                                 <span>{item.label}</span>
-                                                <span className="text-xs">{openSubmenu === item.label ? '▲' : '▼'}</span>
+                                                <span className={`text-xs transition-transform duration-200 ${openSubmenu === item.label ? 'rotate-180' : ''}`}>▼</span>
                                             </button>
                                             {openSubmenu === item.label && (
-                                                <div className="pl-4 py-1.5 space-y-1 bg-piaud-ivory/70 rounded-md mt-1 border border-piaud-border/40">
+                                                <div className="pl-4 py-1.5 space-y-1 bg-[#FAF6EC] rounded-md mt-1 border border-[#E3DAC7]">
                                                     {item.submenu.map((sub) => (
                                                         <Link
                                                             key={sub.label}
                                                             href={sub.href}
                                                             onClick={() => setIsMobileOpen(false)}
-                                                            className="block py-2 px-3 text-xs text-piaud-slate hover:text-piaud-emerald font-medium rounded"
+                                                            className="block py-2 px-3 text-xs text-piaud-slate hover:text-piaud-emerald font-medium rounded active:translate-x-1"
                                                         >
                                                             {sub.label}
                                                         </Link>
@@ -244,8 +253,8 @@ export const Navbar: React.FC = () => {
                                         <Link
                                             href={item.href}
                                             onClick={() => setIsMobileOpen(false)}
-                                            className={`block py-2.5 px-3 text-sm font-semibold rounded-lg transition-colors ${
-                                                active ? 'text-piaud-emerald bg-piaud-ivory font-bold shadow-sm' : 'text-piaud-slate hover:bg-piaud-ivory/60'
+                                            className={`block py-2.5 px-3 text-sm font-semibold rounded-lg transition-colors active:scale-[0.98] ${
+                                                active ? 'text-piaud-emerald bg-[#FAF6EC] font-bold shadow-sm' : 'text-piaud-slate hover:bg-[#FAF6EC]'
                                             }`}
                                         >
                                             {item.label}
@@ -260,4 +269,3 @@ export const Navbar: React.FC = () => {
         </header>
     );
 };
-

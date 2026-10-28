@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { Navbar } from '@/Components/Public/Navbar';
 import { Footer } from '@/Components/Public/Footer';
@@ -10,8 +10,34 @@ import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 export default function Welcome() {
     const waPmbLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
 
+    // Senior Front-End Scroll Reveal Observer (Pure Physical Transforms - Zero Fade)
+    const [revealedSections, setRevealedSections] = useState<Record<string, boolean>>({
+        hero: true,
+    });
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.getAttribute('data-section');
+                        if (sectionId) {
+                            setRevealedSections((prev) => ({ ...prev, [sectionId]: true }));
+                        }
+                    }
+                });
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        const observedElements = document.querySelectorAll('[data-section]');
+        observedElements.forEach((el) => observer.observe(el));
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <div className="min-h-screen bg-piaud-ivory text-piaud-slate flex flex-col font-sans selection:bg-piaud-emerald selection:text-white">
+        <div className="min-h-screen bg-[#FAF6EC] text-piaud-slate flex flex-col font-sans selection:bg-piaud-emerald selection:text-white">
             {/* SEO & Meta Tags */}
             <Head>
                 <title>{`${siteConfig.programName} - ${siteConfig.institutionName}`}</title>
@@ -27,67 +53,67 @@ export default function Welcome() {
             {/* Sections 1 & 2: Top Bar & Navigation */}
             <Navbar />
 
-            <main className="flex-1 w-full animate-fade-in-up">
+            <main className="flex-1 w-full animate-spring-up">
                 {/* 3. HERO SECTION (Warm Ivory & Structured Proportional Layout) */}
-                <section className="bg-piaud-ivory border-b border-piaud-border">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-18 lg:py-20">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
+                <section data-section="hero" className="bg-[#FAF6EC] border-b border-[#E3DAC7]">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 md:py-18 lg:py-20">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-stretch">
                             {/* Left Column (7 cols): Direct Misi & Content */}
                             <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
-                                <div className="space-y-6">
+                                <div className="space-y-5 sm:space-y-6">
                                     <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-tight">
                                         {siteConfig.hero.heading}
                                     </h1>
 
-                                    <p className="text-base sm:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch]">
+                                    <p className="text-sm sm:text-base md:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch]">
                                         {siteConfig.hero.description}
                                     </p>
 
-                                    {/* Two CTAs (Solid Crisp Buttons) */}
-                                    <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                                    {/* Two CTAs (Solid Crisp Buttons with Tactile Physics) */}
+                                    <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
                                         <a
                                             href={waPmbLink}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center justify-center neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-150"
+                                            className="inline-flex items-center justify-center neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-150 tactile-press"
                                         >
                                             {siteConfig.hero.ctaPrimaryText}
                                         </a>
                                         <Link
                                             href="/akademik"
-                                            className="inline-flex items-center justify-center neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-150"
+                                            className="inline-flex items-center justify-center neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-150 tactile-press"
                                         >
                                             {siteConfig.hero.ctaSecondaryText}
                                         </Link>
                                     </div>
                                 </div>
 
-                                {/* Stats & Features Cards Row (Crisp rounded-md) */}
-                                <div className="pt-4 grid grid-cols-3 gap-3 sm:gap-4 text-xs">
-                                    <div className="neu-card neu-card-hover rounded-xl p-4 flex flex-col justify-center">
+                                {/* Stats & Features Cards Row (Interactive Spring Cards) */}
+                                <div className="pt-4 grid grid-cols-3 gap-2.5 sm:gap-4 text-xs">
+                                    <div className="neu-card neu-card-hover rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default">
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Sarjana (S.Pd.)</span>
-                                        <span className="text-piaud-slate-muted text-[11px]">Gelar Lulusan</span>
+                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px]">Gelar Lulusan</span>
                                     </div>
-                                    <div className="neu-card neu-card-hover rounded-xl p-4 flex flex-col justify-center">
+                                    <div className="neu-card neu-card-hover rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default">
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">144 SKS (8 Sem)</span>
-                                        <span className="text-piaud-slate-muted text-[11px]">Masa Studi</span>
+                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px]">Masa Studi</span>
                                     </div>
-                                    <div className="neu-card neu-card-hover rounded-xl p-4 flex flex-col justify-center">
+                                    <div className="neu-card neu-card-hover rounded-xl p-3 sm:p-4 flex flex-col justify-center cursor-default">
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Reguler &amp; Guru</span>
-                                        <span className="text-piaud-slate-muted text-[11px]">Kelas Kuliah</span>
+                                        <span className="text-piaud-slate-muted text-[10px] sm:text-[11px]">Kelas Kuliah</span>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Right Column (5 cols): Crisp Rounded Photo Frame */}
                             <div className="lg:col-span-5 h-full flex flex-col">
-                                <figure className="relative neu-card rounded-2xl p-3.5 transition-all duration-200 h-full flex flex-col justify-center">
+                                <figure className="relative neu-card rounded-2xl p-3 sm:p-3.5 transition-all duration-200 h-full flex flex-col justify-center group overflow-hidden">
                                     <Photo
                                         src={siteConfig.hero.photoUrl}
                                         alt={siteConfig.hero.photoAlt}
                                         priority={true}
                                         aspectRatio="auto"
-                                        className="w-full h-full min-h-[320px] lg:min-h-full object-cover rounded-md shadow-soft"
+                                        className="w-full h-full min-h-[280px] sm:min-h-[340px] lg:min-h-full object-cover rounded-xl shadow-soft group-hover:scale-103 transition-transform duration-300"
                                     />
                                 </figure>
                             </div>
@@ -96,26 +122,30 @@ export default function Welcome() {
                 </section>
 
                 {/* 4. SAMBUTAN KAPRODI (Warm Cream Alternating Section) */}
-                <section id="profil" className="bg-piaud-ivory-dark border-b border-piaud-border py-14 md:py-20">
+                <section
+                    id="profil"
+                    data-section="kaprodi"
+                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20"
+                >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+                        <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center ${revealedSections.kaprodi ? 'spring-reveal' : ''}`}>
                             {/* Kaprodi Photo & Profile */}
                             <div className="lg:col-span-4 space-y-4">
-                                <figure className="neu-card rounded-2xl p-4">
+                                <figure className="neu-card rounded-2xl p-4 group">
                                     <Photo
                                         src={siteConfig.kaprodi.photoUrl}
                                         alt={`Foto ${siteConfig.kaprodi.name}`}
                                         aspectRatio="3/4"
-                                        className="w-full h-auto rounded-md shadow-soft"
+                                        className="w-full h-auto rounded-xl shadow-soft group-hover:scale-102 transition-transform duration-200"
                                     />
                                     <figcaption className="mt-3.5 space-y-1 px-1">
                                         <p className="font-serif font-bold text-base sm:text-lg text-piaud-slate">
                                             {siteConfig.kaprodi.name}
                                         </p>
-                                        <p className="text-xs text-piaud-terracotta font-bold">
+                                        <p className="text-xs text-[#C2613A] font-bold">
                                             {siteConfig.kaprodi.title}
                                         </p>
-                                        <p className="text-xs text-piaud-slate-muted pt-1 border-t border-piaud-border">
+                                        <p className="text-xs text-piaud-slate-muted pt-1 border-t border-[#E3DAC7]">
                                             Fakultas Tarbiyah · IAI Persis Bandung
                                         </p>
                                     </figcaption>
@@ -125,7 +155,7 @@ export default function Welcome() {
                             {/* Editorial Content */}
                             <div className="lg:col-span-8 space-y-5">
                                 <div>
-                                    <blockquote className="font-serif text-xl sm:text-2xl text-piaud-slate font-bold leading-relaxed border-l-4 border-piaud-terracotta pl-4">
+                                    <blockquote className="font-serif text-xl sm:text-2xl text-piaud-slate font-bold leading-relaxed border-l-4 border-[#C2613A] pl-4">
                                         &ldquo;{siteConfig.kaprodi.pullQuote}&rdquo;
                                     </blockquote>
                                 </div>
@@ -138,9 +168,9 @@ export default function Welcome() {
                                     ))}
                                 </div>
 
-                                <div className="pt-4 border-t border-piaud-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div className="pt-4 border-t border-[#E3DAC7] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-md bg-piaud-emerald text-piaud-ivory flex items-center justify-center font-serif text-xs font-bold shrink-0">
+                                        <div className="w-8 h-8 rounded-lg bg-[#0F4C3A] text-white flex items-center justify-center font-serif text-xs font-bold shrink-0 shadow-sm">
                                             PS
                                         </div>
                                         <p className="text-xs text-piaud-slate-muted font-medium">
@@ -149,7 +179,7 @@ export default function Welcome() {
                                     </div>
                                     <Link
                                         href="/profil"
-                                        className="inline-flex items-center gap-1.5 text-xs font-bold text-piaud-emerald hover:text-piaud-emerald-dark transition-colors shrink-0"
+                                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transform hover:translate-x-1.5 active:translate-x-0 transition-transform shrink-0"
                                     >
                                         <span>Selengkapnya di Profil Prodi</span>
                                         <span>&rarr;</span>
@@ -161,7 +191,11 @@ export default function Welcome() {
                 </section>
 
                 {/* 5. PILAR KEUNGGULAN (Clean Ivory Section with Crisp Cards) */}
-                <section id="kurikulum" className="bg-piaud-ivory border-b border-piaud-border py-14 md:py-20">
+                <section
+                    id="kurikulum"
+                    data-section="pillars"
+                    className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20"
+                >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
                             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate leading-tight">
@@ -173,16 +207,18 @@ export default function Welcome() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {siteConfig.pillars.map((pillar) => (
+                            {siteConfig.pillars.map((pillar, idx) => (
                                 <div
                                     key={pillar.number}
-                                    className="neu-card neu-card-hover rounded-2xl p-6 flex flex-col justify-between group"
+                                    className={`neu-card neu-card-hover rounded-2xl p-6 flex flex-col justify-between group cursor-default ${
+                                        revealedSections.pillars ? `spring-reveal stagger-${idx + 1}` : ''
+                                    }`}
                                 >
                                     <div className="space-y-3.5">
-                                        <div className="w-10 h-10 rounded-md bg-piaud-emerald text-piaud-ivory font-serif text-lg font-bold flex items-center justify-center shadow-soft">
+                                        <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-200">
                                             {pillar.number}
                                         </div>
-                                        <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate group-hover:text-piaud-emerald transition-colors">
+                                        <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate group-hover:text-[#0F4C3A] transition-colors">
                                             {pillar.title}
                                         </h3>
                                         <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
@@ -190,12 +226,12 @@ export default function Welcome() {
                                         </p>
                                     </div>
 
-                                    <div className="pt-4 mt-5 border-t border-piaud-border space-y-2">
+                                    <div className="pt-4 mt-5 border-t border-[#E3DAC7] space-y-2">
                                         <span className="text-xs font-bold text-piaud-slate block">Fokus Capaian:</span>
                                         <ul className="space-y-1.5 text-xs text-piaud-slate-muted">
-                                            {pillar.deliverables.map((item, idx) => (
-                                                <li key={idx} className="flex items-center gap-2">
-                                                    <span className="w-1.5 h-1.5 bg-piaud-terracotta rounded-full shrink-0"></span>
+                                            {pillar.deliverables.map((item, dIdx) => (
+                                                <li key={dIdx} className="flex items-center gap-2 transform group-hover:translate-x-1 transition-transform duration-150">
+                                                    <span className="w-1.5 h-1.5 bg-[#C2613A] rounded-full shrink-0"></span>
                                                     <span>{item}</span>
                                                 </li>
                                             ))}
@@ -208,19 +244,23 @@ export default function Welcome() {
                         <div className="mt-8 text-center">
                             <Link
                                 href="/akademik"
-                                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-piaud-emerald hover:text-piaud-emerald-dark neu-btn px-6 py-3 rounded-xl transition-all"
+                                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F4C3A] hover:text-[#0A3427] neu-btn px-6 py-3.5 rounded-xl transition-all tactile-press"
                             >
                                 <span>Lihat Struktur Kurikulum &amp; Sebaran Mata Kuliah</span>
-                                <span>&rarr;</span>
+                                <span className="transform group-hover:translate-x-1 transition-transform">&rarr;</span>
                             </Link>
                         </div>
                     </div>
                 </section>
 
                 {/* 6. DOSEN & TENAGA PENGAJAR (Warm Cream Grid) */}
-                <section id="dosen" className="bg-piaud-ivory-dark border-b border-piaud-border py-14 md:py-20">
+                <section
+                    id="dosen"
+                    data-section="lecturers"
+                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20"
+                >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-piaud-border">
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7]">
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Dosen Pengampu &amp; Pakar Tumbuh Kembang
@@ -228,34 +268,39 @@ export default function Welcome() {
                             </div>
                             <Link
                                 href="/dosen"
-                                className="inline-flex items-center gap-1.5 text-xs font-bold text-piaud-emerald hover:text-piaud-emerald-dark transition-colors self-start md:self-auto"
+                                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transform hover:translate-x-1.5 active:translate-x-0 transition-transform self-start md:self-auto"
                             >
                                 <span>Lihat Semua Dosen</span>
                                 <span>&rarr;</span>
                             </Link>
                         </div>
 
-                        {/* Crisp Cards Grid */}
+                        {/* Crisp Responsive Cards Grid with Spring Dynamics */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.lecturers.map((lecturer, index) => (
                                 <article
                                     key={index}
-                                    className="neu-card neu-card-hover rounded-2xl p-4 group"
+                                    className={`neu-card neu-card-hover rounded-2xl p-4 group cursor-default ${
+                                        revealedSections.lecturers ? `spring-reveal stagger-${index + 1}` : ''
+                                    }`}
                                 >
-                                    <Photo
-                                        src={lecturer.photoUrl}
-                                        alt={`Foto ${lecturer.name}`}
-                                        aspectRatio="1/1"
-                                        className="w-full h-auto rounded-md shadow-soft"
-                                    />
+                                    <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
+                                        <Photo
+                                            src={lecturer.photoUrl}
+                                            alt={`Foto ${lecturer.name}`}
+                                            aspectRatio="1/1"
+                                            className="w-full h-auto rounded-xl shadow-soft group-hover:scale-106 transition-transform duration-300"
+                                        />
+                                    </div>
+
                                     <div className="mt-3.5 space-y-1.5">
-                                        <span className="text-[11px] font-bold tracking-wider text-piaud-terracotta uppercase block">
+                                        <span className="text-[11px] font-bold tracking-wider text-[#C2613A] uppercase block">
                                             {lecturer.role}
                                         </span>
-                                        <h3 className="font-serif font-bold text-base text-piaud-slate leading-snug group-hover:text-piaud-emerald transition-colors">
+                                        <h3 className="font-serif font-bold text-base text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
                                             {lecturer.name}
                                         </h3>
-                                        <div className="pt-2 border-t border-piaud-border/80 text-xs text-piaud-slate-muted space-y-1">
+                                        <div className="pt-2 border-t border-[#E3DAC7] text-xs text-piaud-slate-muted space-y-1">
                                             <p className="font-mono text-[11px] text-slate-500">
                                                 NIP: {lecturer.nip}
                                             </p>
@@ -271,9 +316,13 @@ export default function Welcome() {
                 </section>
 
                 {/* GALERI DOKUMENTASI (Warm Ivory Grid) */}
-                <section id="galeri" className="bg-piaud-ivory border-b border-piaud-border py-14 md:py-20">
+                <section
+                    id="galeri"
+                    data-section="gallery"
+                    className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20"
+                >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-piaud-border">
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7]">
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Galeri Praktikum &amp; Observasi Lapangan
@@ -281,7 +330,7 @@ export default function Welcome() {
                             </div>
                             <Link
                                 href="/galeri"
-                                className="inline-flex items-center gap-1.5 text-xs font-bold text-piaud-emerald hover:text-piaud-emerald-dark transition-colors self-start md:self-auto"
+                                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transform hover:translate-x-1.5 active:translate-x-0 transition-transform self-start md:self-auto"
                             >
                                 <span>Buka Galeri Lengkap</span>
                                 <span>&rarr;</span>
@@ -292,19 +341,23 @@ export default function Welcome() {
                             {siteConfig.gallery.map((item, index) => (
                                 <figure
                                     key={index}
-                                    className="neu-card neu-card-hover rounded-2xl p-3.5 group overflow-hidden"
+                                    className={`neu-card neu-card-hover rounded-2xl p-3.5 group overflow-hidden cursor-default ${
+                                        revealedSections.gallery ? `spring-reveal stagger-${index + 1}` : ''
+                                    }`}
                                 >
-                                    <Photo
-                                        src={item.photoUrl}
-                                        alt={item.title}
-                                        aspectRatio="4/3"
-                                        className="w-full h-auto rounded-md shadow-soft"
-                                    />
+                                    <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
+                                        <Photo
+                                            src={item.photoUrl}
+                                            alt={item.title}
+                                            aspectRatio="4/3"
+                                            className="w-full h-auto rounded-xl shadow-soft group-hover:scale-106 transition-transform duration-300"
+                                        />
+                                    </div>
                                     <figcaption className="mt-2.5 px-1 space-y-1">
-                                        <span className="text-[11px] font-bold uppercase tracking-wider text-piaud-terracotta block">
+                                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#C2613A] block">
                                             {item.category}
                                         </span>
-                                        <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug group-hover:text-piaud-emerald transition-colors">
+                                        <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug group-hover:text-[#0F4C3A] transition-colors">
                                             {item.title}
                                         </h3>
                                     </figcaption>
@@ -315,9 +368,13 @@ export default function Welcome() {
                 </section>
 
                 {/* 7. ARTIKEL PARENTING ISLAMI (Warm Cream Alternating Section) */}
-                <section id="artikel" className="bg-piaud-ivory-dark border-b border-piaud-border py-14 md:py-20">
+                <section
+                    id="artikel"
+                    data-section="articles"
+                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20"
+                >
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-piaud-border">
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7]">
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Artikel Parenting Islami &amp; Khazanah AUD
@@ -325,33 +382,35 @@ export default function Welcome() {
                             </div>
                             <Link
                                 href="/artikel"
-                                className="inline-flex items-center gap-1.5 text-xs font-bold text-piaud-emerald hover:text-piaud-emerald-dark transition-colors self-start md:self-auto"
+                                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transform hover:translate-x-1.5 active:translate-x-0 transition-transform self-start md:self-auto"
                             >
                                 <span>Lihat Semua Artikel</span>
                                 <span>&rarr;</span>
                             </Link>
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                        <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch ${revealedSections.articles ? 'spring-reveal' : ''}`}>
                             {/* Featured Article Card */}
-                            <article className="lg:col-span-6 neu-card neu-card-hover rounded-2xl p-5 flex flex-col justify-between group h-full">
+                            <article className="lg:col-span-6 neu-card neu-card-hover rounded-2xl p-5 flex flex-col justify-between group h-full cursor-default">
                                 <div className="space-y-3.5">
-                                    <Photo
-                                        src={siteConfig.articles.featured.photoUrl}
-                                        alt={siteConfig.articles.featured.title}
-                                        aspectRatio="16/9"
-                                        className="w-full h-auto rounded-md shadow-soft"
-                                    />
+                                    <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
+                                        <Photo
+                                            src={siteConfig.articles.featured.photoUrl}
+                                            alt={siteConfig.articles.featured.title}
+                                            aspectRatio="16/9"
+                                            className="w-full h-auto rounded-xl shadow-soft group-hover:scale-104 transition-transform duration-300"
+                                        />
+                                    </div>
                                     <div className="space-y-2 px-1">
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted flex-wrap">
-                                            <span className="bg-piaud-emerald text-piaud-ivory px-2 py-0.5 rounded font-bold text-[11px]">
+                                            <span className="bg-[#0F4C3A] text-white px-2.5 py-0.5 rounded-md font-bold text-[11px]">
                                                 {siteConfig.articles.featured.category}
                                             </span>
                                             <span>{siteConfig.articles.featured.publishedAt}</span>
                                             <span>&bull;</span>
                                             <span>{siteConfig.articles.featured.readTime}</span>
                                         </div>
-                                        <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug group-hover:text-piaud-emerald transition-colors">
+                                        <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
                                             {siteConfig.articles.featured.title}
                                         </h3>
                                         <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
@@ -361,15 +420,17 @@ export default function Welcome() {
                                 </div>
                             </article>
 
-                            {/* List Articles Stack */}
+                            {/* List Articles Stack (3-Card Stack Flushed Bottom) */}
                             <div className="lg:col-span-6 flex flex-col justify-between gap-4 h-full">
-                                {siteConfig.articles.list.map((article) => (
+                                {siteConfig.articles.list.map((article, idx) => (
                                     <article
                                         key={article.id}
-                                        className="neu-card neu-card-hover rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group"
+                                        className={`neu-card neu-card-hover rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group cursor-default ${
+                                            revealedSections.articles ? `stagger-${idx + 1}` : ''
+                                        }`}
                                     >
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
-                                            <span className="text-piaud-terracotta font-bold text-[11px] bg-amber-100/70 px-2 py-0.5 rounded border border-amber-200/60">
+                                            <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7]">
                                                 {article.category}
                                             </span>
                                             <span>&bull;</span>
@@ -377,7 +438,7 @@ export default function Welcome() {
                                             <span>&bull;</span>
                                             <span>{article.readTime}</span>
                                         </div>
-                                        <h3 className="font-serif text-sm sm:text-base font-bold text-piaud-slate leading-snug group-hover:text-piaud-emerald transition-colors">
+                                        <h3 className="font-serif text-sm sm:text-base font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
                                             {article.title}
                                         </h3>
                                         <p className="text-xs text-piaud-slate-muted leading-relaxed line-clamp-2">
@@ -402,5 +463,3 @@ export default function Welcome() {
         </div>
     );
 }
-
-
