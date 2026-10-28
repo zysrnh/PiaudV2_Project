@@ -10,7 +10,7 @@ import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 export default function Welcome() {
     const waPmbLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
 
-    // Active in-view state for scroll entrance animations
+    // Active in-view state that resets on scroll away and re-animates on scroll into view!
     const [inView, setInView] = useState<Record<string, boolean>>({
         hero: true, // Hero animates immediately on mount
     });
@@ -20,8 +20,11 @@ export default function Welcome() {
             (entries) => {
                 entries.forEach((entry) => {
                     const sectionId = entry.target.getAttribute('data-section');
-                    if (sectionId && entry.isIntersecting) {
-                        setInView((prev) => ({ ...prev, [sectionId]: true }));
+                    if (sectionId) {
+                        setInView((prev) => ({
+                            ...prev,
+                            [sectionId]: entry.isIntersecting,
+                        }));
                     }
                 });
             },
@@ -54,7 +57,7 @@ export default function Welcome() {
                 <section data-section="hero" className="bg-[#FAF6EC] border-b border-[#E3DAC7]">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 md:py-18 lg:py-20">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-stretch">
-                            {/* Left Column (7 cols): Bold Slide-Left Entrance on Mount */}
+                            {/* Left Column (7 cols): Measured Slide-Left Entrance */}
                             <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
                                 <div className="space-y-5 sm:space-y-6">
                                     <h1
@@ -83,14 +86,14 @@ export default function Welcome() {
                                             href={waPmbLink}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="group inline-flex items-center justify-center gap-2 neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-150 tactile-press"
+                                            className="group inline-flex items-center justify-center gap-2 neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-200 tactile-press"
                                         >
                                             <span>{siteConfig.hero.ctaPrimaryText}</span>
                                             <span className="transform group-hover:translate-x-2 transition-transform duration-200">→</span>
                                         </a>
                                         <Link
                                             href="/akademik"
-                                            className="group inline-flex items-center justify-center gap-2 neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-150 tactile-press"
+                                            className="group inline-flex items-center justify-center gap-2 neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-200 tactile-press"
                                         >
                                             <span>{siteConfig.hero.ctaSecondaryText}</span>
                                             <span className="transform group-hover:translate-x-2 transition-transform duration-200">→</span>
@@ -105,7 +108,7 @@ export default function Welcome() {
                                             inView.hero ? 'animate-slide-up delay-1' : ''
                                         }`}
                                     >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] group-hover:scale-105 transition-all">Sarjana (S.Pd.)</span>
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Sarjana (S.Pd.)</span>
                                         <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Gelar Lulusan</span>
                                     </div>
                                     <div
@@ -113,7 +116,7 @@ export default function Welcome() {
                                             inView.hero ? 'animate-slide-up delay-2' : ''
                                         }`}
                                     >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] group-hover:scale-105 transition-all">144 SKS (8 Sem)</span>
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">144 SKS (8 Sem)</span>
                                         <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Masa Studi</span>
                                     </div>
                                     <div
@@ -121,13 +124,13 @@ export default function Welcome() {
                                             inView.hero ? 'animate-slide-up delay-3' : ''
                                         }`}
                                     >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] group-hover:scale-105 transition-all">Reguler &amp; Guru</span>
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Reguler &amp; Guru</span>
                                         <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Kelas Kuliah</span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Right Column (5 cols): Photo Card Hover Lift (Whole Card Floats) */}
+                            {/* Right Column (5 cols): Photo Card Smooth Hover Lift (Whole Card Floats) */}
                             <div className="lg:col-span-5 h-full flex flex-col">
                                 <figure
                                     className={`relative neu-card card-interactive rounded-2xl p-3 sm:p-3.5 h-full flex flex-col justify-center group overflow-hidden ${
@@ -153,7 +156,7 @@ export default function Welcome() {
                 <section id="profil" data-section="kaprodi" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
-                            {/* Kaprodi Photo Card with Card Hover Lift */}
+                            {/* Kaprodi Photo Card with Smooth Card Hover Lift */}
                             <div className={`lg:col-span-4 space-y-4 ${inView.kaprodi ? 'animate-slide-left' : ''}`}>
                                 <figure className="neu-card card-interactive rounded-2xl p-4 group">
                                     <div className="overflow-hidden rounded-xl">
@@ -178,7 +181,7 @@ export default function Welcome() {
                                 </figure>
                             </div>
 
-                            {/* Editorial Content with Bold Slide-Right */}
+                            {/* Editorial Content with Measured Slide-Right */}
                             <div className={`lg:col-span-8 space-y-5 ${inView.kaprodi ? 'animate-slide-right delay-1' : ''}`}>
                                 <div>
                                     <blockquote className="font-serif text-xl sm:text-2xl text-piaud-slate font-bold leading-relaxed border-l-4 border-[#C2613A] pl-4">
@@ -216,7 +219,7 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 5. PILAR KEUNGGULAN (Clean Ivory Section with Staggered Scroll Cards) */}
+                {/* 5. PILAR KEUNGGULAN (Clean Ivory Section with Measured Staggered Scroll Cards) */}
                 <section id="kurikulum" data-section="pillars" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className={`text-center max-w-2xl mx-auto mb-10 space-y-2 ${inView.pillars ? 'animate-slide-up' : ''}`}>
@@ -237,7 +240,7 @@ export default function Welcome() {
                                     }`}
                                 >
                                     <div className="space-y-3.5">
-                                        <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-120 group-hover:rotate-12 transition-transform duration-250">
+                                        <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-115 group-hover:rotate-6 transition-transform duration-300">
                                             {pillar.number}
                                         </div>
                                         <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate group-hover:text-[#0F4C3A] transition-colors">
@@ -252,7 +255,7 @@ export default function Welcome() {
                                         <span className="text-xs font-bold text-piaud-slate block">Fokus Capaian:</span>
                                         <ul className="space-y-1.5 text-xs text-piaud-slate-muted">
                                             {pillar.deliverables.map((item, dIdx) => (
-                                                <li key={dIdx} className="flex items-center gap-2 transform group-hover:translate-x-2 transition-transform duration-150">
+                                                <li key={dIdx} className="flex items-center gap-2 transform group-hover:translate-x-2 transition-transform duration-200">
                                                     <span className="w-1.5 h-1.5 bg-[#C2613A] rounded-full shrink-0"></span>
                                                     <span>{item}</span>
                                                 </li>
@@ -293,7 +296,7 @@ export default function Welcome() {
                             </Link>
                         </div>
 
-                        {/* Crisp Responsive Cards Grid with Card Hover Lift */}
+                        {/* Crisp Responsive Cards Grid with Smooth Card Hover Lift */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.lecturers.map((lecturer, index) => (
                                 <article
@@ -312,7 +315,7 @@ export default function Welcome() {
                                     </div>
 
                                     <div className="mt-3.5 space-y-1.5">
-                                        <span className="text-[11px] font-bold tracking-wider text-[#C2613A] uppercase block transform group-hover:translate-x-1.5 transition-transform">
+                                        <span className="text-[11px] font-bold tracking-wider text-[#C2613A] uppercase block transform group-hover:translate-x-1.5 transition-transform duration-200">
                                             {lecturer.role}
                                         </span>
                                         <h3 className="font-serif font-bold text-base text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
@@ -368,7 +371,7 @@ export default function Welcome() {
                                         />
                                     </div>
                                     <figcaption className="mt-2.5 px-1 space-y-1">
-                                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#C2613A] block transform group-hover:translate-x-1.5 transition-transform">
+                                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#C2613A] block transform group-hover:translate-x-1.5 transition-transform duration-200">
                                             {item.category}
                                         </span>
                                         <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug group-hover:text-[#0F4C3A] transition-colors">
@@ -442,7 +445,7 @@ export default function Welcome() {
                                         }`}
                                     >
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
-                                            <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7] transform group-hover:translate-x-1.5 transition-transform">
+                                            <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7] transform group-hover:translate-x-1.5 transition-transform duration-200">
                                                 {article.category}
                                             </span>
                                             <span>&bull;</span>
