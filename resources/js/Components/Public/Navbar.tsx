@@ -22,29 +22,29 @@ export const Navbar: React.FC = () => {
     return (
         <header className="w-full bg-piaud-ivory/95 backdrop-blur-sm border-b border-piaud-border sticky top-0 z-40 shadow-soft">
             {/* 1. Top Bar */}
-            <div className="bg-piaud-emerald text-piaud-ivory border-b border-piaud-emerald-dark text-xs leading-normal py-2">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
+            <div className="bg-piaud-emerald text-piaud-ivory border-b border-piaud-emerald-dark text-xs leading-normal py-1.5 sm:py-2">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
                     {/* Left: Institution & Program Identity */}
-                    <div className="flex items-center gap-2 flex-wrap text-xs">
-                        <span className="font-bold tracking-wider uppercase text-white">
+                    <div className="flex items-center gap-2 truncate">
+                        <span className="font-bold tracking-wider uppercase text-white text-[11px] sm:text-xs shrink-0">
                             {siteConfig.institutionName}
                         </span>
-                        <span className="text-white/40">|</span>
-                        <span className="text-white/90 font-medium">
+                        <span className="text-white/40 hidden md:inline">|</span>
+                        <span className="text-white/90 font-medium hidden md:inline truncate text-[11px] sm:text-xs">
                             {siteConfig.facultyName} · {siteConfig.programName}
                         </span>
                     </div>
 
                     {/* Right: Phone Number & White SVG Social Media Icons */}
-                    <div className="flex items-center gap-4 text-xs text-white/90 flex-wrap">
+                    <div className="flex items-center gap-3 sm:gap-4 text-xs text-white/90 shrink-0">
                         <a 
                             href={`tel:${siteConfig.phone.replace(/[^0-9]/g, '')}`} 
-                            className="inline-flex items-center gap-1.5 text-white/90 hover:text-white transition-colors"
+                            className="hidden sm:inline-flex items-center gap-1.5 text-white/90 hover:text-white transition-colors"
                         >
                             <svg className="w-3.5 h-3.5 fill-current opacity-80" viewBox="0 0 24 24">
                                 <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                             </svg>
-                            <span className="font-semibold text-white">{siteConfig.phone}</span>
+                            <span className="font-semibold text-white text-[11px] sm:text-xs">{siteConfig.phone}</span>
                         </a>
 
                         <span className="hidden sm:inline text-white/40">|</span>
@@ -108,22 +108,22 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* 2. Main Navbar */}
-            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 py-3 flex items-center justify-between">
+            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 py-3 flex items-center justify-between">
                 {/* Brand Identity with Official Campus Logo */}
                 <Link
                     href="/"
-                    className="flex items-center gap-3.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta rounded-md py-1"
+                    className="flex items-center gap-2.5 sm:gap-3.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta rounded-md py-1 min-w-0"
                 >
                     <img
                         src="/images/logo_kampus.png"
                         alt="Logo IAI Persis Bandung"
-                        className="h-11 sm:h-12 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform duration-150"
+                        className="h-9 sm:h-11 md:h-12 w-auto object-contain shrink-0 group-hover:scale-105 transition-transform duration-150"
                     />
-                    <div className="flex flex-col">
-                        <span className="font-bold text-base sm:text-lg leading-tight text-piaud-slate tracking-tight group-hover:text-piaud-emerald transition-colors font-sans">
+                    <div className="flex flex-col min-w-0">
+                        <span className="font-bold text-sm sm:text-base md:text-lg leading-tight text-piaud-slate tracking-tight group-hover:text-piaud-emerald transition-colors font-sans truncate">
                             PIAUD IAI Persis
                         </span>
-                        <span className="text-[11px] sm:text-xs text-piaud-slate-muted font-medium mt-0.5">
+                        <span className="text-[10px] sm:text-xs text-piaud-slate-muted font-medium mt-0.5 hidden sm:block truncate">
                             S1 Pendidikan Islam Anak Usia Dini
                         </span>
                     </div>
@@ -207,7 +207,7 @@ export const Navbar: React.FC = () => {
 
             {/* Mobile Drawer */}
             {isMobileOpen && (
-                <div className="xl:hidden border-t border-piaud-border bg-piaud-ivory-dark px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-card">
+                <div className="lg:hidden border-t border-piaud-border bg-piaud-ivory-dark px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-card">
                     <div className="flex flex-col space-y-1">
                         {siteConfig.navigation.map((item) => {
                             const active = isActive(item.href);
@@ -218,8 +218,8 @@ export const Navbar: React.FC = () => {
                                             <button
                                                 type="button"
                                                 onClick={() => toggleSubmenu(item.label)}
-                                                className={`w-full flex items-center justify-between py-2 px-3 text-sm font-semibold rounded-md transition-colors ${
-                                                    active ? 'text-piaud-emerald bg-piaud-ivory font-bold' : 'text-piaud-slate hover:bg-piaud-ivory/60'
+                                                className={`w-full flex items-center justify-between py-2.5 px-3 text-sm font-semibold rounded-lg transition-colors ${
+                                                    active ? 'text-piaud-emerald bg-piaud-ivory font-bold shadow-sm' : 'text-piaud-slate hover:bg-piaud-ivory/60'
                                                 }`}
                                             >
                                                 <span>{item.label}</span>
@@ -232,7 +232,7 @@ export const Navbar: React.FC = () => {
                                                             key={sub.label}
                                                             href={sub.href}
                                                             onClick={() => setIsMobileOpen(false)}
-                                                            className="block py-2 px-3 text-sm text-piaud-slate hover:text-piaud-emerald font-medium rounded"
+                                                            className="block py-2 px-3 text-xs text-piaud-slate hover:text-piaud-emerald font-medium rounded"
                                                         >
                                                             {sub.label}
                                                         </Link>
@@ -244,8 +244,8 @@ export const Navbar: React.FC = () => {
                                         <Link
                                             href={item.href}
                                             onClick={() => setIsMobileOpen(false)}
-                                            className={`block py-2 px-3 text-sm font-semibold rounded-md transition-colors ${
-                                                active ? 'text-piaud-emerald bg-piaud-ivory font-bold' : 'text-piaud-slate hover:bg-piaud-ivory/60'
+                                            className={`block py-2.5 px-3 text-sm font-semibold rounded-lg transition-colors ${
+                                                active ? 'text-piaud-emerald bg-piaud-ivory font-bold shadow-sm' : 'text-piaud-slate hover:bg-piaud-ivory/60'
                                             }`}
                                         >
                                             {item.label}
@@ -254,16 +254,6 @@ export const Navbar: React.FC = () => {
                                 </div>
                             );
                         })}
-                    </div>
-                    <div className="pt-2">
-                        <a
-                            href={waLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-full inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-xs font-bold py-2.5 px-4 rounded-md transition-all duration-150 shadow-sm border border-piaud-terracotta-dark"
-                        >
-                            Konsultasi WhatsApp PMB
-                        </a>
                     </div>
                 </div>
             )}
