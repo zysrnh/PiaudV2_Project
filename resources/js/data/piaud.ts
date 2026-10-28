@@ -142,7 +142,7 @@ export const siteConfig: SiteConfig = {
             href: "/profil",
             submenu: [
                 { label: "Visi & Misi", href: "/profil#visi-misi" },
-                { label: "Sambutan Kaprodi", href: "/profil#sambutan" },
+                { label: "Sambutan Kaprodi", href: "/sambutan-kaprodi" },
             ],
         },
         {

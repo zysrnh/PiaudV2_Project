@@ -100,6 +100,15 @@ export default function Profile() {
                                     <p key={idx}>{p}</p>
                                 ))}
                             </div>
+                            <div className="pt-2">
+                                <Link
+                                    href="/sambutan-kaprodi"
+                                    className="inline-flex items-center gap-2 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors group cursor-pointer"
+                                >
+                                    <span>Buka Halaman Khusus Sambutan Kaprodi</span>
+                                    <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">→</span>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -109,10 +118,10 @@ export default function Profile() {
                     {/* Visi Card */}
                     <div className={`lg:col-span-5 h-full ${inView['visi-misi'] ? 'animate-slide-left' : ''}`}>
                         <div className="neu-card-emerald card-interactive rounded-2xl p-7 sm:p-10 flex flex-col justify-between h-full group cursor-pointer">
-                            <div className="space-y-5">
-                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold tracking-wider uppercase border border-white/20">
-                                    <span>Visi Keislaman 2030</span>
-                                </div>
+                            <div className="space-y-4">
+                                <span className="text-xs font-bold tracking-widest text-[#E3DAC7] uppercase block">
+                                    Visi Keislaman 2030
+                                </span>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold leading-tight text-white group-hover:text-emerald-100 transition-colors">
                                     Visi Program Studi S1 PIAUD
                                 </h2>

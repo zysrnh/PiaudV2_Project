@@ -19,6 +19,10 @@ Route::get('/profil', function () {
     return Inertia::render('Public/Profile');
 })->name('profile');
 
+Route::get('/sambutan-kaprodi', function () {
+    return Inertia::render('Public/SambutanKaprodi');
+})->name('sambutan.kaprodi');
+
 Route::get('/akademik', function () {
     return Inertia::render('Public/Academic');
 })->name('academic');
