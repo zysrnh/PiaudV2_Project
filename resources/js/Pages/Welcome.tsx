@@ -55,13 +55,13 @@ export default function Welcome() {
                                         href={waPmbLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center bg-piaud-terracotta hover:bg-piaud-terracotta-dark text-white text-xs sm:text-sm font-bold px-6 py-3 rounded-md border border-piaud-terracotta-dark transition-all duration-150 shadow-sm hover:shadow active:translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-piaud-terracotta"
+                                        className="inline-flex items-center justify-center neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-150"
                                     >
                                         {siteConfig.hero.ctaPrimaryText}
                                     </a>
                                     <Link
                                         href="/akademik"
-                                        className="inline-flex items-center justify-center bg-piaud-ivory-dark hover:bg-piaud-ivory text-piaud-slate text-xs sm:text-sm font-semibold px-5 py-3 rounded-md border border-piaud-border shadow-soft hover:shadow transition-all duration-150"
+                                        className="inline-flex items-center justify-center neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-150"
                                     >
                                         {siteConfig.hero.ctaSecondaryText}
                                     </Link>
@@ -69,15 +69,15 @@ export default function Welcome() {
 
                                 {/* Stats & Features Cards Row (Crisp rounded-md) */}
                                 <div className="pt-3 grid grid-cols-3 gap-3 sm:gap-4 text-xs">
-                                    <div className="bg-piaud-ivory-dark border border-piaud-border rounded-md p-3.5 shadow-soft">
+                                    <div className="neu-card neu-card-hover rounded-xl p-4">
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Sarjana (S.Pd.)</span>
                                         <span className="text-piaud-slate-muted text-[11px]">Gelar Lulusan</span>
                                     </div>
-                                    <div className="bg-piaud-ivory-dark border border-piaud-border rounded-md p-3.5 shadow-soft">
+                                    <div className="neu-card neu-card-hover rounded-xl p-4">
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">144 SKS (8 Sem)</span>
                                         <span className="text-piaud-slate-muted text-[11px]">Masa Studi</span>
                                     </div>
-                                    <div className="bg-piaud-ivory-dark border border-piaud-border rounded-md p-3.5 shadow-soft">
+                                    <div className="neu-card neu-card-hover rounded-xl p-4">
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Reguler &amp; Guru</span>
                                         <span className="text-piaud-slate-muted text-[11px]">Kelas Kuliah</span>
                                     </div>
@@ -86,7 +86,7 @@ export default function Welcome() {
 
                             {/* Right Column (5 cols): Crisp Rounded Photo Frame */}
                             <div className="lg:col-span-5">
-                                <figure className="relative bg-piaud-ivory-dark p-2.5 rounded-lg border border-piaud-border shadow-card transition-all duration-200">
+                                <figure className="relative neu-card rounded-2xl p-3.5 transition-all duration-200">
                                     <Photo
                                         src={siteConfig.hero.photoUrl}
                                         alt={siteConfig.hero.photoAlt}
@@ -110,7 +110,7 @@ export default function Welcome() {
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
                             {/* Kaprodi Photo & Profile */}
                             <div className="lg:col-span-4 space-y-4">
-                                <figure className="bg-piaud-ivory p-3 rounded-lg border border-piaud-border shadow-card">
+                                <figure className="neu-card rounded-2xl p-4">
                                     <Photo
                                         src={siteConfig.kaprodi.photoUrl}
                                         alt={`Foto ${siteConfig.kaprodi.name}`}
@@ -185,7 +185,7 @@ export default function Welcome() {
                             {siteConfig.pillars.map((pillar) => (
                                 <div
                                     key={pillar.number}
-                                    className="bg-piaud-ivory-dark rounded-lg p-6 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between group"
+                                    className="neu-card neu-card-hover rounded-2xl p-6 flex flex-col justify-between group"
                                 >
                                     <div className="space-y-3.5">
                                         <div className="w-10 h-10 rounded-md bg-piaud-emerald text-piaud-ivory font-serif text-lg font-bold flex items-center justify-center shadow-soft">
@@ -217,7 +217,7 @@ export default function Welcome() {
                         <div className="mt-8 text-center">
                             <Link
                                 href="/akademik"
-                                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-piaud-emerald hover:text-piaud-emerald-dark bg-piaud-ivory-dark px-5 py-2.5 rounded-md border border-piaud-border shadow-soft hover:shadow transition-all"
+                                className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-piaud-emerald hover:text-piaud-emerald-dark neu-btn px-6 py-3 rounded-xl transition-all"
                             >
                                 <span>Lihat Struktur Kurikulum &amp; Sebaran Mata Kuliah</span>
                                 <span>&rarr;</span>
@@ -249,7 +249,7 @@ export default function Welcome() {
                             {siteConfig.lecturers.map((lecturer, index) => (
                                 <article
                                     key={index}
-                                    className="bg-piaud-ivory rounded-lg p-4 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all duration-200 group"
+                                    className="neu-card neu-card-hover rounded-2xl p-4 group"
                                 >
                                     <Photo
                                         src={lecturer.photoUrl}
@@ -301,7 +301,7 @@ export default function Welcome() {
                             {siteConfig.gallery.map((item, index) => (
                                 <figure
                                     key={index}
-                                    className="bg-piaud-ivory-dark rounded-lg p-3 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-1 transition-all duration-200 group overflow-hidden"
+                                    className="neu-card neu-card-hover rounded-2xl p-3.5 group overflow-hidden"
                                 >
                                     <Photo
                                         src={item.photoUrl}
@@ -343,7 +343,7 @@ export default function Welcome() {
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                             {/* Featured Article Card */}
-                            <article className="lg:col-span-6 bg-piaud-ivory rounded-lg p-5 border border-piaud-border shadow-card space-y-3.5 group">
+                            <article className="lg:col-span-6 neu-card neu-card-hover rounded-2xl p-5 space-y-3.5 group">
                                 <Photo
                                     src={siteConfig.articles.featured.photoUrl}
                                     alt={siteConfig.articles.featured.title}
@@ -373,7 +373,7 @@ export default function Welcome() {
                                 {siteConfig.articles.list.map((article) => (
                                     <article
                                         key={article.id}
-                                        className="bg-piaud-ivory rounded-lg p-4 border border-piaud-border shadow-soft hover:shadow-card hover:-translate-y-0.5 transition-all duration-150 space-y-1.5 group"
+                                        className="neu-card neu-card-hover rounded-xl p-4 space-y-1.5 group"
                                     >
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
                                             <span className="text-piaud-terracotta font-bold text-[11px] bg-amber-100/70 px-2 py-0.5 rounded border border-amber-200/60">

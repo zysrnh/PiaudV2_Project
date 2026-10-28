@@ -45,9 +45,35 @@ Route::get('/kontak', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
+    // Lecturers
+    Route::resource('lecturers', \App\Http\Controllers\Admin\LecturerController::class)->except(['show']);
+
+    // Articles
+    Route::resource('articles', \App\Http\Controllers\Admin\ArticleController::class)->except(['show']);
+
+    // Gallery & Banners
+    Route::get('gallery', [\App\Http\Controllers\Admin\GalleryController::class, 'index'])->name('gallery.index');
+    Route::post('gallery', [\App\Http\Controllers\Admin\GalleryController::class, 'storeGallery'])->name('gallery.store');
+    Route::delete('gallery/{gallery}', [\App\Http\Controllers\Admin\GalleryController::class, 'destroyGallery'])->name('gallery.destroy');
+    Route::post('banners', [\App\Http\Controllers\Admin\GalleryController::class, 'storeBanner'])->name('banner.store');
+    Route::delete('banners/{banner}', [\App\Http\Controllers\Admin\GalleryController::class, 'destroyBanner'])->name('banner.destroy');
+
+    // Pages
+    Route::get('pages', [\App\Http\Controllers\Admin\PageController::class, 'index'])->name('pages.index');
+    Route::get('pages/{page}/edit', [\App\Http\Controllers\Admin\PageController::class, 'edit'])->name('pages.edit');
+    Route::put('pages/{page}', [\App\Http\Controllers\Admin\PageController::class, 'update'])->name('pages.update');
+
+    // Settings
+    Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
+    Route::put('settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

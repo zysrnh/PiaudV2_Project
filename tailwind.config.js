@@ -34,6 +34,13 @@ export default {
                 'card': '0 2px 6px -1px rgba(31, 41, 51, 0.08), 0 1px 3px -1px rgba(31, 41, 51, 0.05)',
                 'card-hover': '0 8px 16px -2px rgba(15, 76, 58, 0.12), 0 3px 6px -1px rgba(0, 0, 0, 0.06)',
                 'soft': '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
+                'neu-raised': '6px 6px 14px #d8d1c4, -6px -6px 14px #ffffff',
+                'neu-raised-sm': '3px 3px 8px #d8d1c4, -3px -3px 8px #ffffff',
+                'neu-raised-lg': '10px 10px 22px #d5cec0, -10px -10px 22px #ffffff',
+                'neu-inset': 'inset 3px 3px 6px #d8d1c4, inset -3px -3px 6px #ffffff',
+                'neu-inset-sm': 'inset 2px 2px 4px #d8d1c4, inset -2px -2px 4px #ffffff',
+                'neu-emerald': '5px 5px 12px #0a3427, -4px -4px 10px #14644d',
+                'neu-terracotta': '5px 5px 12px #8c3917, -4px -4px 10px #e07952',
             },
             keyframes: {
                 fadeInUp: {
