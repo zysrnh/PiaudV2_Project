@@ -33,9 +33,9 @@ export const Footer: React.FC = () => {
 
     return (
         <footer id="kontak" className="w-full bg-[#0F4C3A] text-piaud-ivory border-t border-[#0A3427]">
-            {/* 8A. CTA Penutup (Solid Deep Forest Box with Clean Neumorphic & Tactile Buttons) */}
+            {/* 8A. CTA Penutup (Solid Deep Forest Box with Dark Natural Shadow - No White Glow) */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mb-6 pt-10">
-                <div className="bg-[#0A3427] border border-[#17664F] rounded-2xl p-8 sm:p-12 shadow-neu-raised text-piaud-ivory relative overflow-hidden">
+                <div className="bg-[#0A3427] border border-[#17664F] rounded-2xl p-8 sm:p-12 shadow-[0_12px_28px_rgba(0,0,0,0.35)] text-piaud-ivory relative overflow-hidden">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 relative z-10">
                         <div className="max-w-2xl space-y-2">
                             <h2 className="text-2xl sm:text-3xl font-serif text-white font-bold leading-snug">

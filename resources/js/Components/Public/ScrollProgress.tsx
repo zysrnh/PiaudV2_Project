@@ -43,7 +43,7 @@ export const ScrollProgress: React.FC = () => {
                 type="button"
                 onClick={scrollToTop}
                 title={`Sudah scroll ${scrollPercent}%. Klik untuk kembali ke atas`}
-                className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-full neu-card flex items-center justify-center bg-[#FAF6EC] border border-[#E3DAC7] text-[#0F4C3A] hover:text-[#0A3427] shadow-[3px_3px_8px_#D4CCC0,-3px_-3px_8px_#FFFFFF] hover:shadow-[5px_5px_14px_#c8bfb2,-5px_-5px_14px_#FFFFFF] transition-all duration-200 transform hover:-translate-y-1.5 active:translate-y-1 active:scale-90"
+                className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center bg-[#FAF6EC] border border-[#E3DAC7] text-[#0F4C3A] hover:text-[#0A3427] shadow-[0_4px_14px_rgba(0,0,0,0.18)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-200 transform hover:-translate-y-1.5 active:translate-y-1 active:scale-90"
             >
                 {/* SVG Progress Circle */}
                 <svg className="w-11 h-11 sm:w-12 sm:h-12 -rotate-90 transform" viewBox="0 0 44 44">
