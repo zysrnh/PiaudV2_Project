@@ -108,7 +108,7 @@ export default function Profile() {
                 <section id="visi-misi" data-section="visi-misi" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                     {/* Visi Card */}
                     <div className={`lg:col-span-5 h-full ${inView['visi-misi'] ? 'animate-slide-left' : ''}`}>
-                        <div className="neu-card card-interactive rounded-2xl p-7 sm:p-10 flex flex-col justify-between h-full bg-[#0F4C3A] text-white border border-[#0A3427] shadow-[0_12px_28px_rgba(10,52,39,0.35)] group">
+                        <div className="neu-card-emerald card-interactive rounded-2xl p-7 sm:p-10 flex flex-col justify-between h-full group cursor-pointer">
                             <div className="space-y-5">
                                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold tracking-wider uppercase border border-white/20">
                                     <span>Visi Keislaman 2030</span>
