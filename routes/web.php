@@ -85,6 +85,10 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () 
     // Settings
     Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
     Route::put('settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
+
+    // Terminal Artisan Console
+    Route::get('terminal', [\App\Http\Controllers\Admin\TerminalController::class, 'index'])->name('terminal.index');
+    Route::post('terminal/execute', [\App\Http\Controllers\Admin\TerminalController::class, 'execute'])->name('terminal.execute');
 });
 
 Route::middleware('auth')->group(function () {

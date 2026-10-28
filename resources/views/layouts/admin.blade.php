@@ -190,6 +190,12 @@
                     <i class="fa-solid fa-sliders w-4 text-center"></i>
                     <span>Pengaturan Web</span>
                 </a>
+
+                <a href="{{ route('admin.terminal.index') }}" 
+                   class="neu-btn flex items-center gap-3 px-4 py-3 text-xs {{ request()->routeIs('admin.terminal.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A]' }}">
+                    <i class="fa-solid fa-terminal w-4 text-center"></i>
+                    <span>Terminal Artisan</span>
+                </a>
             </nav>
         </div>
 
