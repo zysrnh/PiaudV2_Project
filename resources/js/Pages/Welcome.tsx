@@ -29,47 +29,48 @@ export default function Welcome() {
                 {/* 3. HERO SECTION (Warm Ivory & Structured Proportional Layout) */}
                 <section className="bg-piaud-ivory border-b border-piaud-border">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-18 lg:py-20">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-                            {/* Left Column (7 cols): Direct Misi & Accreditation Badge */}
-                            <div className="lg:col-span-7 space-y-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
+                            {/* Left Column (7 cols): Direct Misi & Content */}
+                            <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
+                                <div className="space-y-6">
+                                    <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-tight">
+                                        {siteConfig.hero.heading}
+                                    </h1>
 
-                                <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-tight">
-                                    {siteConfig.hero.heading}
-                                </h1>
+                                    <p className="text-base sm:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch]">
+                                        {siteConfig.hero.description}
+                                    </p>
 
-                                <p className="text-base sm:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch]">
-                                    {siteConfig.hero.description}
-                                </p>
-
-                                {/* Two CTAs (Solid Crisp Buttons) */}
-                                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                                    <a
-                                        href={waPmbLink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-150"
-                                    >
-                                        {siteConfig.hero.ctaPrimaryText}
-                                    </a>
-                                    <Link
-                                        href="/akademik"
-                                        className="inline-flex items-center justify-center neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-150"
-                                    >
-                                        {siteConfig.hero.ctaSecondaryText}
-                                    </Link>
+                                    {/* Two CTAs (Solid Crisp Buttons) */}
+                                    <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                                        <a
+                                            href={waPmbLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center justify-center neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl transition-all duration-150"
+                                        >
+                                            {siteConfig.hero.ctaPrimaryText}
+                                        </a>
+                                        <Link
+                                            href="/akademik"
+                                            className="inline-flex items-center justify-center neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl transition-all duration-150"
+                                        >
+                                            {siteConfig.hero.ctaSecondaryText}
+                                        </Link>
+                                    </div>
                                 </div>
 
                                 {/* Stats & Features Cards Row (Crisp rounded-md) */}
-                                <div className="pt-3 grid grid-cols-3 gap-3 sm:gap-4 text-xs">
-                                    <div className="neu-card neu-card-hover rounded-xl p-4">
+                                <div className="pt-4 grid grid-cols-3 gap-3 sm:gap-4 text-xs">
+                                    <div className="neu-card neu-card-hover rounded-xl p-4 flex flex-col justify-center">
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Sarjana (S.Pd.)</span>
                                         <span className="text-piaud-slate-muted text-[11px]">Gelar Lulusan</span>
                                     </div>
-                                    <div className="neu-card neu-card-hover rounded-xl p-4">
+                                    <div className="neu-card neu-card-hover rounded-xl p-4 flex flex-col justify-center">
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">144 SKS (8 Sem)</span>
                                         <span className="text-piaud-slate-muted text-[11px]">Masa Studi</span>
                                     </div>
-                                    <div className="neu-card neu-card-hover rounded-xl p-4">
+                                    <div className="neu-card neu-card-hover rounded-xl p-4 flex flex-col justify-center">
                                         <span className="font-bold text-piaud-slate block text-xs sm:text-sm">Reguler &amp; Guru</span>
                                         <span className="text-piaud-slate-muted text-[11px]">Kelas Kuliah</span>
                                     </div>
@@ -77,14 +78,14 @@ export default function Welcome() {
                             </div>
 
                             {/* Right Column (5 cols): Crisp Rounded Photo Frame */}
-                            <div className="lg:col-span-5">
-                                <figure className="relative neu-card rounded-2xl p-3.5 transition-all duration-200">
+                            <div className="lg:col-span-5 h-full flex flex-col">
+                                <figure className="relative neu-card rounded-2xl p-3.5 transition-all duration-200 h-full flex flex-col justify-center">
                                     <Photo
                                         src={siteConfig.hero.photoUrl}
                                         alt={siteConfig.hero.photoAlt}
                                         priority={true}
-                                        aspectRatio="4/3"
-                                        className="w-full h-auto rounded-md shadow-soft"
+                                        aspectRatio="auto"
+                                        className="w-full h-full min-h-[320px] lg:min-h-full object-cover rounded-md shadow-soft"
                                     />
                                 </figure>
                             </div>
@@ -329,39 +330,41 @@ export default function Welcome() {
                             </Link>
                         </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                             {/* Featured Article Card */}
-                            <article className="lg:col-span-6 neu-card neu-card-hover rounded-2xl p-5 space-y-3.5 group">
-                                <Photo
-                                    src={siteConfig.articles.featured.photoUrl}
-                                    alt={siteConfig.articles.featured.title}
-                                    aspectRatio="16/9"
-                                    className="w-full h-auto rounded-md shadow-soft"
-                                />
-                                <div className="space-y-2 px-1">
-                                    <div className="flex items-center gap-2 text-xs text-piaud-slate-muted flex-wrap">
-                                        <span className="bg-piaud-emerald text-piaud-ivory px-2 py-0.5 rounded font-bold text-[11px]">
-                                            {siteConfig.articles.featured.category}
-                                        </span>
-                                        <span>{siteConfig.articles.featured.publishedAt}</span>
-                                        <span>&bull;</span>
-                                        <span>{siteConfig.articles.featured.readTime}</span>
+                            <article className="lg:col-span-6 neu-card neu-card-hover rounded-2xl p-5 flex flex-col justify-between group h-full">
+                                <div className="space-y-3.5">
+                                    <Photo
+                                        src={siteConfig.articles.featured.photoUrl}
+                                        alt={siteConfig.articles.featured.title}
+                                        aspectRatio="16/9"
+                                        className="w-full h-auto rounded-md shadow-soft"
+                                    />
+                                    <div className="space-y-2 px-1">
+                                        <div className="flex items-center gap-2 text-xs text-piaud-slate-muted flex-wrap">
+                                            <span className="bg-piaud-emerald text-piaud-ivory px-2 py-0.5 rounded font-bold text-[11px]">
+                                                {siteConfig.articles.featured.category}
+                                            </span>
+                                            <span>{siteConfig.articles.featured.publishedAt}</span>
+                                            <span>&bull;</span>
+                                            <span>{siteConfig.articles.featured.readTime}</span>
+                                        </div>
+                                        <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug group-hover:text-piaud-emerald transition-colors">
+                                            {siteConfig.articles.featured.title}
+                                        </h3>
+                                        <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
+                                            {siteConfig.articles.featured.excerpt}
+                                        </p>
                                     </div>
-                                    <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug group-hover:text-piaud-emerald transition-colors">
-                                        {siteConfig.articles.featured.title}
-                                    </h3>
-                                    <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
-                                        {siteConfig.articles.featured.excerpt}
-                                    </p>
                                 </div>
                             </article>
 
                             {/* List Articles Stack */}
-                            <div className="lg:col-span-6 space-y-4">
+                            <div className="lg:col-span-6 flex flex-col justify-between gap-4 h-full">
                                 {siteConfig.articles.list.map((article) => (
                                     <article
                                         key={article.id}
-                                        className="neu-card neu-card-hover rounded-xl p-4 space-y-1.5 group"
+                                        className="neu-card neu-card-hover rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group"
                                     >
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
                                             <span className="text-piaud-terracotta font-bold text-[11px] bg-amber-100/70 px-2 py-0.5 rounded border border-amber-200/60">

@@ -49,7 +49,7 @@ export const Photo: React.FC<PhotoProps> = ({
             decoding={priority ? 'sync' : 'async'}
             onError={() => setHasError(true)}
             className={`object-cover border border-piaud-border ${className}`}
-            style={{ aspectRatio }}
+            style={{ ...(aspectRatio && aspectRatio !== 'auto' ? { aspectRatio } : {}), width, height }}
         />
     );
 };
