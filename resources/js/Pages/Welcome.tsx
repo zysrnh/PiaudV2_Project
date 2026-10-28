@@ -10,32 +10,25 @@ import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 export default function Welcome() {
     const waPmbLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
 
-    // Initial mount state for hero animation
-    const [isMounted, setIsMounted] = useState(false);
-    useEffect(() => {
-        const timer = setTimeout(() => setIsMounted(true), 50);
-        return () => clearTimeout(timer);
-    }, []);
+    // Active in-view state for scroll entrance animations
+    const [inView, setInView] = useState<Record<string, boolean>>({
+        hero: true, // Hero animates immediately on mount
+    });
 
-    // Direct Element-Level Scroll Observer (Never clips, re-animates smoothly)
     useEffect(() => {
-        const elements = document.querySelectorAll('.scroll-item');
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('scroll-item-visible');
-                    } else if (entry.boundingClientRect.top > window.innerHeight) {
-                        // Reset only if completely below the screen (user scrolled far above)
-                        // Content NEVER vanishes when scrolling up!
-                        entry.target.classList.remove('scroll-item-visible');
+                    const sectionId = entry.target.getAttribute('data-section');
+                    if (sectionId && entry.isIntersecting) {
+                        setInView((prev) => ({ ...prev, [sectionId]: true }));
                     }
                 });
             },
-            { threshold: 0.08, rootMargin: '60px 0px 60px 0px' }
+            { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
         );
 
-        elements.forEach((el) => observer.observe(el));
+        document.querySelectorAll('[data-section]').forEach((el) => observer.observe(el));
         return () => observer.disconnect();
     }, []);
 
@@ -58,23 +51,23 @@ export default function Welcome() {
 
             <main className="flex-1 w-full">
                 {/* 3. HERO SECTION (Warm Ivory & Structured Proportional Layout) */}
-                <section className="bg-[#FAF6EC] border-b border-[#E3DAC7]">
+                <section data-section="hero" className="bg-[#FAF6EC] border-b border-[#E3DAC7]">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 md:py-18 lg:py-20">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-stretch">
                             {/* Left Column (7 cols): Bold Slide-Left Entrance on Mount */}
                             <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
                                 <div className="space-y-5 sm:space-y-6">
                                     <h1
-                                        className={`font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-tight scroll-item ${
-                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-left'
+                                        className={`font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-tight ${
+                                            inView.hero ? 'animate-slide-left' : ''
                                         }`}
                                     >
                                         {siteConfig.hero.heading}
                                     </h1>
 
                                     <p
-                                        className={`text-sm sm:text-base md:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch] scroll-item stagger-1 ${
-                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-left'
+                                        className={`text-sm sm:text-base md:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch] ${
+                                            inView.hero ? 'animate-slide-left delay-1' : ''
                                         }`}
                                     >
                                         {siteConfig.hero.description}
@@ -82,8 +75,8 @@ export default function Welcome() {
 
                                     {/* Two CTAs with Animated Mount & Tactile Hover Physics */}
                                     <div
-                                        className={`pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 scroll-item stagger-2 ${
-                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
+                                        className={`pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 ${
+                                            inView.hero ? 'animate-slide-up delay-2' : ''
                                         }`}
                                     >
                                         <a
@@ -108,37 +101,37 @@ export default function Welcome() {
                                 {/* Stats & Features Cards Row with Interactive Hover & Stagger */}
                                 <div className="pt-4 grid grid-cols-3 gap-2.5 sm:gap-4 text-xs">
                                     <div
-                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group scroll-item stagger-1 ${
-                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
+                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group ${
+                                            inView.hero ? 'animate-slide-up delay-1' : ''
                                         }`}
                                     >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Sarjana (S.Pd.)</span>
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] group-hover:scale-105 transition-all">Sarjana (S.Pd.)</span>
                                         <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Gelar Lulusan</span>
                                     </div>
                                     <div
-                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group scroll-item stagger-2 ${
-                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
+                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group ${
+                                            inView.hero ? 'animate-slide-up delay-2' : ''
                                         }`}
                                     >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">144 SKS (8 Sem)</span>
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] group-hover:scale-105 transition-all">144 SKS (8 Sem)</span>
                                         <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Masa Studi</span>
                                     </div>
                                     <div
-                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group scroll-item stagger-3 ${
-                                            isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-up'
+                                        className={`neu-card card-interactive rounded-xl p-3 sm:p-4 flex flex-col justify-center group ${
+                                            inView.hero ? 'animate-slide-up delay-3' : ''
                                         }`}
                                     >
-                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Reguler &amp; Guru</span>
+                                        <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] group-hover:scale-105 transition-all">Reguler &amp; Guru</span>
                                         <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Kelas Kuliah</span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Right Column (5 cols): Photo Card Hover Lift (Whole Card Floats, No Image Zoom) */}
+                            {/* Right Column (5 cols): Photo Card Hover Lift (Whole Card Floats) */}
                             <div className="lg:col-span-5 h-full flex flex-col">
                                 <figure
-                                    className={`relative neu-card card-interactive rounded-2xl p-3 sm:p-3.5 h-full flex flex-col justify-center group overflow-hidden scroll-item ${
-                                        isMounted ? 'scroll-item-visible' : 'scroll-item-hidden-right'
+                                    className={`relative neu-card card-interactive rounded-2xl p-3 sm:p-3.5 h-full flex flex-col justify-center group overflow-hidden ${
+                                        inView.hero ? 'animate-slide-right' : ''
                                     }`}
                                 >
                                     <div className="w-full h-full min-h-[280px] sm:min-h-[340px] lg:min-h-full overflow-hidden rounded-xl">
@@ -157,11 +150,11 @@ export default function Welcome() {
                 </section>
 
                 {/* 4. SAMBUTAN KAPRODI (Warm Cream Alternating Section) */}
-                <section id="profil" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                <section id="profil" data-section="kaprodi" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
                             {/* Kaprodi Photo Card with Card Hover Lift */}
-                            <div className="lg:col-span-4 space-y-4 scroll-item scroll-item-hidden-left">
+                            <div className={`lg:col-span-4 space-y-4 ${inView.kaprodi ? 'animate-slide-left' : ''}`}>
                                 <figure className="neu-card card-interactive rounded-2xl p-4 group">
                                     <div className="overflow-hidden rounded-xl">
                                         <Photo
@@ -186,7 +179,7 @@ export default function Welcome() {
                             </div>
 
                             {/* Editorial Content with Bold Slide-Right */}
-                            <div className="lg:col-span-8 space-y-5 scroll-item stagger-1 scroll-item-hidden-right">
+                            <div className={`lg:col-span-8 space-y-5 ${inView.kaprodi ? 'animate-slide-right delay-1' : ''}`}>
                                 <div>
                                     <blockquote className="font-serif text-xl sm:text-2xl text-piaud-slate font-bold leading-relaxed border-l-4 border-[#C2613A] pl-4">
                                         &ldquo;{siteConfig.kaprodi.pullQuote}&rdquo;
@@ -224,9 +217,9 @@ export default function Welcome() {
                 </section>
 
                 {/* 5. PILAR KEUNGGULAN (Clean Ivory Section with Staggered Scroll Cards) */}
-                <section id="kurikulum" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                <section id="kurikulum" data-section="pillars" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2 scroll-item scroll-item-hidden-up">
+                        <div className={`text-center max-w-2xl mx-auto mb-10 space-y-2 ${inView.pillars ? 'animate-slide-up' : ''}`}>
                             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate leading-tight">
                                 Tiga Pilar Pendidikan Holistik Calon Guru AUD
                             </h2>
@@ -239,10 +232,12 @@ export default function Welcome() {
                             {siteConfig.pillars.map((pillar, idx) => (
                                 <div
                                     key={pillar.number}
-                                    className={`neu-card card-interactive rounded-2xl p-6 flex flex-col justify-between group scroll-item scroll-item-hidden-up stagger-${idx + 1}`}
+                                    className={`neu-card card-interactive rounded-2xl p-6 flex flex-col justify-between group ${
+                                        inView.pillars ? `animate-slide-up delay-${idx + 1}` : ''
+                                    }`}
                                 >
                                     <div className="space-y-3.5">
-                                        <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-115 group-hover:rotate-6 transition-transform duration-250">
+                                        <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-120 group-hover:rotate-12 transition-transform duration-250">
                                             {pillar.number}
                                         </div>
                                         <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate group-hover:text-[#0F4C3A] transition-colors">
@@ -268,7 +263,7 @@ export default function Welcome() {
                             ))}
                         </div>
 
-                        <div className="mt-8 text-center scroll-item scroll-item-hidden-up stagger-4">
+                        <div className={`mt-8 text-center ${inView.pillars ? 'animate-slide-up delay-4' : ''}`}>
                             <Link
                                 href="/akademik"
                                 className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F4C3A] hover:text-[#0A3427] neu-btn px-6 py-3.5 rounded-xl transition-all tactile-press"
@@ -281,9 +276,9 @@ export default function Welcome() {
                 </section>
 
                 {/* 6. DOSEN & TENAGA PENGAJAR (Warm Cream Grid with Staggered Scroll Cards) */}
-                <section id="dosen" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                <section id="dosen" data-section="lecturers" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item scroll-item-hidden-left">
+                        <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] ${inView.lecturers ? 'animate-slide-left' : ''}`}>
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Dosen Pengampu &amp; Pakar Tumbuh Kembang
@@ -298,12 +293,14 @@ export default function Welcome() {
                             </Link>
                         </div>
 
-                        {/* Crisp Responsive Cards Grid with Card Hover Lift (No Image Zoom) */}
+                        {/* Crisp Responsive Cards Grid with Card Hover Lift */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.lecturers.map((lecturer, index) => (
                                 <article
                                     key={index}
-                                    className={`neu-card card-interactive rounded-2xl p-4 group scroll-item scroll-item-hidden-up stagger-${index + 1}`}
+                                    className={`neu-card card-interactive rounded-2xl p-4 group ${
+                                        inView.lecturers ? `animate-slide-up delay-${index + 1}` : ''
+                                    }`}
                                 >
                                     <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
                                         <Photo
@@ -315,7 +312,7 @@ export default function Welcome() {
                                     </div>
 
                                     <div className="mt-3.5 space-y-1.5">
-                                        <span className="text-[11px] font-bold tracking-wider text-[#C2613A] uppercase block transform group-hover:translate-x-1 transition-transform">
+                                        <span className="text-[11px] font-bold tracking-wider text-[#C2613A] uppercase block transform group-hover:translate-x-1.5 transition-transform">
                                             {lecturer.role}
                                         </span>
                                         <h3 className="font-serif font-bold text-base text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
@@ -336,10 +333,10 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* GALERI DOKUMENTASI (Warm Ivory Grid with Card Hover Lift - No Image Zoom) */}
-                <section id="galeri" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                {/* GALERI DOKUMENTASI (Warm Ivory Grid with Card Hover Lift) */}
+                <section id="galeri" data-section="gallery" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item scroll-item-hidden-left">
+                        <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] ${inView.gallery ? 'animate-slide-left' : ''}`}>
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Galeri Praktikum &amp; Observasi Lapangan
@@ -358,7 +355,9 @@ export default function Welcome() {
                             {siteConfig.gallery.map((item, index) => (
                                 <figure
                                     key={index}
-                                    className={`neu-card card-interactive rounded-2xl p-3.5 group overflow-hidden scroll-item scroll-item-hidden-up stagger-${index + 1}`}
+                                    className={`neu-card card-interactive rounded-2xl p-3.5 group overflow-hidden ${
+                                        inView.gallery ? `animate-slide-up delay-${index + 1}` : ''
+                                    }`}
                                 >
                                     <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
                                         <Photo
@@ -369,7 +368,7 @@ export default function Welcome() {
                                         />
                                     </div>
                                     <figcaption className="mt-2.5 px-1 space-y-1">
-                                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#C2613A] block transform group-hover:translate-x-1 transition-transform">
+                                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#C2613A] block transform group-hover:translate-x-1.5 transition-transform">
                                             {item.category}
                                         </span>
                                         <h3 className="font-serif font-bold text-sm text-piaud-slate line-clamp-2 leading-snug group-hover:text-[#0F4C3A] transition-colors">
@@ -383,9 +382,9 @@ export default function Welcome() {
                 </section>
 
                 {/* 7. ARTIKEL PARENTING ISLAMI (Warm Cream Alternating Section with Card Hover Lift) */}
-                <section id="artikel" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                <section id="artikel" data-section="articles" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item scroll-item-hidden-left">
+                        <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] ${inView.articles ? 'animate-slide-left' : ''}`}>
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Artikel Parenting Islami &amp; Khazanah AUD
@@ -402,7 +401,9 @@ export default function Welcome() {
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                             {/* Featured Article Card */}
-                            <article className="lg:col-span-6 neu-card card-interactive rounded-2xl p-5 flex flex-col justify-between group h-full scroll-item scroll-item-hidden-left">
+                            <article className={`lg:col-span-6 neu-card card-interactive rounded-2xl p-5 flex flex-col justify-between group h-full ${
+                                inView.articles ? 'animate-slide-left delay-1' : ''
+                            }`}>
                                 <div className="space-y-3.5">
                                     <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
                                         <Photo
@@ -436,10 +437,12 @@ export default function Welcome() {
                                 {siteConfig.articles.list.map((article, idx) => (
                                     <article
                                         key={article.id}
-                                        className={`neu-card card-interactive rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group scroll-item scroll-item-hidden-right stagger-${idx + 1}`}
+                                        className={`neu-card card-interactive rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group ${
+                                            inView.articles ? `animate-slide-right delay-${idx + 1}` : ''
+                                        }`}
                                     >
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
-                                            <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7] transform group-hover:translate-x-1 transition-transform">
+                                            <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7] transform group-hover:translate-x-1.5 transition-transform">
                                                 {article.category}
                                             </span>
                                             <span>&bull;</span>
