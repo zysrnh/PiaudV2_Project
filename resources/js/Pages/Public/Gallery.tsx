@@ -108,20 +108,20 @@ export default function Gallery() {
                     </span>
                 </div>
 
-                {/* Elevated Photo Grid */}
+                {/* Elevated Photo Grid with Card Hover Lift (No Inner Image Zoom) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filtered.map((item, index) => (
                         <figure
                             key={index}
                             onClick={() => setActiveModalPhoto(item)}
-                            className="bg-[#FAF6EC] rounded-2xl p-4 border border-[#E3DAC7] neu-card neu-card-hover cursor-pointer group"
+                            className="bg-[#FAF6EC] rounded-2xl p-4 border border-[#E3DAC7] neu-card card-interactive group"
                         >
                             <div className="overflow-hidden rounded-xl relative border border-[#E3DAC7]">
                                 <Photo
                                     src={item.photoUrl}
                                     alt={item.title}
                                     aspectRatio="4/3"
-                                    className="w-full h-auto group-hover:scale-105 transition-transform duration-300"
+                                    className="w-full h-auto rounded-xl shadow-soft"
                                 />
                                 <div className="absolute inset-0 bg-[#0F4C3A]/30 transform scale-90 invisible group-hover:visible group-hover:scale-100 transition-transform duration-200 flex items-center justify-center">
                                     <span className="bg-[#FAF6EC] text-[#0F4C3A] font-bold text-xs px-3.5 py-1.5 rounded-lg shadow-md border border-[#E3DAC7]">
@@ -145,14 +145,14 @@ export default function Gallery() {
                 </div>
             </div>
 
-            {/* Lightbox / Modal (Solid Background, Spring Pop In, Zero Blur) */}
+            {/* Lightbox / Modal (Solid Background, Spring Pop In, Zero White Halo) */}
             {activeModalPhoto && (
                 <div
                     className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
                     onClick={() => setActiveModalPhoto(null)}
                 >
                     <div
-                        className="bg-[#FAF6EC] rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-neu-raised border border-[#E3DAC7] animate-spring-pop"
+                        className="bg-[#FAF6EC] rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-[0_20px_40px_rgba(0,0,0,0.35)] border border-[#E3DAC7] animate-spring-pop"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="flex items-center justify-between pb-3 border-b border-[#E3DAC7]">

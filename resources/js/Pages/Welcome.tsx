@@ -134,7 +134,7 @@ export default function Welcome() {
                                 </div>
                             </div>
 
-                            {/* Right Column (5 cols): Photo Frame with Slide-Right Entrance & Zoom Hover */}
+                            {/* Right Column (5 cols): Photo Card Hover Lift (Whole Card Floats, No Image Zoom) */}
                             <div className="lg:col-span-5 h-full flex flex-col">
                                 <figure
                                     className={`relative neu-card card-interactive rounded-2xl p-3 sm:p-3.5 h-full flex flex-col justify-center group overflow-hidden scroll-item ${
@@ -147,7 +147,7 @@ export default function Welcome() {
                                             alt={siteConfig.hero.photoAlt}
                                             priority={true}
                                             aspectRatio="auto"
-                                            className="w-full h-full object-cover rounded-xl shadow-soft img-hover-zoom"
+                                            className="w-full h-full object-cover rounded-xl shadow-soft"
                                         />
                                     </div>
                                 </figure>
@@ -160,7 +160,7 @@ export default function Welcome() {
                 <section id="profil" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
-                            {/* Kaprodi Photo & Profile with Bold Slide-Left */}
+                            {/* Kaprodi Photo Card with Card Hover Lift */}
                             <div className="lg:col-span-4 space-y-4 scroll-item scroll-item-hidden-left">
                                 <figure className="neu-card card-interactive rounded-2xl p-4 group">
                                     <div className="overflow-hidden rounded-xl">
@@ -168,7 +168,7 @@ export default function Welcome() {
                                             src={siteConfig.kaprodi.photoUrl}
                                             alt={`Foto ${siteConfig.kaprodi.name}`}
                                             aspectRatio="3/4"
-                                            className="w-full h-auto rounded-xl shadow-soft img-hover-zoom"
+                                            className="w-full h-auto rounded-xl shadow-soft"
                                         />
                                     </div>
                                     <figcaption className="mt-3.5 space-y-1 px-1">
@@ -298,7 +298,7 @@ export default function Welcome() {
                             </Link>
                         </div>
 
-                        {/* Crisp Responsive Cards Grid with Staggered Motion */}
+                        {/* Crisp Responsive Cards Grid with Card Hover Lift (No Image Zoom) */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {siteConfig.lecturers.map((lecturer, index) => (
                                 <article
@@ -310,7 +310,7 @@ export default function Welcome() {
                                             src={lecturer.photoUrl}
                                             alt={`Foto ${lecturer.name}`}
                                             aspectRatio="1/1"
-                                            className="w-full h-auto rounded-xl shadow-soft img-hover-zoom"
+                                            className="w-full h-auto rounded-xl shadow-soft"
                                         />
                                     </div>
 
@@ -336,7 +336,7 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* GALERI DOKUMENTASI (Warm Ivory Grid with Staggered Scroll Motion) */}
+                {/* GALERI DOKUMENTASI (Warm Ivory Grid with Card Hover Lift - No Image Zoom) */}
                 <section id="galeri" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item scroll-item-hidden-left">
@@ -365,7 +365,7 @@ export default function Welcome() {
                                             src={item.photoUrl}
                                             alt={item.title}
                                             aspectRatio="4/3"
-                                            className="w-full h-auto rounded-xl shadow-soft img-hover-zoom"
+                                            className="w-full h-auto rounded-xl shadow-soft"
                                         />
                                     </div>
                                     <figcaption className="mt-2.5 px-1 space-y-1">
@@ -382,7 +382,7 @@ export default function Welcome() {
                     </div>
                 </section>
 
-                {/* 7. ARTIKEL PARENTING ISLAMI (Warm Cream Alternating Section with Staggered Scroll Motion) */}
+                {/* 7. ARTIKEL PARENTING ISLAMI (Warm Cream Alternating Section with Card Hover Lift) */}
                 <section id="artikel" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item scroll-item-hidden-left">
@@ -409,7 +409,7 @@ export default function Welcome() {
                                             src={siteConfig.articles.featured.photoUrl}
                                             alt={siteConfig.articles.featured.title}
                                             aspectRatio="16/9"
-                                            className="w-full h-auto rounded-xl shadow-soft img-hover-zoom"
+                                            className="w-full h-auto rounded-xl shadow-soft"
                                         />
                                     </div>
                                     <div className="space-y-2 px-1">
