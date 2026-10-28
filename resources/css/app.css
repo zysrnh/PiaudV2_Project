@@ -160,8 +160,8 @@ h2 {
 }
 
 /* ========================================================
-   PHYSICAL MOTION, BOLD SCROLL REVEALS & COMPONENT INTERACTIONS
-   (Bold 60px Distance, Smooth Spring Easing, Zero Fade)
+   PHYSICAL MOTION, RELIABLE SCROLL REVEALS & COMPONENT INTERACTIONS
+   (Natural 36px Spring, Zero Glitch, Zero Opacity Fade)
    ======================================================== */
 .tactile-press {
     transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.14s ease;
@@ -175,19 +175,19 @@ h2 {
     transform: translateY(2px) scale(0.96);
 }
 
-/* Bold Scroll Motion Classes */
+/* Individual Scroll Motion Classes */
 .scroll-item {
-    transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, border-color 0.25s ease;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.2s ease;
     will-change: transform;
 }
 .scroll-item-hidden-up {
-    transform: translateY(60px) scale(0.94);
+    transform: translateY(36px) scale(0.98);
 }
 .scroll-item-hidden-left {
-    transform: translateX(-60px);
+    transform: translateX(-36px);
 }
 .scroll-item-hidden-right {
-    transform: translateX(60px);
+    transform: translateX(36px);
 }
 .scroll-item-visible {
     transform: translateY(0) translateX(0) scale(1) !important;
@@ -231,9 +231,9 @@ h2 {
 }
 
 /* Stagger Delays for Grid Elements */
-.stagger-1 { transition-delay: 60ms; }
-.stagger-2 { transition-delay: 130ms; }
-.stagger-3 { transition-delay: 200ms; }
-.stagger-4 { transition-delay: 270ms; }
-.stagger-5 { transition-delay: 340ms; }
-.stagger-6 { transition-delay: 410ms; }
+.stagger-1 { transition-delay: 40ms; }
+.stagger-2 { transition-delay: 80ms; }
+.stagger-3 { transition-delay: 120ms; }
+.stagger-4 { transition-delay: 160ms; }
+.stagger-5 { transition-delay: 200ms; }
+.stagger-6 { transition-delay: 240ms; }

@@ -10,32 +10,32 @@ import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 export default function Welcome() {
     const waPmbLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
 
-    // Mount state for initial page load animation
+    // Initial mount state for hero animation
     const [isMounted, setIsMounted] = useState(false);
     useEffect(() => {
-        const timer = setTimeout(() => setIsMounted(true), 60);
+        const timer = setTimeout(() => setIsMounted(true), 50);
         return () => clearTimeout(timer);
     }, []);
 
-    // Stable In-View Scroll Observer (Bold Entrance & Solid Visibility on Scroll Up)
-    const [inViewSections, setInViewSections] = useState<Record<string, boolean>>({});
-
+    // Direct Element-Level Scroll Observer (Never clips, re-animates smoothly)
     useEffect(() => {
+        const elements = document.querySelectorAll('.scroll-item');
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    const sectionId = entry.target.getAttribute('data-section');
-                    if (sectionId && entry.isIntersecting) {
-                        setInViewSections((prev) => ({ ...prev, [sectionId]: true }));
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('scroll-item-visible');
+                    } else if (entry.boundingClientRect.top > window.innerHeight) {
+                        // Reset only if completely below the screen (user scrolled far above)
+                        // Content NEVER vanishes when scrolling up!
+                        entry.target.classList.remove('scroll-item-visible');
                     }
                 });
             },
-            { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+            { threshold: 0.08, rootMargin: '60px 0px 60px 0px' }
         );
 
-        const observedElements = document.querySelectorAll('[data-section]');
-        observedElements.forEach((el) => observer.observe(el));
-
+        elements.forEach((el) => observer.observe(el));
         return () => observer.disconnect();
     }, []);
 
@@ -58,7 +58,7 @@ export default function Welcome() {
 
             <main className="flex-1 w-full">
                 {/* 3. HERO SECTION (Warm Ivory & Structured Proportional Layout) */}
-                <section className="bg-[#FAF6EC] border-b border-[#E3DAC7] overflow-hidden">
+                <section className="bg-[#FAF6EC] border-b border-[#E3DAC7]">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 md:py-18 lg:py-20">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-stretch">
                             {/* Left Column (7 cols): Bold Slide-Left Entrance on Mount */}
@@ -157,19 +157,11 @@ export default function Welcome() {
                 </section>
 
                 {/* 4. SAMBUTAN KAPRODI (Warm Cream Alternating Section) */}
-                <section
-                    id="profil"
-                    data-section="kaprodi"
-                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20 overflow-hidden"
-                >
+                <section id="profil" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
                             {/* Kaprodi Photo & Profile with Bold Slide-Left */}
-                            <div
-                                className={`lg:col-span-4 space-y-4 scroll-item ${
-                                    inViewSections.kaprodi ? 'scroll-item-visible' : 'scroll-item-hidden-left'
-                                }`}
-                            >
+                            <div className="lg:col-span-4 space-y-4 scroll-item scroll-item-hidden-left">
                                 <figure className="neu-card card-interactive rounded-2xl p-4 group">
                                     <div className="overflow-hidden rounded-xl">
                                         <Photo
@@ -194,11 +186,7 @@ export default function Welcome() {
                             </div>
 
                             {/* Editorial Content with Bold Slide-Right */}
-                            <div
-                                className={`lg:col-span-8 space-y-5 scroll-item stagger-1 ${
-                                    inViewSections.kaprodi ? 'scroll-item-visible' : 'scroll-item-hidden-right'
-                                }`}
-                            >
+                            <div className="lg:col-span-8 space-y-5 scroll-item stagger-1 scroll-item-hidden-right">
                                 <div>
                                     <blockquote className="font-serif text-xl sm:text-2xl text-piaud-slate font-bold leading-relaxed border-l-4 border-[#C2613A] pl-4">
                                         &ldquo;{siteConfig.kaprodi.pullQuote}&rdquo;
@@ -236,17 +224,9 @@ export default function Welcome() {
                 </section>
 
                 {/* 5. PILAR KEUNGGULAN (Clean Ivory Section with Staggered Scroll Cards) */}
-                <section
-                    id="kurikulum"
-                    data-section="pillars"
-                    className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20 overflow-hidden"
-                >
+                <section id="kurikulum" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div
-                            className={`text-center max-w-2xl mx-auto mb-10 space-y-2 scroll-item ${
-                                inViewSections.pillars ? 'scroll-item-visible' : 'scroll-item-hidden-up'
-                            }`}
-                        >
+                        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2 scroll-item scroll-item-hidden-up">
                             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate leading-tight">
                                 Tiga Pilar Pendidikan Holistik Calon Guru AUD
                             </h2>
@@ -259,9 +239,7 @@ export default function Welcome() {
                             {siteConfig.pillars.map((pillar, idx) => (
                                 <div
                                     key={pillar.number}
-                                    className={`neu-card card-interactive rounded-2xl p-6 flex flex-col justify-between group scroll-item stagger-${idx + 1} ${
-                                        inViewSections.pillars ? 'scroll-item-visible' : 'scroll-item-hidden-up'
-                                    }`}
+                                    className={`neu-card card-interactive rounded-2xl p-6 flex flex-col justify-between group scroll-item scroll-item-hidden-up stagger-${idx + 1}`}
                                 >
                                     <div className="space-y-3.5">
                                         <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-115 group-hover:rotate-6 transition-transform duration-250">
@@ -290,11 +268,7 @@ export default function Welcome() {
                             ))}
                         </div>
 
-                        <div
-                            className={`mt-8 text-center scroll-item stagger-4 ${
-                                inViewSections.pillars ? 'scroll-item-visible' : 'scroll-item-hidden-up'
-                            }`}
-                        >
+                        <div className="mt-8 text-center scroll-item scroll-item-hidden-up stagger-4">
                             <Link
                                 href="/akademik"
                                 className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F4C3A] hover:text-[#0A3427] neu-btn px-6 py-3.5 rounded-xl transition-all tactile-press"
@@ -307,17 +281,9 @@ export default function Welcome() {
                 </section>
 
                 {/* 6. DOSEN & TENAGA PENGAJAR (Warm Cream Grid with Staggered Scroll Cards) */}
-                <section
-                    id="dosen"
-                    data-section="lecturers"
-                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20 overflow-hidden"
-                >
+                <section id="dosen" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div
-                            className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item ${
-                                inViewSections.lecturers ? 'scroll-item-visible' : 'scroll-item-hidden-left'
-                            }`}
-                        >
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item scroll-item-hidden-left">
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Dosen Pengampu &amp; Pakar Tumbuh Kembang
@@ -337,9 +303,7 @@ export default function Welcome() {
                             {siteConfig.lecturers.map((lecturer, index) => (
                                 <article
                                     key={index}
-                                    className={`neu-card card-interactive rounded-2xl p-4 group scroll-item stagger-${index + 1} ${
-                                        inViewSections.lecturers ? 'scroll-item-visible' : 'scroll-item-hidden-up'
-                                    }`}
+                                    className={`neu-card card-interactive rounded-2xl p-4 group scroll-item scroll-item-hidden-up stagger-${index + 1}`}
                                 >
                                     <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
                                         <Photo
@@ -373,17 +337,9 @@ export default function Welcome() {
                 </section>
 
                 {/* GALERI DOKUMENTASI (Warm Ivory Grid with Staggered Scroll Motion) */}
-                <section
-                    id="galeri"
-                    data-section="gallery"
-                    className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20 overflow-hidden"
-                >
+                <section id="galeri" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div
-                            className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item ${
-                                inViewSections.gallery ? 'scroll-item-visible' : 'scroll-item-hidden-left'
-                            }`}
-                        >
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item scroll-item-hidden-left">
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Galeri Praktikum &amp; Observasi Lapangan
@@ -402,9 +358,7 @@ export default function Welcome() {
                             {siteConfig.gallery.map((item, index) => (
                                 <figure
                                     key={index}
-                                    className={`neu-card card-interactive rounded-2xl p-3.5 group overflow-hidden scroll-item stagger-${index + 1} ${
-                                        inViewSections.gallery ? 'scroll-item-visible' : 'scroll-item-hidden-up'
-                                    }`}
+                                    className={`neu-card card-interactive rounded-2xl p-3.5 group overflow-hidden scroll-item scroll-item-hidden-up stagger-${index + 1}`}
                                 >
                                     <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
                                         <Photo
@@ -429,17 +383,9 @@ export default function Welcome() {
                 </section>
 
                 {/* 7. ARTIKEL PARENTING ISLAMI (Warm Cream Alternating Section with Staggered Scroll Motion) */}
-                <section
-                    id="artikel"
-                    data-section="articles"
-                    className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20 overflow-hidden"
-                >
+                <section id="artikel" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div
-                            className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item ${
-                                inViewSections.articles ? 'scroll-item-visible' : 'scroll-item-hidden-left'
-                            }`}
-                        >
+                        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] scroll-item scroll-item-hidden-left">
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Artikel Parenting Islami &amp; Khazanah AUD
@@ -456,11 +402,7 @@ export default function Welcome() {
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
                             {/* Featured Article Card */}
-                            <article
-                                className={`lg:col-span-6 neu-card card-interactive rounded-2xl p-5 flex flex-col justify-between group h-full scroll-item ${
-                                    inViewSections.articles ? 'scroll-item-visible' : 'scroll-item-hidden-left'
-                                }`}
-                            >
+                            <article className="lg:col-span-6 neu-card card-interactive rounded-2xl p-5 flex flex-col justify-between group h-full scroll-item scroll-item-hidden-left">
                                 <div className="space-y-3.5">
                                     <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
                                         <Photo
@@ -494,9 +436,7 @@ export default function Welcome() {
                                 {siteConfig.articles.list.map((article, idx) => (
                                     <article
                                         key={article.id}
-                                        className={`neu-card card-interactive rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group scroll-item stagger-${idx + 1} ${
-                                            inViewSections.articles ? 'scroll-item-visible' : 'scroll-item-hidden-right'
-                                        }`}
+                                        className={`neu-card card-interactive rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group scroll-item scroll-item-hidden-right stagger-${idx + 1}`}
                                     >
                                         <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
                                             <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7] transform group-hover:translate-x-1 transition-transform">
