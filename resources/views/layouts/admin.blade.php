@@ -43,38 +43,32 @@
 
     <style>
         body {
-            background-color: #F2ECE0;
+            background-color: #F8F5EE;
             color: #1B2A2F;
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* Clean Flat UI Design Tokens (Zero Neon Halo / Zero Puffy Neumorphism) */
+        /* Clean Flat UI Design Tokens */
         .neu-card {
-            background-color: #FAF6EC;
+            background-color: #FFFFFF;
             border: 1px solid #E3DAC7;
-            box-shadow: 0 1px 3px 0 rgba(31, 41, 51, 0.05);
-            border-radius: 12px;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .neu-card:hover {
-            border-color: #D4C7AF;
-            box-shadow: 0 4px 12px -2px rgba(31, 41, 51, 0.08);
+            box-shadow: 0 1px 3px 0 rgba(31, 41, 51, 0.04);
+            border-radius: 14px;
         }
 
         .neu-card-sm {
-            background-color: #FAF6EC;
+            background-color: #FFFFFF;
             border: 1px solid #E3DAC7;
-            box-shadow: 0 1px 2px 0 rgba(31, 41, 51, 0.04);
-            border-radius: 8px;
+            box-shadow: 0 1px 2px 0 rgba(31, 41, 51, 0.03);
+            border-radius: 10px;
         }
 
         .neu-btn {
             background-color: #FAF6EC;
             border: 1px solid #E3DAC7;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
-            transition: all 0.15s ease-in-out;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .neu-btn:hover {
@@ -91,9 +85,9 @@
             background-color: #0F4C3A;
             color: #FFFFFF;
             border: 1px solid #0A3427;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
-            transition: all 0.15s ease-in-out;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .neu-btn-primary:hover {
@@ -108,13 +102,13 @@
         .neu-inset {
             background-color: #FAF6EC;
             border: 1px solid #E3DAC7;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .neu-input {
             background-color: #FFFFFF;
             border: 1px solid #E3DAC7;
-            border-radius: 8px;
+            border-radius: 10px;
             transition: all 0.2s ease;
         }
 
@@ -129,10 +123,65 @@
             color: #FFFFFF !important;
             border-color: #0A3427 !important;
             font-weight: 700 !important;
+            box-shadow: 0 4px 12px -2px rgba(15, 76, 58, 0.25) !important;
         }
 
         .neu-sidebar-active i {
             color: #FFFFFF !important;
+        }
+
+        /* Pure Physical Animation & Motion (UI Guidelines compliant) */
+        @keyframes slideUpEntrance {
+            from {
+                transform: translateY(18px);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .anim-slide-up {
+            animation: slideUpEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .anim-delay-1 { animation-delay: 0.05s; }
+        .anim-delay-2 { animation-delay: 0.12s; }
+        .anim-delay-3 { animation-delay: 0.2s; }
+        .anim-delay-4 { animation-delay: 0.28s; }
+
+        /* Buttery Smooth Card Hover Physics */
+        .card-interactive {
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+        }
+        .card-interactive:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 28px -6px rgba(15, 76, 58, 0.12), 0 6px 12px -4px rgba(15, 76, 58, 0.06);
+            border-color: #0F4C3A;
+        }
+        .card-interactive:active {
+            transform: translateY(-1px);
+        }
+
+        .card-interactive-terracotta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 28px -6px rgba(194, 97, 58, 0.15), 0 6px 12px -4px rgba(194, 97, 58, 0.08);
+            border-color: #C2613A;
+        }
+
+        .card-interactive-slate:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 28px -6px rgba(27, 42, 47, 0.15), 0 6px 12px -4px rgba(27, 42, 47, 0.08);
+            border-color: #1B2A2F;
+        }
+
+        /* Sidebar link smooth horizontal slide */
+        .sidebar-link {
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .sidebar-link:hover {
+            transform: translateX(4px);
+        }
+        .sidebar-link:active {
+            transform: translateX(1px);
         }
     </style>
 </head>
@@ -143,7 +192,7 @@
         <div class="space-y-6">
             <!-- Brand Identity -->
             <div class="flex items-center gap-3 pb-5 border-b border-[#E3DAC7]">
-                <div class="w-10 h-10 rounded-lg bg-[#0F4C3A] text-white flex items-center justify-center font-bold text-lg font-serif">
+                <div class="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white flex items-center justify-center font-bold text-lg font-serif shadow-sm">
                     P
                 </div>
                 <div>
@@ -155,37 +204,37 @@
             <!-- Navigation Links -->
             <nav class="space-y-1.5">
                 <a href="{{ route('admin.dashboard') }}" 
-                   class="neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs {{ request()->routeIs('admin.dashboard') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A]' }}">
+                   class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.dashboard') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
                     <i class="fa-solid fa-chart-pie w-4 text-center"></i>
                     <span>Dashboard</span>
                 </a>
 
                 <a href="{{ route('admin.lecturers.index') }}" 
-                   class="neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs {{ request()->routeIs('admin.lecturers.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A]' }}">
+                   class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.lecturers.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
                     <i class="fa-solid fa-chalkboard-user w-4 text-center"></i>
                     <span>Data Dosen</span>
                 </a>
 
                 <a href="{{ route('admin.articles.index') }}" 
-                   class="neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs {{ request()->routeIs('admin.articles.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A]' }}">
+                   class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.articles.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
                     <i class="fa-solid fa-newspaper w-4 text-center"></i>
-                    <span>Artikel & Berita</span>
+                    <span>Artikel &amp; Berita</span>
                 </a>
 
                 <a href="{{ route('admin.gallery.index') }}" 
-                   class="neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs {{ request()->routeIs('admin.gallery.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A]' }}">
+                   class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.gallery.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
                     <i class="fa-solid fa-images w-4 text-center"></i>
-                    <span>Galeri & Slider</span>
+                    <span>Galeri &amp; Slider</span>
                 </a>
 
                 <a href="{{ route('admin.pages.index') }}" 
-                   class="neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs {{ request()->routeIs('admin.pages.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A]' }}">
+                   class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.pages.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
                     <i class="fa-solid fa-file-lines w-4 text-center"></i>
-                    <span>Profil & Halaman</span>
+                    <span>Profil &amp; Halaman</span>
                 </a>
 
                 <a href="{{ route('admin.settings.index') }}" 
-                   class="neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs {{ request()->routeIs('admin.settings.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A]' }}">
+                   class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.settings.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
                     <i class="fa-solid fa-sliders w-4 text-center"></i>
                     <span>Pengaturan Web</span>
                 </a>
@@ -193,12 +242,13 @@
                 {{-- HANYA ADMIN DEVELOPER YANG DAPAT MELIHAT MENU TERMINAL --}}
                 @if(auth()->check() && auth()->user()->isDev())
                 <div class="pt-3 border-t border-[#E3DAC7]/80">
-                    <span class="text-[10px] font-bold text-[#C2613A] uppercase tracking-wider block px-2 mb-1.5">
+                    <span class="text-[10px] font-bold text-[#C2613A] uppercase tracking-wider block px-2 mb-1.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-code text-[10px]"></i>
                         Developer Tools
                     </span>
                     <a href="{{ route('admin.terminal.index') }}" 
-                       class="neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs {{ request()->routeIs('admin.terminal.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A]' }}">
-                        <i class="fa-solid fa-terminal w-4 text-center"></i>
+                       class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.terminal.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#C2613A] hover:bg-white' }}">
+                        <i class="fa-solid fa-terminal w-4 text-center text-[#C2613A]"></i>
                         <span>Terminal Artisan</span>
                     </a>
                 </div>
@@ -208,7 +258,7 @@
 
         <!-- Bottom Actions -->
         <div class="space-y-3 pt-6 border-t border-[#E3DAC7]">
-            <a href="{{ url('/') }}" target="_blank" class="neu-btn flex items-center justify-center gap-2 px-3 py-2 text-xs text-[#0F4C3A] hover:bg-white">
+            <a href="{{ url('/') }}" target="_blank" class="sidebar-link neu-btn flex items-center justify-center gap-2 px-3 py-2 text-xs text-[#0F4C3A] hover:bg-white">
                 <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
                 <span>Lihat Web Publik</span>
             </a>
@@ -241,15 +291,23 @@
 
             <div class="flex items-center gap-3">
                 @if(auth()->check() && auth()->user()->isDev())
-                    <span class="text-xs font-bold text-[#C2613A] flex items-center gap-1.5 uppercase tracking-wider">
-                        <i class="fa-solid fa-code text-[11px]"></i>
-                        <span>Developer Mode</span>
-                    </span>
+                    <a href="{{ route('admin.terminal.index') }}" 
+                       class="card-interactive flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-[#E3DAC7] text-xs font-bold text-[#C2613A] hover:border-[#C2613A] shadow-sm cursor-pointer group"
+                       title="Buka Web Artisan Terminal">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <i class="fa-solid fa-terminal text-[11px] text-[#C2613A]"></i>
+                        <span>Developer Console</span>
+                        <i class="fa-solid fa-arrow-right text-[10px] text-[#C2613A] transition-transform group-hover:translate-x-1"></i>
+                    </a>
                 @else
-                    <span class="text-xs font-bold text-[#0F4C3A] flex items-center gap-1.5 uppercase tracking-wider">
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-[#E3DAC7] text-xs font-bold text-[#0F4C3A] shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
                         <i class="fa-solid fa-user-shield text-[11px]"></i>
                         <span>Admin Konten</span>
-                    </span>
+                    </div>
                 @endif
             </div>
         </header>
