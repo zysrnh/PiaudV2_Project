@@ -16,25 +16,40 @@ class PiaudDataSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Akun Developer (Akses Penuh + Terminal)
-        User::updateOrCreate(
-            ['email' => 'dev@piaud.iaipibandung.ac.id'],
+        // 1. Akun Pengguna Berdasarkan Peran & Jabatan Kampus
+        $users = [
             [
-                'name' => 'Admin Developer',
-                'password' => Hash::make('DevPersis2026!'),
+                'name' => 'Superadmin Developer',
+                'email' => 'dev@piaud.iaipibandung.ac.id',
+                'password' => Hash::make('admin123'),
                 'role' => 'dev',
-            ]
-        );
-
-        // Akun Admin Biasa (Pengelola Konten Tanpa Akses Terminal)
-        User::updateOrCreate(
-            ['email' => 'admin@piaud.iaipibandung.ac.id'],
+            ],
             [
-                'name' => 'Admin Konten',
-                'password' => Hash::make('PiaudPersis2026!'),
+                'name' => 'Dra. Hj. Siti Komariah, M.Pd. (Kaprodi)',
+                'email' => 'kaprodi@piaud.iaipibandung.ac.id',
+                'password' => Hash::make('admin123'),
                 'role' => 'admin',
-            ]
-        );
+            ],
+            [
+                'name' => 'Staf Akademik & TU PIAUD',
+                'email' => 'tu@piaud.iaipibandung.ac.id',
+                'password' => Hash::make('admin123'),
+                'role' => 'admin',
+            ],
+            [
+                'name' => 'Admin Konten & Humas',
+                'email' => 'admin@piaud.iaipibandung.ac.id',
+                'password' => Hash::make('admin123'),
+                'role' => 'admin',
+            ],
+        ];
+
+        foreach ($users as $userData) {
+            User::updateOrCreate(
+                ['email' => $userData['email']],
+                $userData
+            );
+        }
 
         // 2. Site Settings
         $settings = [

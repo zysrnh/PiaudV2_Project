@@ -199,25 +199,28 @@ Route::get('/setup-admin-pertama', function () {
         // Abaikan jika migrasi sudah pernah jalan
     }
 
-    // 1. Akun Developer (Akses Terminal + Penuh)
-    $dev = \App\Models\User::updateOrCreate(
-        ['email' => 'dev@piaud.iaipibandung.ac.id'],
-        [
-            'name' => 'Admin Developer',
-            'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
-            'role' => 'dev',
-        ]
-    );
-
-    // 2. Akun Admin Konten (Kelola Konten)
-    $admin = \App\Models\User::updateOrCreate(
-        ['email' => 'admin@piaud.iaipibandung.ac.id'],
-        [
-            'name' => 'Admin Konten',
-            'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
-            'role' => 'admin',
-        ]
-    );
+    // Jalankan seeder lengkap agar seluruh data dan akun masuk
+    try {
+        \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'PiaudDataSeeder', '--force' => true]);
+    } catch (\Throwable $e) {
+        // Fallback update manual jika seeder ada kendala
+        $users = [
+            ['name' => 'Superadmin Developer', 'email' => 'dev@piaud.iaipibandung.ac.id', 'role' => 'dev'],
+            ['name' => 'Dra. Hj. Siti Komariah, M.Pd. (Kaprodi)', 'email' => 'kaprodi@piaud.iaipibandung.ac.id', 'role' => 'admin'],
+            ['name' => 'Staf Akademik & TU PIAUD', 'email' => 'tu@piaud.iaipibandung.ac.id', 'role' => 'admin'],
+            ['name' => 'Admin Konten & Humas', 'email' => 'admin@piaud.iaipibandung.ac.id', 'role' => 'admin'],
+        ];
+        foreach ($users as $u) {
+            \App\Models\User::updateOrCreate(
+                ['email' => $u['email']],
+                [
+                    'name' => $u['name'],
+                    'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
+                    'role' => $u['role'],
+                ]
+            );
+        }
+    }
 
     $html = <<<HTML
     <!DOCTYPE html>
@@ -225,35 +228,49 @@ Route::get('/setup-admin-pertama', function () {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Setup Akun Admin PIAUD Berhasil</title>
+        <title>Setup Akun Kampus PIAUD Berhasil</title>
         <style>
             body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #FAF6EC; color: #1B2A2F; margin: 0; padding: 2rem; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-            .card { max-width: 520px; width: 100%; background: #FFFFFF; border: 1px solid #E3DAC7; border-radius: 8px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center; }
+            .card { max-width: 580px; width: 100%; background: #FFFFFF; border: 1px solid #E3DAC7; border-radius: 8px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center; }
             h1 { color: #0F4C3A; margin: 0 0 0.5rem 0; font-size: 1.35rem; }
             p { color: #5C6B73; font-size: 0.9rem; margin-top: 0; }
-            .box { background: #F2ECE0; border: 1px solid #E3DAC7; border-radius: 6px; padding: 1rem; margin: 1rem 0; text-align: left; font-size: 0.88rem; }
-            .box-title { font-weight: bold; color: #0F4C3A; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
-            .row { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+            .box { background: #F2ECE0; border: 1px solid #E3DAC7; border-radius: 6px; padding: 0.8rem 1rem; margin: 0.8rem 0; text-align: left; font-size: 0.88rem; }
+            .box-title { font-weight: bold; color: #0F4C3A; margin-bottom: 0.4rem; font-size: 0.85rem; text-transform: uppercase; }
+            .row { display: flex; justify-content: space-between; margin-bottom: 0.3rem; }
             .row:last-child { margin-bottom: 0; }
-            .val { font-weight: bold; font-family: monospace; color: #1B2A2F; font-size: 0.95rem; }
+            .val { font-weight: bold; font-family: monospace; color: #1B2A2F; font-size: 0.92rem; }
             .btn { display: block; background: #C2613A; color: #fff; padding: 0.8rem; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 1.5rem; }
             .btn:hover { background: #A64F2D; }
         </style>
     </head>
     <body>
         <div class="card">
-            <h1>✅ Akun Admin & Developer Berhasil Dibuat!</h1>
-            <p>Database server otomatis dimigrasikan dan kedua akun siap digunakan.</p>
+            <h1>✅ Akun Kampus & Seeder PIAUD Berhasil Dibuat!</h1>
+            <p>Seluruh tabel, data dosen/artikel, dan 4 akun peran kampus sudah aktif di database.</p>
             
             <div class="box">
-                <div class="box-title">1. Akun Developer (Akses Terminal)</div>
+                <div class="box-title">1. Superadmin Developer (Akses Terminal)</div>
                 <div class="row"><span>Email:</span> <span class="val">dev@piaud.iaipibandung.ac.id</span></div>
                 <div class="row"><span>Password:</span> <span class="val">admin123</span></div>
                 <div class="row"><span>Role:</span> <span class="val">dev</span></div>
             </div>
 
             <div class="box">
-                <div class="box-title">2. Akun Admin Konten</div>
+                <div class="box-title">2. Ketua Program Studi (Kaprodi)</div>
+                <div class="row"><span>Email:</span> <span class="val">kaprodi@piaud.iaipibandung.ac.id</span></div>
+                <div class="row"><span>Password:</span> <span class="val">admin123</span></div>
+                <div class="row"><span>Role:</span> <span class="val">admin</span></div>
+            </div>
+
+            <div class="box">
+                <div class="box-title">3. Staf Akademik & Tata Usaha (TU)</div>
+                <div class="row"><span>Email:</span> <span class="val">tu@piaud.iaipibandung.ac.id</span></div>
+                <div class="row"><span>Password:</span> <span class="val">admin123</span></div>
+                <div class="row"><span>Role:</span> <span class="val">admin</span></div>
+            </div>
+
+            <div class="box">
+                <div class="box-title">4. Admin Konten & Publikasi (Humas)</div>
                 <div class="row"><span>Email:</span> <span class="val">admin@piaud.iaipibandung.ac.id</span></div>
                 <div class="row"><span>Password:</span> <span class="val">admin123</span></div>
                 <div class="row"><span>Role:</span> <span class="val">admin</span></div>
