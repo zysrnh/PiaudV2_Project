@@ -1,8 +1,25 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 
 export const Footer: React.FC = () => {
+    const { siteSettings } = usePage().props as { siteSettings?: Record<string, string> };
+
+    const ctaTitle = siteSettings?.footer_cta_title || "Siap Menjadi Pendidik Generasi Emas yang Berkarakter Islami?";
+    const ctaDesc = siteSettings?.footer_cta_description || "Konsultasikan persyaratan pendaftaran, konversi nilai guru mengajar, serta jadwal perkuliahan reguler dan kelas karyawan dengan tim prodi.";
+    const copyrightText = siteSettings?.footer_copyright || "Program Studi S1 PIAUD IAI Persis Bandung. Hak Cipta Dilindungi Undang-Undang.";
+    const campusAddress = siteSettings?.campus_address || siteConfig.campusAddress;
+    const phone = siteSettings?.phone || siteConfig.phone;
+    const officeHours = siteSettings?.office_hours || siteConfig.officeHours;
+    const email = siteSettings?.email || siteConfig.email;
+    const programName = siteSettings?.program_name || "S1 PIAUD";
+    const institutionName = siteSettings?.institution_name || "IAI Persis Bandung";
+    const facultyName = siteSettings?.faculty_name || "Fakultas Tarbiyah";
+
+    const accStatus = siteSettings?.accreditation_status || siteConfig.accreditation.status;
+    const accInstitution = siteSettings?.accreditation_institution || siteConfig.accreditation.institution;
+    const accValidUntil = siteSettings?.accreditation_valid_until || siteConfig.accreditation.validUntil;
+
     const waLink = createWhatsAppLink("Halo Admin, saya ingin mendaftar ke Program Studi S1 PIAUD IAI Persis Bandung.");
 
     const renderLink = (link: { label: string; href: string }) => {
@@ -39,10 +56,10 @@ export const Footer: React.FC = () => {
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 relative z-10">
                         <div className="max-w-2xl space-y-2">
                             <h2 className="text-2xl sm:text-3xl font-serif text-white font-bold leading-snug">
-                                Siap Menjadi Pendidik Generasi Emas yang Berkarakter Islami?
+                                {ctaTitle}
                             </h2>
                             <p className="text-sm text-piaud-ivory/90 leading-relaxed max-w-[65ch]">
-                                Konsultasikan persyaratan pendaftaran, konversi nilai guru mengajar, serta jadwal perkuliahan reguler dan kelas karyawan dengan tim prodi.
+                                {ctaDesc}
                             </p>
                         </div>
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 shrink-0">
@@ -80,30 +97,30 @@ export const Footer: React.FC = () => {
                             </div>
                             <div>
                                 <p className="font-serif font-bold text-base text-white leading-snug">
-                                    S1 PIAUD IAI Persis Bandung
+                                    {programName} {institutionName}
                                 </p>
                                 <p className="text-xs text-piaud-ivory/80 leading-relaxed mt-0.5">
-                                    Fakultas Tarbiyah · Institut Agama Islam Persatuan Islam
+                                    {facultyName} · {institutionName}
                                 </p>
                             </div>
                         </div>
 
                         <p className="text-xs text-piaud-ivory/85 leading-relaxed max-w-[55ch]">
-                            {siteConfig.campusAddress}
+                            {campusAddress}
                         </p>
 
                         <div className="text-xs space-y-2 text-piaud-ivory/85 pt-3 border-t border-[#17664F]">
                             <p>
-                                <strong className="text-white font-medium">Telepon Kantor:</strong> {siteConfig.phone}
+                                <strong className="text-white font-medium">Telepon Kantor:</strong> {phone}
                             </p>
                             <p>
-                                <strong className="text-white font-medium">Jam Layanan:</strong> {siteConfig.officeHours}
+                                <strong className="text-white font-medium">Jam Layanan:</strong> {officeHours}
                             </p>
                             <p>
-                                <strong className="text-white font-medium">Email:</strong> {siteConfig.email}
+                                <strong className="text-white font-medium">Email:</strong> {email}
                             </p>
                             <p>
-                                <strong className="text-white font-medium">Akreditasi:</strong> {siteConfig.accreditation.status} ({siteConfig.accreditation.institution}) · Berlaku hingga {siteConfig.accreditation.validUntil}
+                                <strong className="text-white font-medium">Akreditasi:</strong> {accStatus} ({accInstitution}) · Berlaku hingga {accValidUntil}
                             </p>
                         </div>
                     </div>
@@ -154,7 +171,7 @@ export const Footer: React.FC = () => {
                 {/* Bottom Bar */}
                 <div className="mt-12 pt-6 border-t border-[#17664F] flex flex-col sm:flex-row items-center justify-between text-xs text-piaud-ivory/70 gap-3">
                     <p>
-                        &copy; {new Date().getFullYear()} Program Studi S1 PIAUD IAI Persis Bandung. Hak Cipta Dilindungi Undang-Undang.
+                        &copy; {new Date().getFullYear()} {copyrightText}
                     </p>
                     <p className="text-right">
                         Sistem Informasi &amp; Portal Resmi Program Studi

@@ -130,6 +130,34 @@
             </div>
         </div>
 
+        <!-- Section 5: Kustomisasi Teks Footer & Banner Ajakan (CTA) -->
+        <div class="neu-card p-6 space-y-4">
+            <h3 class="font-serif font-bold text-base text-[#0F4C3A] flex items-center gap-2 border-b border-[#E3DAC7] pb-3">
+                <i class="fa-solid fa-shoe-prints"></i>
+                <span>Kustomisasi Teks Footer &amp; Banner Ajakan (CTA)</span>
+            </h3>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-[#1B2A2F] mb-1">Judul Banner CTA Footer (Ajakan Konsultasi)</label>
+                    <input type="text" name="footer_cta_title" value="{{ $settings['footer_cta_title'] ?? 'Siap Menjadi Pendidik Generasi Emas yang Berkarakter Islami?' }}"
+                           class="neu-input w-full px-3.5 py-2.5 text-xs text-[#1B2A2F]">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-[#1B2A2F] mb-1">Deskripsi / Sub-judul Banner CTA Footer</label>
+                    <textarea name="footer_cta_description" rows="2" 
+                              class="neu-input w-full px-3.5 py-2.5 text-xs text-[#1B2A2F]">{{ $settings['footer_cta_description'] ?? 'Konsultasikan persyaratan pendaftaran, konversi nilai guru mengajar, serta jadwal perkuliahan reguler dan kelas karyawan dengan tim prodi.' }}</textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-[#1B2A2F] mb-1">Teks Hak Cipta / Copyright Footer</label>
+                    <input type="text" name="footer_copyright" value="{{ $settings['footer_copyright'] ?? 'Program Studi S1 PIAUD IAI Persis Bandung. Hak Cipta Dilindungi Undang-Undang.' }}"
+                           class="neu-input w-full px-3.5 py-2.5 text-xs text-[#1B2A2F]">
+                </div>
+            </div>
+        </div>
+
         <!-- Submit Button -->
         <div class="flex items-center justify-end">
             <button type="submit" class="neu-btn-primary px-8 py-3 text-xs flex items-center gap-2 font-bold shadow-lg">

@@ -34,6 +34,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'siteSettings' => \App\Models\SiteSetting::pluck('value', 'key')->toArray(),
         ];
     }
 }

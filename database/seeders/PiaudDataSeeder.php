@@ -50,6 +50,9 @@ class PiaudDataSeeder extends Seeder
             'accreditation_status' => 'Terakreditasi Baik',
             'accreditation_institution' => 'LAMDIK',
             'accreditation_valid_until' => '2027',
+            'footer_cta_title' => 'Siap Menjadi Pendidik Generasi Emas yang Berkarakter Islami?',
+            'footer_cta_description' => 'Konsultasikan persyaratan pendaftaran, konversi nilai guru mengajar, serta jadwal perkuliahan reguler dan kelas karyawan dengan tim prodi.',
+            'footer_copyright' => 'Program Studi S1 PIAUD IAI Persis Bandung. Hak Cipta Dilindungi Undang-Undang.',
         ];
 
         foreach ($settings as $key => $value) {
