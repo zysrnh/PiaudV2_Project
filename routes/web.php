@@ -134,6 +134,7 @@ Route::get('/galeri', function () {
 Route::get('/kontak', function () {
     return Inertia::render('Public/Contact');
 })->name('contact');
+Route::post('/kontak', [\App\Http\Controllers\PublicContactController::class, 'store'])->name('contact.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -147,6 +148,11 @@ Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class
 
 Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+
+    // Contacts / Pesan Masuk
+    Route::get('contacts', [\App\Http\Controllers\Admin\ContactController::class, 'index'])->name('contacts.index');
+    Route::patch('contacts/{contact}/read', [\App\Http\Controllers\Admin\ContactController::class, 'markAsRead'])->name('contacts.read');
+    Route::delete('contacts/{contact}', [\App\Http\Controllers\Admin\ContactController::class, 'destroy'])->name('contacts.destroy');
 
     // Lecturers
     Route::resource('lecturers', \App\Http\Controllers\Admin\LecturerController::class)->except(['show']);

@@ -233,6 +233,20 @@
                     <span>Profil &amp; Halaman</span>
                 </a>
 
+                <a href="{{ route('admin.contacts.index') }}" 
+                   class="sidebar-link neu-btn flex items-center justify-between px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.contacts.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-envelope-open-text w-4 text-center"></i>
+                        <span>Pesan Masuk</span>
+                    </div>
+                    @php
+                        $unreadBadge = \App\Models\Contact::where('status', 'unread')->count();
+                    @endphp
+                    @if($unreadBadge > 0)
+                        <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#C2613A] text-white">{{ $unreadBadge }}</span>
+                    @endif
+                </a>
+
                 <a href="{{ route('admin.settings.index') }}" 
                    class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.settings.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
                     <i class="fa-solid fa-sliders w-4 text-center"></i>

@@ -218,5 +218,27 @@ class PiaudDataSeeder extends Seeder
                 ]
             );
         }
+
+        // 6. Sample Contacts
+        $sampleContacts = [
+            [
+                'name' => 'Siti Khadijah',
+                'phone' => '081234567890',
+                'interest' => 'Pendaftaran Mahasiswa Baru (PMB)',
+                'message' => 'Assalamu\'alaikum, mohon informasi persyaratan pendaftaran mahasiswa baru jalur beasiswa tahfidz dan konversi guru RA untuk semester depan.',
+                'status' => 'unread',
+            ],
+            [
+                'name' => 'Rahmat Hidayat',
+                'phone' => '085798765432',
+                'interest' => 'Konversi Ijazah Guru',
+                'message' => 'Halo admin, apakah ada program RPL atau perkuliahan kelas karyawan untuk guru PAUD/TK yang sudah mengajar lebih dari 5 tahun?',
+                'status' => 'read',
+            ],
+        ];
+
+        foreach ($sampleContacts as $sc) {
+            \App\Models\Contact::firstOrCreate(['phone' => $sc['phone']], $sc);
+        }
     }
 }

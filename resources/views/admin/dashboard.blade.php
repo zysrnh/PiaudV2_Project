@@ -67,7 +67,7 @@
         </a>
 
         <!-- Metric 4: Pesan Masuk / Pengaturan -->
-        <a href="{{ route('admin.settings.index') }}" 
+        <a href="{{ route('admin.contacts.index') }}" 
            class="card-interactive group cursor-pointer block p-6 bg-white border border-[#E3DAC7] rounded-xl shadow-sm hover:border-[#0F4C3A]">
             <div class="flex items-center justify-between">
                 <div class="space-y-1">
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="border-t border-[#E3DAC7]/60 pt-3 mt-4 flex items-center justify-between text-xs font-bold text-[#0F4C3A]">
-                <span>Lihat Pengaturan &amp; Kontak</span>
+                <span>Buka Pesan Masuk</span>
                 <i class="fa-solid fa-arrow-right text-[11px] transition-transform duration-300 group-hover:translate-x-1.5"></i>
             </div>
         </a>

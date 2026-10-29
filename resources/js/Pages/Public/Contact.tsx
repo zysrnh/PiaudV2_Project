@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 
@@ -9,12 +9,32 @@ export default function Contact() {
     const [interest, setInterest] = useState('Pendaftaran Mahasiswa Baru (PMB)');
     const [message, setMessage] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSending, setIsSending] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSending(true);
+
+        // 1. Simpan pesan ke database admin
+        router.post('/kontak', {
+            name,
+            phone,
+            interest,
+            message,
+        }, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setIsSubmitted(true);
+                setIsSending(false);
+            },
+            onError: () => {
+                setIsSending(false);
+            }
+        });
+
+        // 2. Buka WhatsApp chat ke Admin PMB
         const formattedMsg = `Halo Admin PMB PIAUD IAI Persis Bandung,%0A%0ASaya ingin berkonsultasi:%0A- Nama: ${encodeURIComponent(name)}%0A- Kontak: ${encodeURIComponent(phone)}%0A- Topik: ${encodeURIComponent(interest)}%0A- Pesan: ${encodeURIComponent(message)}`;
         window.open(`https://wa.me/${siteConfig.whatsappNumber}?text=${formattedMsg}`, '_blank');
-        setIsSubmitted(true);
     };
 
     return (
