@@ -456,3 +456,11 @@ Route::get('/deploy-helper/{secret}', function ($secret) {
 });
 
 require __DIR__.'/auth.php';
+
+// Force clean redirect ke /dashboard saat login sukses (agar URL di browser langsung berubah ke /dashboard)
+Route::post('login', function (\App\Http\Requests\Auth\LoginRequest $request) {
+    $request->authenticate();
+    $request->session()->regenerate();
+    return \Inertia\Inertia::location(route('dashboard'));
+})->middleware('guest');
+
