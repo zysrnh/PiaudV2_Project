@@ -176,6 +176,9 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () 
     Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
     Route::put('settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
 
+    // User / Admin Management (Khusus Superadmin Dev)
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(['show', 'create', 'edit']);
+
     // Terminal Artisan Console
     Route::get('terminal', [\App\Http\Controllers\Admin\TerminalController::class, 'index'])->name('terminal.index');
     Route::post('terminal/execute', [\App\Http\Controllers\Admin\TerminalController::class, 'execute'])->name('terminal.execute');

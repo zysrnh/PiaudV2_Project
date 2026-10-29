@@ -260,6 +260,11 @@
                         <i class="fa-solid fa-code text-[10px]"></i>
                         Developer Tools
                     </span>
+                    <a href="{{ route('admin.users.index') }}" 
+                       class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.users.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
+                        <i class="fa-solid fa-users-gear w-4 text-center text-[#0F4C3A]"></i>
+                        <span>Kelola Akun Admin</span>
+                    </a>
                     <a href="{{ route('admin.terminal.index') }}" 
                        class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.terminal.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#C2613A] hover:bg-white' }}">
                         <i class="fa-solid fa-terminal w-4 text-center text-[#C2613A]"></i>
