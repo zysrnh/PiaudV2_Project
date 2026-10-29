@@ -12,7 +12,7 @@
                 <i class="fa-solid fa-circle-check text-emerald-600"></i>
                 <span>{{ session('success') }}</span>
             </div>
-            <a href="{{ url('/') }}" target="_blank" class="underline text-emerald-700 hover:text-emerald-900">Lihat Beranda ↗</a>
+            <a href="{{ url('/') }}" target="_blank" class="underline text-emerald-700 hover:text-emerald-900">Lihat Beranda &rarr;</a>
         </div>
     @endif
 

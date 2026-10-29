@@ -542,7 +542,10 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                                         rel="noopener noreferrer"
                                         className="group inline-flex items-center justify-center gap-2 bg-[#FAF6EC] hover:bg-[#F2ECE0] text-[#0F4C3A] text-xs sm:text-sm font-bold px-7 py-4 rounded-xl border border-[#E3DAC7] shadow-sm hover:shadow transition-all duration-200 cursor-pointer"
                                     >
-                                        <span>Kunjungi Jurnal PIAUDKU ↗</span>
+                                        <span>Kunjungi Jurnal PIAUDKU</span>
+                                        <svg className="w-3.5 h-3.5 stroke-current stroke-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                        </svg>
                                     </a>
                                 </div>
                             </div>

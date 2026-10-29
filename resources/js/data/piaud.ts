@@ -301,7 +301,7 @@ export const siteConfig: SiteConfig = {
         description:
             "Jelajahi publikasi ilmiah, artikel penelitian, dan kajian seputar pendidikan Islam anak usia dini melalui portal jurnal resmi PIAUD IAI Persis Bandung.",
         notice: "Portal jurnal dikelola pada situs jurnal terpisah dan akan terbuka di tab baru.",
-        ctaText: "Kunjungi Jurnal PIAUDKU ↗",
+        ctaText: "Kunjungi Jurnal PIAUDKU",
         url: "https://journal.iaipibandung.ac.id/index.php/piaudku/index",
     },
 
@@ -309,7 +309,7 @@ export const siteConfig: SiteConfig = {
     noticeBanner: {
         title: "Informasi Resmi Program Studi",
         description: "Hubungi pengelola prodi untuk mendapatkan informasi akademik, dokumen, dan layanan yang telah diverifikasi.",
-        ctaText: "Lihat Kontak ↗",
+        ctaText: "Lihat Kontak",
         ctaHref: "/kontak",
     },
 

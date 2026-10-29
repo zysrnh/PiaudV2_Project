@@ -41,7 +41,11 @@ export const Footer: React.FC = () => {
             >
                 <span className="text-white/40 text-[10px]">›</span>
                 <span>{link.label}</span>
-                {link.href.startsWith('http') && <span className="text-[10px] text-white/50">↗</span>}
+                {link.href.startsWith('http') && (
+                    <svg className="w-2.5 h-2.5 text-white/60 inline ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                )}
             </a>
         );
     };
@@ -63,9 +67,10 @@ export const Footer: React.FC = () => {
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 shrink-0">
                             <a
                                 href="#kontak"
-                                className="inline-flex items-center justify-center bg-[#FAF6EC] hover:bg-[#F2ECE0] text-[#0F4C3A] text-xs font-bold px-7 py-3.5 rounded-xl border border-[#E3DAC7] shadow-sm hover:shadow transition-all duration-150 tactile-press"
+                                className="inline-flex items-center justify-center gap-1.5 bg-[#FAF6EC] hover:bg-[#F2ECE0] text-[#0F4C3A] text-xs font-bold px-7 py-3.5 rounded-xl border border-[#E3DAC7] shadow-sm hover:shadow transition-all duration-150 tactile-press"
                             >
-                                <span>Lihat Kontak ↗</span>
+                                <span>Lihat Kontak</span>
+                                <span className="text-[11px]">→</span>
                             </a>
                         </div>
                     </div>
