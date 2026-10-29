@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Script 1-Klik Buat 1 Akun Admin Developer PIAUD
+ * Script 1-Klik Buat Akun Developer & Admin PIAUD
  * Bisa diakses via BROWSER: https://domain-kamu.com/buat_admin.php
  * Atau via TERMINAL CLI: php public/buat_admin.php
  */
@@ -29,29 +29,38 @@ if (!Schema::hasTable('users') || !Schema::hasColumn('users', 'role')) {
     }
 }
 
-// 2. Data 1 Akun Admin Developer
-$email = $_GET['email'] ?? ($argv[1] ?? 'dev@piaud.iaipibandung.ac.id');
-$password = $_GET['password'] ?? ($argv[2] ?? 'admin123');
-$name = 'Admin Developer';
-$role = 'dev';
-
-$user = User::updateOrCreate(
-    ['email' => $email],
+// 2. Buat Akun 1: Developer (Akses Penuh + Terminal)
+$devUser = User::updateOrCreate(
+    ['email' => 'dev@piaud.iaipibandung.ac.id'],
     [
-        'name' => $name,
-        'password' => Hash::make($password),
-        'role' => $role,
+        'name' => 'Admin Developer',
+        'password' => Hash::make('admin123'),
+        'role' => 'dev',
+    ]
+);
+
+// 3. Buat Akun 2: Admin Konten (Kelola Konten)
+$adminUser = User::updateOrCreate(
+    ['email' => 'admin@piaud.iaipibandung.ac.id'],
+    [
+        'name' => 'Admin Konten',
+        'password' => Hash::make('admin123'),
+        'role' => 'admin',
     ]
 );
 
 if ($isCli) {
     echo "\n=========================================\n";
-    echo " ✅ AKUN ADMIN DEVELOPER BERHASIL DIBUAT!\n";
+    echo " ✅ AKUN DEV & ADMIN BERHASIL DIBUAT!\n";
     echo "=========================================\n";
-    echo " Name     : {$user->name}\n";
-    echo " Email    : {$user->email}\n";
-    echo " Password : {$password}\n";
-    echo " Role     : {$user->role} (Akses Terminal & Admin)\n";
+    echo " 1. AKUN DEVELOPER:\n";
+    echo "    Email    : {$devUser->email}\n";
+    echo "    Password : admin123\n";
+    echo "    Role     : {$devUser->role} (Akses Terminal)\n\n";
+    echo " 2. AKUN ADMIN KONTEN:\n";
+    echo "    Email    : {$adminUser->email}\n";
+    echo "    Password : admin123\n";
+    echo "    Role     : {$adminUser->role}\n";
     echo "=========================================\n";
     echo " Silakan login di: /login\n\n";
     exit;
@@ -65,53 +74,49 @@ header('Content-Type: text/html; charset=UTF-8');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Setup 1 Akun Admin PIAUD</title>
+    <title>Setup Akun Admin PIAUD</title>
     <style>
         * { box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #FAF6EC; color: #1B2A2F; margin: 0; padding: 2rem; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .card { max-width: 500px; width: 100%; background: #FFFFFF; border: 1px solid #E3DAC7; border-radius: 8px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+        .card { max-width: 520px; width: 100%; background: #FFFFFF; border: 1px solid #E3DAC7; border-radius: 8px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
         .badge { display: inline-block; padding: 4px 10px; background: #0F4C3A; color: #FAF6EC; border-radius: 4px; font-size: 0.75rem; font-weight: bold; margin-bottom: 1rem; }
         h1 { margin: 0 0 0.5rem 0; font-size: 1.35rem; color: #0F4C3A; }
         p { color: #5C6B73; font-size: 0.9rem; margin-top: 0; }
-        .info-box { background: #F2ECE0; border: 1px solid #E3DAC7; border-radius: 6px; padding: 1.2rem; margin: 1.5rem 0; font-size: 0.9rem; }
-        .info-row { display: flex; justify-content: space-between; margin-bottom: 0.6rem; border-bottom: 1px dashed #D9CFC1; padding-bottom: 0.6rem; }
-        .info-row:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+        .info-box { background: #F2ECE0; border: 1px solid #E3DAC7; border-radius: 6px; padding: 1rem; margin: 1rem 0; font-size: 0.88rem; }
+        .box-title { font-weight: bold; color: #0F4C3A; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; }
+        .info-row { display: flex; justify-content: space-between; margin-bottom: 0.4rem; }
+        .info-row:last-child { margin-bottom: 0; }
         .label { color: #7B8A90; }
         .val { font-weight: bold; color: #1B2A2F; font-family: monospace; font-size: 0.95rem; }
-        .btn { display: block; text-align: center; background: #C2613A; color: #FFFFFF; padding: 0.8rem; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 1rem; }
+        .btn { display: block; text-align: center; background: #C2613A; color: #FFFFFF; padding: 0.8rem; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 1.5rem; }
         .btn:hover { background: #A64F2D; }
-        .note { font-size: 0.75rem; color: #8C3917; margin-top: 1rem; }
+        .note { font-size: 0.75rem; color: #8C3917; margin-top: 1rem; text-align: center; }
     </style>
 </head>
 <body>
     <div class="card">
         <span class="badge">PIAUD SETUP UTILITY</span>
-        <h1>✅ 1 Akun Admin Berhasil Dibuat!</h1>
-        <p>Database sudah otomatis dicek/dimigrasikan dan akun siap digunakan untuk login.</p>
+        <h1>✅ Akun Admin & Dev Berhasil Dibuat!</h1>
+        <p>Database sudah dimigrasikan dan kedua akun siap digunakan.</p>
 
         <div class="info-box">
-            <div class="info-row">
-                <span class="label">Nama:</span>
-                <span class="val"><?= htmlspecialchars($user->name) ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Email:</span>
-                <span class="val"><?= htmlspecialchars($user->email) ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Password:</span>
-                <span class="val"><?= htmlspecialchars($password) ?></span>
-            </div>
-            <div class="info-row">
-                <span class="label">Role:</span>
-                <span class="val"><?= htmlspecialchars($user->role) ?> (Developer + Terminal)</span>
-            </div>
+            <div class="box-title">1. Akun Developer (Akses Terminal)</div>
+            <div class="info-row"><span class="label">Email:</span> <span class="val"><?= htmlspecialchars($devUser->email) ?></span></div>
+            <div class="info-row"><span class="label">Password:</span> <span class="val">admin123</span></div>
+            <div class="info-row"><span class="label">Role:</span> <span class="val"><?= htmlspecialchars($devUser->role) ?></span></div>
+        </div>
+
+        <div class="info-box">
+            <div class="box-title">2. Akun Admin Konten</div>
+            <div class="info-row"><span class="label">Email:</span> <span class="val"><?= htmlspecialchars($adminUser->email) ?></span></div>
+            <div class="info-row"><span class="label">Password:</span> <span class="val">admin123</span></div>
+            <div class="info-row"><span class="label">Role:</span> <span class="val"><?= htmlspecialchars($adminUser->role) ?></span></div>
         </div>
 
         <a href="/login" class="btn">🚀 Buka Halaman Login Sekarang</a>
 
         <div class="note">
-            ⚠️ <strong>Saran Keamanan:</strong> Setelah berhasil login ke sistem, hapus file <code>public/buat_admin.php</code> ini dari hosting demi keamanan.
+            ⚠️ <strong>Saran:</strong> Setelah login berhasil, hapus file <code>public/buat_admin.php</code> dari hosting demi keamanan.
         </div>
     </div>
 </body>
