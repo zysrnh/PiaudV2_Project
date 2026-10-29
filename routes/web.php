@@ -59,11 +59,16 @@ Route::get('/', function () {
         ];
     });
 
+    $homeSettings = \App\Models\SiteSetting::where('group', 'homepage')
+        ->pluck('value', 'key')
+        ->toArray();
+
     return Inertia::render('Welcome', [
         'dbLecturers' => $lecturers,
         'dbArticles' => $articles,
         'dbGalleries' => $galleries,
         'dbQuickLinks' => $quickLinks,
+        'homeSettings' => $homeSettings,
     ]);
 })->name('home');
 
@@ -186,6 +191,10 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () 
     // Settings
     Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
     Route::put('settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
+
+    // Kelola Halaman Beranda (Homepage CMS)
+    Route::get('homepage', [\App\Http\Controllers\Admin\HomepageController::class, 'index'])->name('homepage.index');
+    Route::put('homepage', [\App\Http\Controllers\Admin\HomepageController::class, 'update'])->name('homepage.update');
 
     // Quick Links / Tautan Cepat
     Route::resource('quick-links', \App\Http\Controllers\Admin\QuickLinkController::class)->except(['show', 'create', 'edit']);

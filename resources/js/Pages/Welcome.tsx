@@ -41,9 +41,55 @@ interface WelcomeProps {
         logoUrl?: string | null;
         showTitle: boolean;
     }>;
+    homeSettings?: Record<string, string>;
 }
 
-export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickLinks }: WelcomeProps) {
+export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickLinks, homeSettings }: WelcomeProps) {
+    // Dynamic values from database homeSettings with fallback to siteConfig
+    const heroTagline = homeSettings?.home_hero_tagline || siteConfig.hero.tagline;
+    const heroHeading = homeSettings?.home_hero_heading || siteConfig.hero.heading;
+    const heroDesc = homeSettings?.home_hero_desc || siteConfig.hero.description;
+    const heroCta1Text = homeSettings?.home_hero_cta1_text || siteConfig.hero.ctaPrimaryText;
+    const heroCta2Text = homeSettings?.home_hero_cta2_text || siteConfig.hero.ctaSecondaryText;
+    const heroNote = homeSettings?.home_hero_note || siteConfig.hero.heroNote;
+
+    const focusItems = [
+        {
+            icon: "📖",
+            title: homeSettings?.home_focus1_title || siteConfig.focusStrip[0]?.title || "Pendidikan Berkualitas",
+            description: homeSettings?.home_focus1_desc || siteConfig.focusStrip[0]?.description || "Pembelajaran kontekstual dan berlandaskan nilai Islam",
+        },
+        {
+            icon: "👩‍🏫",
+            title: homeSettings?.home_focus2_title || siteConfig.focusStrip[1]?.title || "Dosen Profesional",
+            description: homeSettings?.home_focus2_desc || siteConfig.focusStrip[1]?.description || "Pendampingan akademik dan pengembangan kompetensi",
+        },
+        {
+            icon: "🔎",
+            title: homeSettings?.home_focus3_title || siteConfig.focusStrip[2]?.title || "Riset dan Inovasi",
+            description: homeSettings?.home_focus3_desc || siteConfig.focusStrip[2]?.description || "Pengembangan pendidikan anak usia dini",
+        },
+        {
+            icon: "🎓",
+            title: homeSettings?.home_focus4_title || siteConfig.focusStrip[3]?.title || "Pengembangan Karier",
+            description: homeSettings?.home_focus4_desc || siteConfig.focusStrip[3]?.description || "Menyiapkan calon pendidik dan praktisi PAUD",
+        },
+    ];
+
+    const aboutTitle = homeSettings?.home_about_title || siteConfig.about.title;
+    const aboutP1 = homeSettings?.home_about_p1 || siteConfig.about.description[0];
+    const aboutP2 = homeSettings?.home_about_p2 || siteConfig.about.description[1];
+    const aboutChecklist = [
+        homeSettings?.home_about_check1 || siteConfig.about.checklist[0],
+        homeSettings?.home_about_check2 || siteConfig.about.checklist[1],
+        homeSettings?.home_about_check3 || siteConfig.about.checklist[2],
+    ];
+    const aboutCaption = homeSettings?.home_about_caption || siteConfig.about.artCaption;
+
+    const journalTitle = homeSettings?.home_journal_title || siteConfig.journal.title;
+    const journalDesc = homeSettings?.home_journal_desc || siteConfig.journal.description;
+    const journalUrl = homeSettings?.home_journal_url || siteConfig.journal.url;
+
     const defaultQuickLinks = [
         {
             id: 1,
@@ -102,7 +148,7 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
         ? dbArticles.filter((a) => a.id !== featuredArticle.id).slice(0, 2)
         : siteConfig.articles.list;
 
-    // Active in-view state that resets on scroll away and re-animates on scroll into view
+    // Active in-view state for smooth animations
     const [inView, setInView] = useState<Record<string, boolean>>({
         hero: true,
     });
@@ -137,7 +183,7 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                     content="Website resmi Program Studi Pendidikan Islam Anak Usia Dini IAI Persis Bandung. Informasi profil, akademik, dosen, penelitian, berita, dan pengumuman."
                 />
                 <meta property="og:title" content={`PIAUD | ${siteConfig.institutionName}`} />
-                <meta property="og:description" content={siteConfig.hero.description} />
+                <meta property="og:description" content={heroDesc} />
                 <meta property="og:type" content="website" />
             </Head>
 
@@ -154,7 +200,7 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                                 <div className="space-y-4 sm:space-y-5">
                                     <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0F4C3A]">
                                         <span className="w-6 h-[3px] bg-[#C2613A] rounded-sm"></span>
-                                        <span>{siteConfig.hero.tagline}</span>
+                                        <span>{heroTagline}</span>
                                     </div>
 
                                     <h1
@@ -162,8 +208,7 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                                             inView.hero ? 'animate-slide-left' : ''
                                         }`}
                                     >
-                                        Mendidik Generasi,<br />
-                                        <span className="text-[#0F4C3A]">Menumbuhkan Peradaban.</span>
+                                        {heroHeading}
                                     </h1>
 
                                     <p
@@ -171,7 +216,7 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                                             inView.hero ? 'animate-slide-left delay-1' : ''
                                         }`}
                                     >
-                                        {siteConfig.hero.description}
+                                        {heroDesc}
                                     </p>
 
                                     {/* Action Buttons */}
@@ -184,14 +229,14 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                                             href="#profil"
                                             className="group inline-flex items-center justify-center gap-2.5 neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl cursor-pointer"
                                         >
-                                            <span>{siteConfig.hero.ctaPrimaryText}</span>
+                                            <span>{heroCta1Text}</span>
                                             <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">→</span>
                                         </a>
                                         <a
                                             href="#akademik"
                                             className="group inline-flex items-center justify-center gap-2.5 neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl cursor-pointer"
                                         >
-                                            <span>{siteConfig.hero.ctaSecondaryText}</span>
+                                            <span>{heroCta2Text}</span>
                                             <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">→</span>
                                         </a>
                                     </div>
@@ -199,7 +244,7 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                                     {/* Hero Note */}
                                     <p className="text-xs sm:text-sm text-piaud-slate-muted pt-2 flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C3A]"></span>
-                                        <span>{siteConfig.hero.heroNote}</span>
+                                        <span>{heroNote}</span>
                                     </p>
                                 </div>
                             </div>
@@ -231,21 +276,30 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                     </div>
                 </section>
 
-                {/* 2. QUICK STRIP: FOKUS PROGRAM STUDI & QUICK ACCESS PORTAL */}
+                {/* 2. QUICK STRIP: FOKUS PROGRAM STUDI (Simetris & Proporsional 4 Kolom) */}
                 <section data-section="quick-strip" className="bg-white border-b border-[#E3DAC7]">
-                    {/* 4 Focus Points Grid */}
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 divide-y sm:divide-y-0 lg:divide-x divide-[#E3DAC7]">
-                            {siteConfig.focusStrip.map((item, idx) => (
-                                <div key={idx} className="flex items-start gap-3.5 py-3 lg:py-1 px-2 lg:px-5 first:pl-0">
-                                    <div className="w-10 h-10 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-xl shrink-0 shadow-sm">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#E3DAC7]">
+                            {focusItems.map((item, idx) => (
+                                <div
+                                    key={idx}
+                                    className="flex items-center gap-4 px-4 sm:px-6 py-5 lg:py-6"
+                                >
+                                    {/* Circle Solid Badge */}
+                                    <div
+                                        className={`w-12 h-12 rounded-full flex items-center justify-center text-xl shrink-0 shadow-sm ${
+                                            idx % 2 === 0
+                                                ? 'bg-[#0F4C3A] text-white'
+                                                : 'bg-[#F9C928] text-[#0F4C3A]'
+                                        }`}
+                                    >
                                         {item.icon}
                                     </div>
-                                    <div className="space-y-0.5">
-                                        <strong className="block text-xs sm:text-sm font-bold text-piaud-slate">
+                                    <div className="space-y-0.5 min-w-0">
+                                        <strong className="block text-sm font-bold text-piaud-slate leading-snug truncate">
                                             {item.title}
                                         </strong>
-                                        <small className="block text-[11px] sm:text-xs text-piaud-slate-muted leading-relaxed">
+                                        <small className="block text-xs text-piaud-slate-muted leading-relaxed line-clamp-2">
                                             {item.description}
                                         </small>
                                     </div>
@@ -253,109 +307,135 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                             ))}
                         </div>
                     </div>
+                </section>
 
-                    {/* Quick Access Portal Bar (Pintasan Web Lain) */}
-                    <div className="bg-[#F2ECE0] border-t border-[#E3DAC7] py-3.5 sm:py-4">
-                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
-                                <div className="flex items-center gap-2 self-start md:self-auto flex-shrink-0">
-                                    <span className="w-2 h-2 rounded-full bg-[#0F4C3A]"></span>
-                                    <span className="text-[11px] font-bold text-[#0F4C3A] uppercase tracking-wider">Akses Cepat Portal</span>
-                                </div>
+                {/* 2.5 QUICK ACCESS PORTAL BAR (Pintasan Web Kampus Terpisah Rapi) */}
+                <section data-section="quick-links" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-3.5 sm:py-4">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+                            <div className="flex items-center gap-2 self-start md:self-auto flex-shrink-0">
+                                <span className="w-2 h-2 rounded-full bg-[#0F4C3A]"></span>
+                                <span className="text-[11px] font-bold text-[#0F4C3A] uppercase tracking-wider">Akses Cepat Portal</span>
+                            </div>
 
-                                <div className="w-full md:w-auto flex items-center gap-2.5 sm:gap-3 flex-wrap justify-start md:justify-end">
-                                    {displayedQuickLinks.map((link) => (
-                                        <a
-                                            key={link.id}
-                                            href={link.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            title={link.title}
-                                            className="group neu-card card-interactive-sm rounded-lg px-3 py-2 flex items-center gap-2 bg-white border border-[#E3DAC7] hover:border-[#0F4C3A] transition-all cursor-pointer shadow-sm text-xs font-semibold text-[#1B2A2F]"
-                                        >
-                                            {link.logoUrl ? (
-                                                <img
-                                                    src={link.logoUrl}
-                                                    alt={link.title}
-                                                    className="h-5 sm:h-6 w-auto max-w-[80px] object-contain flex-shrink-0 group-hover:scale-105 transition-transform"
-                                                />
-                                            ) : (
-                                                <i className="fa-solid fa-arrow-up-right-from-square text-[10px] text-[#0F4C3A] flex-shrink-0"></i>
-                                            )}
+                            <div className="w-full md:w-auto flex items-center gap-2.5 sm:gap-3 flex-wrap justify-start md:justify-end">
+                                {displayedQuickLinks.map((link) => (
+                                    <a
+                                        key={link.id}
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        title={link.title}
+                                        className="group neu-card card-interactive-sm rounded-lg px-3 py-2 flex items-center gap-2 bg-white border border-[#E3DAC7] hover:border-[#0F4C3A] transition-all cursor-pointer shadow-sm text-xs font-semibold text-[#1B2A2F]"
+                                    >
+                                        {link.logoUrl ? (
+                                            <img
+                                                src={link.logoUrl}
+                                                alt={link.title}
+                                                className="h-5 sm:h-6 w-auto max-w-[80px] object-contain flex-shrink-0 group-hover:scale-105 transition-transform"
+                                            />
+                                        ) : (
+                                            <i className="fa-solid fa-arrow-up-right-from-square text-[10px] text-[#0F4C3A] flex-shrink-0"></i>
+                                        )}
 
-                                            {link.showTitle && (
-                                                <span className="text-[11px] sm:text-xs font-semibold text-[#1B2A2F] group-hover:text-[#0F4C3A] transition-colors whitespace-nowrap">
-                                                    {link.title}
-                                                </span>
-                                            )}
-                                        </a>
-                                    ))}
-                                </div>
+                                        {link.showTitle && (
+                                            <span className="text-[11px] sm:text-xs font-semibold text-[#1B2A2F] group-hover:text-[#0F4C3A] transition-colors whitespace-nowrap">
+                                                {link.title}
+                                            </span>
+                                        )}
+                                    </a>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* 3. PROFIL PRODI SECTION (#profil) */}
+                {/* 3. PROFIL PRODI SECTION (#profil) - Dibuat Simetris & Proporsional */}
                 <section id="profil" data-section="about" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
-                            {/* Left Art Card / Visual (5 cols) */}
-                            <div className={`lg:col-span-5 ${inView.about ? 'animate-slide-left' : ''}`}>
-                                <figure className="neu-card card-interactive rounded-2xl p-4 sm:p-5 group text-center space-y-4">
-                                    <div className="bg-[#F2ECE0] border border-[#E3DAC7] rounded-xl p-8 flex flex-col items-center justify-center">
-                                        <div className="text-6xl mb-3">🧒🏻📗</div>
-                                        <p className="font-serif font-bold text-base text-piaud-slate">
-                                            {siteConfig.about.artCaption}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-stretch">
+                            {/* Left Column (5 cols): Symmetrical Height Card */}
+                            <div className={`lg:col-span-5 flex flex-col ${inView.about ? 'animate-slide-left' : ''}`}>
+                                <figure className="neu-card card-interactive rounded-2xl p-6 sm:p-7 group flex flex-col justify-between h-full space-y-6">
+                                    {/* Upper: Illustration & Caption */}
+                                    <div className="bg-[#F2ECE0] border border-[#E3DAC7] rounded-xl p-8 flex flex-col items-center justify-center text-center space-y-3">
+                                        <div className="text-6xl filter drop-shadow-sm">🧒🏻 📗</div>
+                                        <p className="font-serif font-bold text-base sm:text-lg text-piaud-slate">
+                                            {aboutCaption}
                                         </p>
-                                        <p className="text-xs text-piaud-slate-muted mt-1 max-w-[30ch]">
-                                            Komitmen mencetak sarjana pendidikan anak usia dini yang berkarakter Islami.
+                                        <p className="text-xs text-piaud-slate-muted max-w-[32ch] leading-relaxed">
+                                            Membina generasi emas sejak usia dini dengan fondasi aqidah, akhlak mulia, dan kecerdasan terpadu.
                                         </p>
                                     </div>
-                                    <div className="pt-2 text-left">
-                                        <p className="text-xs text-[#C2613A] font-bold uppercase tracking-wider">
-                                            Fakultas Tarbiyah · IAI Persis Bandung
+
+                                    {/* Middle: Feature highlights */}
+                                    <div className="grid grid-cols-2 gap-3 text-xs">
+                                        <div className="bg-[#FAF6EC] border border-[#E3DAC7] rounded-xl p-3 text-center">
+                                            <span className="block font-bold text-[#0F4C3A]">Sarjana (S.Pd.)</span>
+                                            <span className="text-[11px] text-piaud-slate-muted">Gelar Lulusan</span>
+                                        </div>
+                                        <div className="bg-[#FAF6EC] border border-[#E3DAC7] rounded-xl p-3 text-center">
+                                            <span className="block font-bold text-[#0F4C3A]">144 SKS</span>
+                                            <span className="text-[11px] text-piaud-slate-muted">8 Semester</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Lower: Institutional Accreditation Badge */}
+                                    <div className="p-4 bg-[#FAF6EC] border border-[#E3DAC7] rounded-xl space-y-1">
+                                        <div className="flex items-center justify-between text-xs">
+                                            <span className="font-bold text-[#C2613A] uppercase tracking-wider text-[11px]">
+                                                Fakultas Tarbiyah
+                                            </span>
+                                            <span className="bg-[#0F4C3A] text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                                                LAMDIK
+                                            </span>
+                                        </div>
+                                        <p className="text-xs font-semibold text-piaud-slate">
+                                            Institut Agama Islam Persis Bandung
                                         </p>
-                                        <p className="text-xs text-piaud-slate-muted mt-0.5">
-                                            Jenjang Sarjana (S1) · Terakreditasi LAMDIK
+                                        <p className="text-[11px] text-piaud-slate-muted">
+                                            Status: Terakreditasi Baik · Berlaku s.d. 2027
                                         </p>
                                     </div>
                                 </figure>
                             </div>
 
-                            {/* Right Editorial Copy (7 cols) */}
-                            <div className={`lg:col-span-7 space-y-5 ${inView.about ? 'animate-slide-right delay-1' : ''}`}>
-                                <div className="space-y-3">
+                            {/* Right Editorial Copy (7 cols): Matches Left Height Perfectly */}
+                            <div className={`lg:col-span-7 flex flex-col justify-between space-y-6 ${inView.about ? 'animate-slide-right delay-1' : ''}`}>
+                                <div className="space-y-4">
                                     <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0F4C3A]">
                                         <span className="w-5 h-[2px] bg-[#C2613A]"></span>
-                                        <span>{siteConfig.about.eyebrow}</span>
+                                        <span>Tentang Kami</span>
                                     </div>
+
                                     <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-piaud-slate leading-tight">
-                                        {siteConfig.about.title}
+                                        {aboutTitle}
                                     </h2>
+
+                                    <div className="space-y-3.5 text-sm sm:text-base text-piaud-slate-muted leading-relaxed">
+                                        <p>{aboutP1}</p>
+                                        <p>{aboutP2}</p>
+                                    </div>
+
+                                    {/* 3 Checklist Items */}
+                                    <ul className="space-y-3 pt-2">
+                                        {aboutChecklist.map((item, cIdx) => (
+                                            <li key={cIdx} className="flex items-start gap-3 text-xs sm:text-sm text-piaud-slate font-medium">
+                                                <span className="w-5 h-5 rounded-md bg-[#0F4C3A] text-white flex items-center justify-center text-xs shrink-0 mt-0.5 shadow-sm">
+                                                    ✓
+                                                </span>
+                                                <span className="leading-snug">{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
 
-                                <div className="space-y-3.5 text-sm sm:text-base text-piaud-slate-muted leading-relaxed">
-                                    {siteConfig.about.description.map((par, pIdx) => (
-                                        <p key={pIdx}>{par}</p>
-                                    ))}
-                                </div>
-
-                                <ul className="space-y-2.5 pt-2">
-                                    {siteConfig.about.checklist.map((item, cIdx) => (
-                                        <li key={cIdx} className="flex items-start gap-3 text-xs sm:text-sm text-piaud-slate font-medium">
-                                            <span className="w-5 h-5 rounded-md bg-[#0F4C3A] text-white flex items-center justify-center text-xs shrink-0 mt-0.5">✓</span>
-                                            <span>{item}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <div className="pt-4 flex items-center gap-4">
+                                <div className="pt-4 border-t border-[#E3DAC7] flex flex-wrap items-center gap-4">
                                     <Link
-                                        href={siteConfig.about.ctaHref}
+                                        href="/profil"
                                         className="group inline-flex items-center gap-2 bg-[#0F4C3A] hover:bg-[#0A3427] text-white text-xs sm:text-sm font-bold px-6 py-3.5 rounded-xl transition-all cursor-pointer shadow-sm"
                                     >
-                                        <span>{siteConfig.about.ctaText}</span>
+                                        <span>Lihat Informasi Prodi →</span>
                                     </Link>
                                     <Link
                                         href="/sambutan-kaprodi"
@@ -431,7 +511,6 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                 {/* 5. PUBLIKASI ILMIAH: JURNAL PIAUDKU (#jurnal-piaud) */}
                 <section id="jurnal-piaud" data-section="journal" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        {/* Solid Deep Emerald Banner Card adhering strictly to UI_GUIDELINES.md */}
                         <div className={`bg-[#0A3427] border border-[#17664F] rounded-2xl p-8 sm:p-12 shadow-[0_12px_28px_rgba(0,0,0,0.30)] text-piaud-ivory relative overflow-hidden ${
                             inView.journal ? 'animate-slide-up' : ''
                         }`}>
@@ -439,32 +518,31 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                                 <div className="lg:col-span-8 space-y-3.5">
                                     <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#F9C928]">
                                         <span className="w-6 h-[3px] bg-[#F9C928] rounded-sm"></span>
-                                        <span>{siteConfig.journal.eyebrow}</span>
+                                        <span>Publikasi Ilmiah</span>
                                     </div>
 
                                     <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
-                                        {siteConfig.journal.title}
+                                        {journalTitle}
                                     </h2>
 
                                     <p className="text-sm sm:text-base text-piaud-ivory/90 leading-relaxed max-w-[65ch]">
-                                        {siteConfig.journal.description}
+                                        {journalDesc}
                                     </p>
 
                                     <div className="flex items-center gap-2 text-xs text-piaud-ivory/75 pt-1">
                                         <span className="w-1.5 h-1.5 rounded-full bg-[#F9C928]"></span>
-                                        <span>{siteConfig.journal.notice}</span>
+                                        <span>Portal jurnal dikelola pada situs jurnal terpisah dan akan terbuka di tab baru.</span>
                                     </div>
                                 </div>
 
                                 <div className="lg:col-span-4 flex lg:justify-end items-center">
                                     <a
-                                        href={siteConfig.journal.url}
+                                        href={journalUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="group inline-flex items-center justify-center gap-2 bg-[#FAF6EC] hover:bg-[#F2ECE0] text-[#0F4C3A] text-xs sm:text-sm font-bold px-7 py-4 rounded-xl border border-[#E3DAC7] shadow-sm hover:shadow transition-all duration-200 cursor-pointer"
                                     >
-                                        <span>{siteConfig.journal.ctaText}</span>
-                                        <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">↗</span>
+                                        <span>Kunjungi Jurnal PIAUDKU ↗</span>
                                     </a>
                                 </div>
                             </div>

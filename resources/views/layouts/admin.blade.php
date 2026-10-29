@@ -247,6 +247,12 @@
                     @endif
                 </a>
 
+                <a href="{{ route('admin.homepage.index') }}" 
+                   class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.homepage.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
+                    <i class="fa-solid fa-house-chimney w-4 text-center"></i>
+                    <span>Kelola Beranda</span>
+                </a>
+
                 <a href="{{ route('admin.settings.index') }}" 
                    class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.settings.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
                     <i class="fa-solid fa-sliders w-4 text-center"></i>
