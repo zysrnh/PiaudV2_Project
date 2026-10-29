@@ -253,6 +253,12 @@
                     <span>Pengaturan Web</span>
                 </a>
 
+                <a href="{{ route('admin.quick-links.index') }}" 
+                   class="sidebar-link neu-btn flex items-center gap-3 px-3.5 py-2.5 text-xs cursor-pointer {{ request()->routeIs('admin.quick-links.*') ? 'neu-sidebar-active' : 'text-[#1B2A2F] hover:text-[#0F4C3A] hover:bg-white' }}">
+                    <i class="fa-solid fa-arrow-up-right-from-square w-4 text-center"></i>
+                    <span>Tautan Cepat</span>
+                </a>
+
                 {{-- HANYA ADMIN DEVELOPER YANG DAPAT MELIHAT MENU TERMINAL --}}
                 @if(auth()->check() && auth()->user()->isDev())
                 <div class="pt-3 border-t border-[#E3DAC7]/80">

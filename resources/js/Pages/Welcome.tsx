@@ -34,10 +34,59 @@ interface WelcomeProps {
         date?: string;
         description?: string;
     }>;
+    dbQuickLinks?: Array<{
+        id: number;
+        title: string;
+        url: string;
+        logoUrl?: string | null;
+        showTitle: boolean;
+    }>;
 }
 
-export default function Welcome({ dbLecturers, dbArticles, dbGalleries }: WelcomeProps) {
+export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickLinks }: WelcomeProps) {
     const waPmbLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
+
+    const defaultQuickLinks = [
+        {
+            id: 1,
+            title: 'IAI Persis Bandung',
+            url: 'https://iaipibandung.ac.id',
+            logoUrl: '/images/logo_kampus.png',
+            showTitle: false,
+        },
+        {
+            id: 2,
+            title: 'SIAKAD Kampus',
+            url: 'https://siakad.iaipibandung.ac.id',
+            logoUrl: null,
+            showTitle: true,
+        },
+        {
+            id: 3,
+            title: 'E-Library Kampus',
+            url: 'https://iaipibandung.ac.id',
+            logoUrl: null,
+            showTitle: true,
+        },
+        {
+            id: 4,
+            title: 'Jurnal PIAUD',
+            url: 'https://ejournal.iaipibandung.ac.id',
+            logoUrl: null,
+            showTitle: true,
+        },
+        {
+            id: 5,
+            title: 'PMB Online',
+            url: 'https://pmb.iaipibandung.ac.id',
+            logoUrl: null,
+            showTitle: true,
+        },
+    ];
+
+    const displayedQuickLinks = (dbQuickLinks && dbQuickLinks.length > 0)
+        ? dbQuickLinks
+        : defaultQuickLinks;
 
     const displayedLecturers = (dbLecturers && dbLecturers.length > 0)
         ? dbLecturers.slice(0, 4)
@@ -182,6 +231,49 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries }: Welcom
                                         />
                                     </div>
                                 </figure>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 3.5 QUICK ACCESS PORTAL BAR (Pintasan Cepat ke Portal & Web Lain) */}
+                <section data-section="quick-links" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-4 sm:py-5">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+                            {/* Left Overline Badge */}
+                            <div className="flex items-center gap-2 self-start md:self-auto flex-shrink-0">
+                                <span className="w-2 h-2 rounded-full bg-[#0F4C3A]"></span>
+                                <span className="text-[11px] font-bold text-[#0F4C3A] uppercase tracking-wider">Akses Cepat Portal</span>
+                            </div>
+
+                            {/* Quick Links Strip */}
+                            <div className="w-full md:w-auto flex items-center gap-2.5 sm:gap-3 flex-wrap justify-start md:justify-end">
+                                {displayedQuickLinks.map((link) => (
+                                    <a
+                                        key={link.id}
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        title={link.title}
+                                        className="group neu-card card-interactive-sm rounded-lg px-3 py-2 flex items-center gap-2 bg-white border border-[#E3DAC7] hover:border-[#0F4C3A] transition-all cursor-pointer shadow-sm text-xs font-semibold text-[#1B2A2F]"
+                                    >
+                                        {link.logoUrl ? (
+                                            <img
+                                                src={link.logoUrl}
+                                                alt={link.title}
+                                                className="h-5 sm:h-6 w-auto max-w-[80px] object-contain flex-shrink-0 group-hover:scale-105 transition-transform"
+                                            />
+                                        ) : (
+                                            <i className="fa-solid fa-arrow-up-right-from-square text-[10px] text-[#0F4C3A] flex-shrink-0"></i>
+                                        )}
+
+                                        {link.showTitle && (
+                                            <span className="text-[11px] sm:text-xs font-semibold text-[#1B2A2F] group-hover:text-[#0F4C3A] transition-colors whitespace-nowrap">
+                                                {link.title}
+                                            </span>
+                                        )}
+                                    </a>
+                                ))}
                             </div>
                         </div>
                     </div>

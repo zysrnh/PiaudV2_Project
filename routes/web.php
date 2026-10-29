@@ -49,10 +49,21 @@ Route::get('/', function () {
         ];
     });
 
+    $quickLinks = \App\Models\QuickLink::where('is_active', true)->orderBy('order')->get()->map(function ($q) {
+        return [
+            'id' => $q->id,
+            'title' => $q->title,
+            'url' => $q->url,
+            'logoUrl' => $q->logo_url,
+            'showTitle' => (bool) $q->show_title,
+        ];
+    });
+
     return Inertia::render('Welcome', [
         'dbLecturers' => $lecturers,
         'dbArticles' => $articles,
         'dbGalleries' => $galleries,
+        'dbQuickLinks' => $quickLinks,
     ]);
 })->name('home');
 
@@ -175,6 +186,9 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () 
     // Settings
     Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
     Route::put('settings', [\App\Http\Controllers\Admin\SettingController::class, 'update'])->name('settings.update');
+
+    // Quick Links / Tautan Cepat
+    Route::resource('quick-links', \App\Http\Controllers\Admin\QuickLinkController::class)->except(['show', 'create', 'edit']);
 
     // User / Admin Management (Khusus Superadmin Dev)
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except(['show', 'create', 'edit']);

@@ -258,5 +258,53 @@ class PiaudDataSeeder extends Seeder
         foreach ($sampleContacts as $sc) {
             \App\Models\Contact::firstOrCreate(['phone' => $sc['phone']], $sc);
         }
+
+        // 7. Quick Links (Pintasan Cepat Akses Kampus & Portal)
+        $quickLinks = [
+            [
+                'title' => 'IAI Persis Bandung',
+                'url' => 'https://iaipibandung.ac.id',
+                'logo_url' => '/images/logo_kampus.png',
+                'show_title' => false,
+                'order' => 1,
+                'is_active' => true,
+            ],
+            [
+                'title' => 'SIAKAD Kampus',
+                'url' => 'https://siakad.iaipibandung.ac.id',
+                'logo_url' => null,
+                'show_title' => true,
+                'order' => 2,
+                'is_active' => true,
+            ],
+            [
+                'title' => 'E-Library Kampus',
+                'url' => 'https://iaipibandung.ac.id',
+                'logo_url' => null,
+                'show_title' => true,
+                'order' => 3,
+                'is_active' => true,
+            ],
+            [
+                'title' => 'Jurnal PIAUD',
+                'url' => 'https://ejournal.iaipibandung.ac.id',
+                'logo_url' => null,
+                'show_title' => true,
+                'order' => 4,
+                'is_active' => true,
+            ],
+            [
+                'title' => 'PMB Online',
+                'url' => 'https://pmb.iaipibandung.ac.id',
+                'logo_url' => null,
+                'show_title' => true,
+                'order' => 5,
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($quickLinks as $ql) {
+            \App\Models\QuickLink::updateOrCreate(['title' => $ql['title']], $ql);
+        }
     }
 }
