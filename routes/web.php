@@ -189,6 +189,65 @@ Route::middleware('auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
+| 1-Klik Setup Akun Admin Pertama (Tanpa Terminal / CLI)
+|--------------------------------------------------------------------------
+*/
+Route::get('/setup-admin-pertama', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    } catch (\Throwable $e) {
+        // Abaikan jika migrasi sudah pernah jalan
+    }
+
+    $user = \App\Models\User::updateOrCreate(
+        ['email' => 'dev@piaud.iaipibandung.ac.id'],
+        [
+            'name' => 'Admin Developer',
+            'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
+            'role' => 'dev',
+        ]
+    );
+
+    $html = <<<HTML
+    <!DOCTYPE html>
+    <html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Setup Admin Pertama Berhasil</title>
+        <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #FAF6EC; color: #1B2A2F; margin: 0; padding: 2rem; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+            .card { max-width: 500px; width: 100%; background: #FFFFFF; border: 1px solid #E3DAC7; border-radius: 8px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.06); text-align: center; }
+            h1 { color: #0F4C3A; margin: 0 0 0.5rem 0; font-size: 1.4rem; }
+            p { color: #5C6B73; font-size: 0.9rem; margin-top: 0; }
+            .box { background: #F2ECE0; border: 1px solid #E3DAC7; border-radius: 6px; padding: 1.2rem; margin: 1.5rem 0; text-align: left; font-size: 0.9rem; }
+            .row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+            .row:last-child { margin-bottom: 0; }
+            .val { font-weight: bold; font-family: monospace; color: #0F4C3A; font-size: 1rem; }
+            .btn { display: block; background: #C2613A; color: #fff; padding: 0.8rem; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 1.5rem; }
+            .btn:hover { background: #A64F2D; }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <h1>✅ Akun Admin Pertama Berhasil Dibuat!</h1>
+            <p>Database server otomatis dimigrasikan dan akun siap digunakan.</p>
+            <div class="box">
+                <div class="row"><span>Email:</span> <span class="val">dev@piaud.iaipibandung.ac.id</span></div>
+                <div class="row"><span>Password:</span> <span class="val">admin123</span></div>
+                <div class="row"><span>Role:</span> <span class="val">dev (Akses Penuh Web Terminal)</span></div>
+            </div>
+            <a href="/login" class="btn">🚀 Buka Halaman Login Sekarang</a>
+        </div>
+    </body>
+    </html>
+    HTML;
+
+    return response($html);
+});
+
+/*
+|--------------------------------------------------------------------------
 | Shared Hosting Deploy Helper (cPanel No-Terminal Utility)
 |--------------------------------------------------------------------------
 */
