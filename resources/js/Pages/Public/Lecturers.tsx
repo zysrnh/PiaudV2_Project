@@ -4,41 +4,56 @@ import PublicLayout from '@/Layouts/PublicLayout';
 import { Photo } from '@/Components/Public/Photo';
 import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 
-export default function Lecturers() {
+interface LecturerItem {
+    id?: number;
+    name: string;
+    nip: string;
+    role: string;
+    expertise: string;
+    photoUrl: string;
+}
+
+interface LecturersProps {
+    dbLecturers?: LecturerItem[];
+}
+
+export default function Lecturers({ dbLecturers }: LecturersProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const waLink = createWhatsAppLink("Halo Admin, saya ingin menanyakan jadwal bimbingan atau kontak dosen PIAUD IAI Persis Bandung.");
 
-    const allLecturers = [
-        ...siteConfig.lecturers,
-        {
-            name: "Drs. H. Mamat Rahmat, M.Ag.",
-            nip: "197203152002121002",
-            role: "Dosen Senior",
-            expertise: "Pendidikan Karakter & Pemikiran Jam'iyyah Persis",
-            photoUrl: "/images/piaud/team-2.jpg",
-        },
-        {
-            name: "Dian Permana, M.Pd.",
-            nip: "198807212019031008",
-            role: "Dosen Keahlian Khusus",
-            expertise: "Media Pembelajaran Digital & Storytelling AUD",
-            photoUrl: "/images/piaud/team-3.jpg",
-        },
-        {
-            name: "Fitri Nurhayati, M.Pd.",
-            nip: "199104102021042011",
-            role: "Dosen Keahlian Khusus",
-            expertise: "Manajemen PAUD Inklusif & Supervisi Kelas",
-            photoUrl: "/images/piaud/team-4.jpg",
-        },
-        {
-            name: "Dr. H. Wildan Hasan, M.Pd.I.",
-            nip: "197608142006041003",
-            role: "Dosen Tamu Pakar",
-            expertise: "Filsafat Pendidikan Islam & Kebijakan Kurikulum",
-            photoUrl: "/images/piaud/team-1.jpg",
-        },
-    ];
+    const allLecturers: LecturerItem[] = (dbLecturers && dbLecturers.length > 0)
+        ? dbLecturers
+        : [
+            ...siteConfig.lecturers,
+            {
+                name: "Drs. H. Mamat Rahmat, M.Ag.",
+                nip: "197203152002121002",
+                role: "Dosen Senior",
+                expertise: "Pendidikan Karakter & Pemikiran Jam'iyyah Persis",
+                photoUrl: "/images/piaud/team-2.jpg",
+            },
+            {
+                name: "Dian Permana, M.Pd.",
+                nip: "198807212019031008",
+                role: "Dosen Keahlian Khusus",
+                expertise: "Media Pembelajaran Digital & Storytelling AUD",
+                photoUrl: "/images/piaud/team-3.jpg",
+            },
+            {
+                name: "Fitri Nurhayati, M.Pd.",
+                nip: "199104102021042011",
+                role: "Dosen Keahlian Khusus",
+                expertise: "Manajemen PAUD Inklusif & Supervisi Kelas",
+                photoUrl: "/images/piaud/team-4.jpg",
+            },
+            {
+                name: "Dr. H. Wildan Hasan, M.Pd.I.",
+                nip: "197608142006041003",
+                role: "Dosen Tamu Pakar",
+                expertise: "Filsafat Pendidikan Islam & Kebijakan Kurikulum",
+                photoUrl: "/images/piaud/team-1.jpg",
+            },
+        ];
 
     const filtered = allLecturers.filter(
         (l) =>

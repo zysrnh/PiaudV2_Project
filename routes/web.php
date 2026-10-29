@@ -12,7 +12,48 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome');
+    $lecturers = \App\Models\Lecturer::where('is_active', true)->orderBy('order')->get()->map(function ($l) {
+        return [
+            'id' => $l->id,
+            'name' => $l->name,
+            'nip' => $l->nip ?: ($l->nidn ?: '-'),
+            'role' => $l->role,
+            'expertise' => $l->expertise,
+            'photoUrl' => $l->photo_url ?: '/images/piaud/team-1.jpg',
+        ];
+    });
+
+    $articles = \App\Models\Article::with('category')->latest()->get()->map(function ($a) {
+        return [
+            'id' => (string) $a->id,
+            'title' => $a->title,
+            'slug' => $a->slug,
+            'category' => $a->category->name ?? 'Umum',
+            'publishedAt' => $a->published_at ? $a->published_at->format('d M Y') : $a->created_at->format('d M Y'),
+            'readTime' => $a->read_time ?? '5 menit baca',
+            'excerpt' => $a->excerpt,
+            'content' => $a->content,
+            'photoUrl' => $a->photo_url ?: '/images/piaud/Foto-Kegiatan-1.jpg',
+            'isFeatured' => (bool) $a->is_featured,
+        ];
+    });
+
+    $galleries = \App\Models\Gallery::with('category')->orderBy('order')->latest()->get()->map(function ($g) {
+        return [
+            'id' => $g->id,
+            'title' => $g->title,
+            'photoUrl' => $g->photo_url ?: '/images/piaud/Foto-Kegiatan-1.jpg',
+            'category' => $g->category->name ?? 'Praktikum APE',
+            'date' => $g->date ?? 'Oktober 2026',
+            'description' => $g->description ?? '',
+        ];
+    });
+
+    return Inertia::render('Welcome', [
+        'dbLecturers' => $lecturers,
+        'dbArticles' => $articles,
+        'dbGalleries' => $galleries,
+    ]);
 })->name('home');
 
 Route::get('/profil', function () {
@@ -36,15 +77,58 @@ Route::get('/laboratorium-ape', function () {
 })->name('lab.ape');
 
 Route::get('/dosen', function () {
-    return Inertia::render('Public/Lecturers');
+    $lecturers = \App\Models\Lecturer::where('is_active', true)->orderBy('order')->get()->map(function ($l) {
+        return [
+            'id' => $l->id,
+            'name' => $l->name,
+            'nip' => $l->nip ?: ($l->nidn ?: '-'),
+            'role' => $l->role,
+            'expertise' => $l->expertise,
+            'photoUrl' => $l->photo_url ?: '/images/piaud/team-1.jpg',
+        ];
+    });
+
+    return Inertia::render('Public/Lecturers', [
+        'dbLecturers' => $lecturers,
+    ]);
 })->name('lecturers');
 
 Route::get('/artikel', function () {
-    return Inertia::render('Public/Articles');
+    $articles = \App\Models\Article::with('category')->latest()->get()->map(function ($a) {
+        return [
+            'id' => (string) $a->id,
+            'title' => $a->title,
+            'slug' => $a->slug,
+            'category' => $a->category->name ?? 'Umum',
+            'publishedAt' => $a->published_at ? $a->published_at->format('d M Y') : $a->created_at->format('d M Y'),
+            'readTime' => $a->read_time ?? '5 menit baca',
+            'excerpt' => $a->excerpt,
+            'content' => $a->content,
+            'photoUrl' => $a->photo_url ?: '/images/piaud/Foto-Kegiatan-1.jpg',
+            'isFeatured' => (bool) $a->is_featured,
+        ];
+    });
+
+    return Inertia::render('Public/Articles', [
+        'dbArticles' => $articles,
+    ]);
 })->name('articles');
 
 Route::get('/galeri', function () {
-    return Inertia::render('Public/Gallery');
+    $galleries = \App\Models\Gallery::with('category')->orderBy('order')->latest()->get()->map(function ($g) {
+        return [
+            'id' => $g->id,
+            'title' => $g->title,
+            'photoUrl' => $g->photo_url ?: '/images/piaud/Foto-Kegiatan-1.jpg',
+            'category' => $g->category->name ?? 'Praktikum APE',
+            'date' => $g->date ?? 'Oktober 2026',
+            'description' => $g->description ?? '',
+        ];
+    });
+
+    return Inertia::render('Public/Gallery', [
+        'dbGalleries' => $galleries,
+    ]);
 })->name('gallery');
 
 Route::get('/kontak', function () {

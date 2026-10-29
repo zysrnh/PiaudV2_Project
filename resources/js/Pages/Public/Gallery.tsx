@@ -12,47 +12,54 @@ interface GalleryPhoto {
     description: string;
 }
 
-export default function Gallery() {
+interface GalleryProps {
+    dbGalleries?: GalleryPhoto[];
+}
+
+export default function Gallery({ dbGalleries }: GalleryProps) {
     const [selectedCategory, setSelectedCategory] = useState('Semua');
     const [activeModalPhoto, setActiveModalPhoto] = useState<GalleryPhoto | null>(null);
 
-    const galleryData: GalleryPhoto[] = [
-        ...siteConfig.gallery.map((g, idx) => ({
-            ...g,
-            date: "Oktober 2026",
-            description: "Dokumentasi praktikum mahasiswa dalam perancangan media belajar dan stimulasi anak usia dini di laboratorium PIAUD IAI Persis Bandung.",
-        })),
-        {
-            title: "Simulasi Praktik Mengajar Microteaching di Kelas Sentra",
-            photoUrl: "/images/piaud/Foto-Kegiatan-1.jpg",
-            category: "Microteaching",
-            date: "September 2026",
-            description: "Penerapan metode bercerita dan interaksi komunikasi dua arah antara calon pendidik dan siswa usia prasekolah.",
-        },
-        {
-            title: "Workshop Pembuatan Alat Peraga Edukatif Ramah Anak",
-            photoUrl: "/images/piaud/Foto-Kegiatan-2.jpg",
-            category: "Praktikum APE",
-            date: "Agustus 2026",
-            description: "Mahasiswa mendesain alat peraga dari bahan daur ulang dan kayu halus yang aman untuk sensori motorik anak.",
-        },
-        {
-            title: "Pentas Seni & Tari Gerak Kreativitas Santri Cilik",
-            photoUrl: "/images/piaud/Foto-Kegiatan-3.jpg",
-            category: "Pentas Seni",
-            date: "Juli 2026",
-            description: "Kegiatan akhir semester unjuk bakat olah gerak, lagu anak Islami, dan ekspresi percaya diri anak usia dini.",
-        },
-        {
-            title: "Kunjungan Studi Lapangan Observasi Tumbuh Kembang RA",
-            photoUrl: "/images/piaud/Foto-Kegiatan-4.jpg",
-            category: "Observasi RA",
-            date: "Juni 2026",
-            description: "Observasi langsung terhadap interaksi sosial dan kemandirian anak di Raudhatul Athfal mitra se-Bandung Raya.",
-        },
-    ];
+    const galleryData: GalleryPhoto[] = (dbGalleries && dbGalleries.length > 0)
+        ? dbGalleries
+        : [
+            ...siteConfig.gallery.map((g, idx) => ({
+                ...g,
+                date: "Oktober 2026",
+                description: "Dokumentasi praktikum mahasiswa dalam perancangan media belajar dan stimulasi anak usia dini di laboratorium PIAUD IAI Persis Bandung.",
+            })),
+            {
+                title: "Simulasi Praktik Mengajar Microteaching di Kelas Sentra",
+                photoUrl: "/images/piaud/Foto-Kegiatan-1.jpg",
+                category: "Microteaching",
+                date: "September 2026",
+                description: "Penerapan metode bercerita dan interaksi komunikasi dua arah antara calon pendidik dan siswa usia prasekolah.",
+            },
+            {
+                title: "Workshop Pembuatan Alat Peraga Edukatif Ramah Anak",
+                photoUrl: "/images/piaud/Foto-Kegiatan-2.jpg",
+                category: "Praktikum APE",
+                date: "Agustus 2026",
+                description: "Mahasiswa mendesain alat peraga dari bahan daur ulang dan kayu halus yang aman untuk sensori motorik anak.",
+            },
+            {
+                title: "Pentas Seni & Tari Gerak Kreativitas Santri Cilik",
+                photoUrl: "/images/piaud/Foto-Kegiatan-3.jpg",
+                category: "Pentas Seni",
+                date: "Juli 2026",
+                description: "Kegiatan akhir semester unjuk bakat olah gerak, lagu anak Islami, dan ekspresi percaya diri anak usia dini.",
+            },
+            {
+                title: "Kunjungan Studi Lapangan Observasi Tumbuh Kembang RA",
+                photoUrl: "/images/piaud/Foto-Kegiatan-4.jpg",
+                category: "Observasi RA",
+                date: "Juni 2026",
+                description: "Observasi langsung terhadap interaksi sosial dan kemandirian anak di Raudhatul Athfal mitra se-Bandung Raya.",
+            },
+        ];
 
-    const categories = ['Semua', 'Praktikum APE', 'Microteaching', 'Pentas Seni', 'Observasi RA'];
+    const dynamicCats = Array.from(new Set(galleryData.map((item) => item.category).filter(Boolean)));
+    const categories = ['Semua', ...dynamicCats.filter((c) => c !== 'Semua')];
 
     const filtered = galleryData.filter(
         (item) => selectedCategory === 'Semua' || item.category === selectedCategory

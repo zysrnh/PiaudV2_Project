@@ -4,47 +4,67 @@ import PublicLayout from '@/Layouts/PublicLayout';
 import { Photo } from '@/Components/Public/Photo';
 import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 
-export default function Articles() {
+interface ArticleItem {
+    id: string;
+    title: string;
+    slug: string;
+    category: string;
+    publishedAt: string;
+    readTime: string;
+    excerpt: string;
+    content?: string;
+    photoUrl: string;
+    isFeatured?: boolean;
+}
+
+interface ArticlesProps {
+    dbArticles?: ArticleItem[];
+}
+
+export default function Articles({ dbArticles }: ArticlesProps) {
     const [selectedCategory, setSelectedCategory] = useState('Semua');
     const [searchQuery, setSearchQuery] = useState('');
     const waLink = createWhatsAppLink("Halo Admin, saya ingin berlangganan buletin artikel parenting PIAUD IAI Persis Bandung.");
 
-    const allArticles = [
-        siteConfig.articles.featured,
-        ...siteConfig.articles.list,
-        {
-            id: "art-4",
-            title: "Stimulasi Bahasa Melalui Cerita Bergambar Islami pada Anak Prasekolah",
-            slug: "stimulasi-bahasa-cerita-bergambar-islami",
-            category: "Psikologi AUD",
-            publishedAt: "20 Oktober 2026",
-            readTime: "4 menit baca",
-            excerpt: "Mengenalkan kosakata akhlak dan teladan para Nabi melalui teknik read-aloud dengan intonasi ramah anak.",
-            photoUrl: "/images/piaud/Foto-Kegiatan-2.jpg",
-        },
-        {
-            id: "art-5",
-            title: "Membangun Disiplin Positif Tanpa Membentak: Kajian Adab Nabawi",
-            slug: "disiplin-positif-tanpa-membentak-kajian-adab",
-            category: "Parenting Islami",
-            publishedAt: "19 Oktober 2026",
-            readTime: "6 menit baca",
-            excerpt: "Pendekatan empati dan keteladanan yang diajarkan Rasulullah SAW dalam menghadapi tantrum dan perilaku anak usia dini.",
-            photoUrl: "/images/piaud/Foto-Kegiatan-3.jpg",
-        },
-        {
-            id: "art-6",
-            title: "Optimalisasi Sensori Motorik dengan Sentra Bahan Alam di PAUD",
-            slug: "optimalisasi-sensori-motorik-sentra-bahan-alam",
-            category: "Kreativitas APE",
-            publishedAt: "18 Oktober 2026",
-            readTime: "5 menit baca",
-            excerpt: "Pemanfaatan pasir, air, biji-bijian, dan dedaunan kering untuk merangsang reseptor sensori dan kelenturan jari anak.",
-            photoUrl: "/images/piaud/Foto-Kegiatan-4.jpg",
-        },
-    ];
+    const allArticles: ArticleItem[] = (dbArticles && dbArticles.length > 0)
+        ? dbArticles
+        : [
+            siteConfig.articles.featured,
+            ...siteConfig.articles.list,
+            {
+                id: "art-4",
+                title: "Stimulasi Bahasa Melalui Cerita Bergambar Islami pada Anak Prasekolah",
+                slug: "stimulasi-bahasa-cerita-bergambar-islami",
+                category: "Psikologi AUD",
+                publishedAt: "20 Oktober 2026",
+                readTime: "4 menit baca",
+                excerpt: "Mengenalkan kosakata akhlak dan teladan para Nabi melalui teknik read-aloud dengan intonasi ramah anak.",
+                photoUrl: "/images/piaud/Foto-Kegiatan-2.jpg",
+            },
+            {
+                id: "art-5",
+                title: "Membangun Disiplin Positif Tanpa Membentak: Kajian Adab Nabawi",
+                slug: "disiplin-positif-tanpa-membentak-kajian-adab",
+                category: "Parenting Islami",
+                publishedAt: "19 Oktober 2026",
+                readTime: "6 menit baca",
+                excerpt: "Pendekatan empati dan keteladanan yang diajarkan Rasulullah SAW dalam menghadapi tantrum dan perilaku anak usia dini.",
+                photoUrl: "/images/piaud/Foto-Kegiatan-3.jpg",
+            },
+            {
+                id: "art-6",
+                title: "Optimalisasi Sensori Motorik dengan Sentra Bahan Alam di PAUD",
+                slug: "optimalisasi-sensori-motorik-sentra-bahan-alam",
+                category: "Kreativitas APE",
+                publishedAt: "18 Oktober 2026",
+                readTime: "5 menit baca",
+                excerpt: "Pemanfaatan pasir, air, biji-bijian, dan dedaunan kering untuk merangsang reseptor sensori dan kelenturan jari anak.",
+                photoUrl: "/images/piaud/Foto-Kegiatan-4.jpg",
+            },
+        ];
 
-    const categories = ['Semua', 'Parenting Islami', 'Kreativitas APE', 'Akademik & Lab', 'Psikologi AUD'];
+    const dynamicCats = Array.from(new Set(allArticles.map((a) => a.category).filter(Boolean)));
+    const categories = ['Semua', ...dynamicCats.filter((c) => c !== 'Semua')];
 
     const filtered = allArticles.filter((art) => {
         const matchCategory = selectedCategory === 'Semua' || art.category === selectedCategory;

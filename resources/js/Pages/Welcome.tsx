@@ -7,8 +7,53 @@ import { FloatingWhatsApp } from '@/Components/Public/FloatingWhatsApp';
 import { ScrollProgress } from '@/Components/Public/ScrollProgress';
 import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 
-export default function Welcome() {
+interface WelcomeProps {
+    dbLecturers?: Array<{
+        id?: number;
+        name: string;
+        nip: string;
+        role: string;
+        expertise: string;
+        photoUrl: string;
+    }>;
+    dbArticles?: Array<{
+        id: string;
+        title: string;
+        slug: string;
+        category: string;
+        publishedAt: string;
+        readTime: string;
+        excerpt: string;
+        photoUrl: string;
+        isFeatured?: boolean;
+    }>;
+    dbGalleries?: Array<{
+        title: string;
+        photoUrl: string;
+        category: string;
+        date?: string;
+        description?: string;
+    }>;
+}
+
+export default function Welcome({ dbLecturers, dbArticles, dbGalleries }: WelcomeProps) {
     const waPmbLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
+
+    const displayedLecturers = (dbLecturers && dbLecturers.length > 0)
+        ? dbLecturers.slice(0, 4)
+        : siteConfig.lecturers;
+
+    const displayedGalleries = (dbGalleries && dbGalleries.length > 0)
+        ? dbGalleries.slice(0, 4)
+        : siteConfig.gallery;
+
+    const featuredArticle = (dbArticles && dbArticles.length > 0)
+        ? (dbArticles.find((a) => a.isFeatured) || dbArticles[0])
+        : siteConfig.articles.featured;
+
+    const listArticles = (dbArticles && dbArticles.length > 1)
+        ? dbArticles.filter((a) => a.id !== featuredArticle.id).slice(0, 3)
+        : siteConfig.articles.list;
 
     // Active in-view state that resets on scroll away and re-animates on scroll into view!
     const [inView, setInView] = useState<Record<string, boolean>>({
@@ -288,7 +333,7 @@ export default function Welcome() {
 
                         {/* Crisp Responsive Cards Grid with Decoupled Wrappers for Smooth Hover Lift */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {siteConfig.lecturers.map((lecturer, index) => (
+                            {displayedLecturers.map((lecturer, index) => (
                                 <div
                                     key={index}
                                     className={`h-full ${inView.lecturers ? `animate-slide-up delay-${index + 1}` : ''}`}
@@ -348,7 +393,7 @@ export default function Welcome() {
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {siteConfig.gallery.map((item, index) => (
+                            {displayedGalleries.map((item, index) => (
                                 <div
                                     key={index}
                                     className={`h-full ${inView.gallery ? `animate-slide-up delay-${index + 1}` : ''}`}
@@ -402,8 +447,8 @@ export default function Welcome() {
                                     <div className="space-y-3.5">
                                         <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
                                             <Photo
-                                                src={siteConfig.articles.featured.photoUrl}
-                                                alt={siteConfig.articles.featured.title}
+                                                src={featuredArticle.photoUrl}
+                                                alt={featuredArticle.title}
                                                 aspectRatio="16/9"
                                                 className="w-full h-auto rounded-xl shadow-soft"
                                             />
@@ -411,17 +456,17 @@ export default function Welcome() {
                                         <div className="space-y-2 px-1">
                                             <div className="flex items-center gap-2 text-xs text-piaud-slate-muted flex-wrap">
                                                 <span className="bg-[#0F4C3A] text-white px-2.5 py-0.5 rounded-md font-bold text-[11px] group-hover:bg-[#0A3427] transition-colors">
-                                                    {siteConfig.articles.featured.category}
+                                                    {featuredArticle.category}
                                                 </span>
-                                                <span>{siteConfig.articles.featured.publishedAt}</span>
+                                                <span>{featuredArticle.publishedAt}</span>
                                                 <span>&bull;</span>
-                                                <span>{siteConfig.articles.featured.readTime}</span>
+                                                <span>{featuredArticle.readTime}</span>
                                             </div>
                                             <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
-                                                {siteConfig.articles.featured.title}
+                                                {featuredArticle.title}
                                             </h3>
                                             <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
-                                                {siteConfig.articles.featured.excerpt}
+                                                {featuredArticle.excerpt}
                                             </p>
                                         </div>
                                     </div>
@@ -430,7 +475,7 @@ export default function Welcome() {
 
                             {/* List Articles Stack (3-Card Stack Flushed Bottom) */}
                             <div className="lg:col-span-6 flex flex-col justify-between gap-4 h-full">
-                                {siteConfig.articles.list.map((article, idx) => (
+                                {listArticles.map((article, idx) => (
                                     <div
                                         key={article.id}
                                         className={`flex-1 flex flex-col ${inView.articles ? `animate-slide-right delay-${idx + 1}` : ''}`}
