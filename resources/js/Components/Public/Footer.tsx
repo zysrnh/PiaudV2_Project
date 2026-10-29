@@ -5,22 +5,19 @@ import { siteConfig, createWhatsAppLink } from '@/data/piaud';
 export const Footer: React.FC = () => {
     const { siteSettings } = usePage().props as { siteSettings?: Record<string, string> };
 
-    const ctaTitle = siteSettings?.footer_cta_title || "Siap Menjadi Pendidik Generasi Emas yang Berkarakter Islami?";
-    const ctaDesc = siteSettings?.footer_cta_description || "Konsultasikan persyaratan pendaftaran, konversi nilai guru mengajar, serta jadwal perkuliahan reguler dan kelas karyawan dengan tim prodi.";
-    const copyrightText = siteSettings?.footer_copyright || "Program Studi S1 PIAUD IAI Persis Bandung. Hak Cipta Dilindungi Undang-Undang.";
+    const ctaTitle = siteSettings?.footer_cta_title || siteConfig.noticeBanner.title;
+    const ctaDesc = siteSettings?.footer_cta_description || siteConfig.noticeBanner.description;
+    const copyrightText = siteSettings?.footer_copyright || "Program Studi PIAUD IAI Persis Bandung";
     const campusAddress = siteSettings?.campus_address || siteConfig.campusAddress;
     const phone = siteSettings?.phone || siteConfig.phone;
     const officeHours = siteSettings?.office_hours || siteConfig.officeHours;
     const email = siteSettings?.email || siteConfig.email;
-    const programName = siteSettings?.program_name || "S1 PIAUD";
+    const programName = siteSettings?.program_name || "PIAUD";
     const institutionName = siteSettings?.institution_name || "IAI Persis Bandung";
-    const facultyName = siteSettings?.faculty_name || "Fakultas Tarbiyah";
 
     const accStatus = siteSettings?.accreditation_status || siteConfig.accreditation.status;
     const accInstitution = siteSettings?.accreditation_institution || siteConfig.accreditation.institution;
     const accValidUntil = siteSettings?.accreditation_valid_until || siteConfig.accreditation.validUntil;
-
-    const waLink = createWhatsAppLink("Halo Admin, saya ingin mendaftar ke Program Studi S1 PIAUD IAI Persis Bandung.");
 
     const renderLink = (link: { label: string; href: string }) => {
         const isInternal = link.href.startsWith('/') && !link.href.startsWith('//');
@@ -44,13 +41,14 @@ export const Footer: React.FC = () => {
             >
                 <span className="text-white/40 text-[10px]">›</span>
                 <span>{link.label}</span>
+                {link.href.startsWith('http') && <span className="text-[10px] text-white/50">↗</span>}
             </a>
         );
     };
 
     return (
         <footer id="kontak" className="w-full bg-[#0F4C3A] text-piaud-ivory border-t border-[#0A3427]">
-            {/* 8A. CTA Penutup (Solid Deep Forest Box with Dark Natural Shadow - No White Glow) */}
+            {/* 8A. Section Informasi Resmi Program Studi (Notice Panel) */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mb-6 pt-10">
                 <div className="bg-[#0A3427] border border-[#17664F] rounded-2xl p-8 sm:p-12 shadow-[0_12px_28px_rgba(0,0,0,0.35)] text-piaud-ivory relative overflow-hidden">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 relative z-10">
@@ -64,19 +62,11 @@ export const Footer: React.FC = () => {
                         </div>
                         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 shrink-0">
                             <a
-                                href={waLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center bg-[#C2613A] hover:bg-[#A64F2D] text-white text-xs font-bold px-6 py-3.5 rounded-xl border border-[#A64F2D] shadow-sm hover:shadow transition-all duration-150 tactile-press"
+                                href="#kontak"
+                                className="inline-flex items-center justify-center bg-[#FAF6EC] hover:bg-[#F2ECE0] text-[#0F4C3A] text-xs font-bold px-7 py-3.5 rounded-xl border border-[#E3DAC7] shadow-sm hover:shadow transition-all duration-150 tactile-press"
                             >
-                                Hubungi CS PMB PIAUD
+                                <span>Lihat Kontak ↗</span>
                             </a>
-                            <Link
-                                href="/akademik#kurikulum"
-                                className="inline-flex items-center justify-center bg-[#FAF6EC] hover:bg-[#F2ECE0] text-[#0F4C3A] text-xs font-bold px-6 py-3.5 rounded-xl border border-[#E3DAC7] shadow-sm hover:shadow transition-all duration-150 tactile-press"
-                            >
-                                Pelajari Kurikulum
-                            </Link>
                         </div>
                     </div>
                 </div>
@@ -97,38 +87,41 @@ export const Footer: React.FC = () => {
                             </div>
                             <div>
                                 <p className="font-serif font-bold text-base text-white leading-snug">
-                                    {programName} {institutionName}
+                                    {programName} · {institutionName}
                                 </p>
                                 <p className="text-xs text-piaud-ivory/80 leading-relaxed mt-0.5">
-                                    {facultyName} · {institutionName}
+                                    Portal Resmi Program Studi S1 PIAUD
                                 </p>
                             </div>
                         </div>
 
                         <p className="text-xs text-piaud-ivory/85 leading-relaxed max-w-[55ch]">
-                            {campusAddress}
+                            Portal informasi Program Studi Pendidikan Islam Anak Usia Dini IAI Persis Bandung. Informasi profil, akademik, dosen, penelitian, publikasi jurnal, dan berita resmi.
                         </p>
 
                         <div className="text-xs space-y-2 text-piaud-ivory/85 pt-3 border-t border-[#17664F]">
                             <p>
-                                <strong className="text-white font-medium">Telepon Kantor:</strong> {phone}
+                                <strong className="text-white font-medium">Alamat:</strong> {campusAddress}
                             </p>
                             <p>
-                                <strong className="text-white font-medium">Jam Layanan:</strong> {officeHours}
+                                <strong className="text-white font-medium">Telepon:</strong> {phone}
                             </p>
                             <p>
                                 <strong className="text-white font-medium">Email:</strong> {email}
                             </p>
                             <p>
-                                <strong className="text-white font-medium">Akreditasi:</strong> {accStatus} ({accInstitution}) · Berlaku hingga {accValidUntil}
+                                <strong className="text-white font-medium">Jam Layanan:</strong> {officeHours}
+                            </p>
+                            <p>
+                                <strong className="text-white font-medium">Akreditasi:</strong> {accStatus} ({accInstitution}) · Berlaku s.d. {accValidUntil}
                             </p>
                         </div>
                     </div>
 
-                    {/* Academic Links */}
+                    {/* Navigasi Links */}
                     <div>
                         <h3 className="font-serif text-sm font-bold text-white tracking-wide mb-3">
-                            Akademik &amp; Fasilitas
+                            Navigasi
                         </h3>
                         <ul className="space-y-2 text-xs text-piaud-ivory/80">
                             {siteConfig.footerLinks.academic.map((link) => (
@@ -139,10 +132,10 @@ export const Footer: React.FC = () => {
                         </ul>
                     </div>
 
-                    {/* Institutional Links */}
+                    {/* Informasi Links */}
                     <div>
                         <h3 className="font-serif text-sm font-bold text-white tracking-wide mb-3">
-                            Kelembagaan
+                            Informasi
                         </h3>
                         <ul className="space-y-2 text-xs text-piaud-ivory/80">
                             {siteConfig.footerLinks.institutional.map((link) => (
@@ -153,10 +146,10 @@ export const Footer: React.FC = () => {
                         </ul>
                     </div>
 
-                    {/* Portal Links */}
+                    {/* Layanan & Portal Links */}
                     <div>
                         <h3 className="font-serif text-sm font-bold text-white tracking-wide mb-3">
-                            Layanan Mahasiswa
+                            Layanan Prodi
                         </h3>
                         <ul className="space-y-2 text-xs text-piaud-ivory/80">
                             {siteConfig.footerLinks.portal.map((link) => (
@@ -174,7 +167,7 @@ export const Footer: React.FC = () => {
                         &copy; {new Date().getFullYear()} {copyrightText}
                     </p>
                     <p className="text-right">
-                        Sistem Informasi &amp; Portal Resmi Program Studi
+                        Website resmi · Informasi akademik dan kegiatan prodi
                     </p>
                 </div>
             </div>

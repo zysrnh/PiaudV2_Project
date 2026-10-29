@@ -5,7 +5,7 @@ import { Footer } from '@/Components/Public/Footer';
 import { Photo } from '@/Components/Public/Photo';
 import { FloatingWhatsApp } from '@/Components/Public/FloatingWhatsApp';
 import { ScrollProgress } from '@/Components/Public/ScrollProgress';
-import { siteConfig, createWhatsAppLink } from '@/data/piaud';
+import { siteConfig } from '@/data/piaud';
 
 interface WelcomeProps {
     dbLecturers?: Array<{
@@ -44,8 +44,6 @@ interface WelcomeProps {
 }
 
 export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickLinks }: WelcomeProps) {
-    const waPmbLink = createWhatsAppLink(siteConfig.whatsappDefaultMessage);
-
     const defaultQuickLinks = [
         {
             id: 1,
@@ -56,22 +54,22 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
         },
         {
             id: 2,
+            title: 'Jurnal PIAUDKU',
+            url: 'https://journal.iaipibandung.ac.id/index.php/piaudku/index',
+            logoUrl: null,
+            showTitle: true,
+        },
+        {
+            id: 3,
             title: 'SIAKAD Kampus',
             url: 'https://siakad.iaipibandung.ac.id',
             logoUrl: null,
             showTitle: true,
         },
         {
-            id: 3,
+            id: 4,
             title: 'E-Library Kampus',
             url: 'https://iaipibandung.ac.id',
-            logoUrl: null,
-            showTitle: true,
-        },
-        {
-            id: 4,
-            title: 'Jurnal PIAUD',
-            url: 'https://ejournal.iaipibandung.ac.id',
             logoUrl: null,
             showTitle: true,
         },
@@ -101,12 +99,12 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
         : siteConfig.articles.featured;
 
     const listArticles = (dbArticles && dbArticles.length > 1)
-        ? dbArticles.filter((a) => a.id !== featuredArticle.id).slice(0, 3)
+        ? dbArticles.filter((a) => a.id !== featuredArticle.id).slice(0, 2)
         : siteConfig.articles.list;
 
-    // Active in-view state that resets on scroll away and re-animates on scroll into view!
+    // Active in-view state that resets on scroll away and re-animates on scroll into view
     const [inView, setInView] = useState<Record<string, boolean>>({
-        hero: true, // Hero animates immediately on mount
+        hero: true,
     });
 
     useEffect(() => {
@@ -133,95 +131,83 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
         <div className="min-h-screen bg-[#FAF6EC] text-piaud-slate flex flex-col font-sans selection:bg-piaud-emerald selection:text-white">
             {/* SEO & Meta Tags */}
             <Head>
-                <title>{`${siteConfig.programName} - ${siteConfig.institutionName}`}</title>
+                <title>{`PIAUD | ${siteConfig.institutionName}`}</title>
                 <meta
                     name="description"
-                    content={`Program Studi S1 PIAUD IAI Persis Bandung. ${siteConfig.hero.description}`}
+                    content="Website resmi Program Studi Pendidikan Islam Anak Usia Dini IAI Persis Bandung. Informasi profil, akademik, dosen, penelitian, berita, dan pengumuman."
                 />
-                <meta property="og:title" content={`${siteConfig.programName} - ${siteConfig.institutionName}`} />
+                <meta property="og:title" content={`PIAUD | ${siteConfig.institutionName}`} />
                 <meta property="og:description" content={siteConfig.hero.description} />
                 <meta property="og:type" content="website" />
             </Head>
 
-            {/* Sections 1 & 2: Top Bar & Navigation */}
+            {/* Navigation */}
             <Navbar />
 
             <main className="flex-1 w-full">
-                {/* 3. HERO SECTION (Warm Ivory & Structured Proportional Layout) */}
-                <section data-section="hero" className="bg-[#FAF6EC] border-b border-[#E3DAC7]">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 md:py-18 lg:py-20">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-stretch">
-                            {/* Left Column (7 cols): Measured Slide-Left Entrance */}
-                            <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
-                                <div className="space-y-5 sm:space-y-6">
+                {/* 1. HERO SECTION (#beranda) */}
+                <section id="beranda" data-section="hero" className="bg-[#FAF6EC] border-b border-[#E3DAC7] relative overflow-hidden">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
+                            {/* Left Column (7 cols): Hero Content */}
+                            <div className="lg:col-span-7 flex flex-col justify-center space-y-6">
+                                <div className="space-y-4 sm:space-y-5">
+                                    <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0F4C3A]">
+                                        <span className="w-6 h-[3px] bg-[#C2613A] rounded-sm"></span>
+                                        <span>{siteConfig.hero.tagline}</span>
+                                    </div>
+
                                     <h1
-                                        className={`font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-tight ${
+                                        className={`font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-piaud-slate tracking-tight leading-[1.15] ${
                                             inView.hero ? 'animate-slide-left' : ''
                                         }`}
                                     >
-                                        {siteConfig.hero.heading}
+                                        Mendidik Generasi,<br />
+                                        <span className="text-[#0F4C3A]">Menumbuhkan Peradaban.</span>
                                     </h1>
 
                                     <p
-                                        className={`text-sm sm:text-base md:text-lg text-piaud-slate-muted leading-relaxed max-w-[65ch] ${
+                                        className={`text-base sm:text-lg text-piaud-slate-muted leading-relaxed max-w-[62ch] ${
                                             inView.hero ? 'animate-slide-left delay-1' : ''
                                         }`}
                                     >
                                         {siteConfig.hero.description}
                                     </p>
 
-                                    {/* Two CTAs with Animated Mount & Tactile Hover Physics */}
+                                    {/* Action Buttons */}
                                     <div
                                         className={`pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 ${
                                             inView.hero ? 'animate-slide-up delay-2' : ''
                                         }`}
                                     >
                                         <a
-                                            href={waPmbLink}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
+                                            href="#profil"
                                             className="group inline-flex items-center justify-center gap-2.5 neu-btn-primary text-white text-xs sm:text-sm font-bold px-7 py-3.5 rounded-xl cursor-pointer"
                                         >
                                             <span>{siteConfig.hero.ctaPrimaryText}</span>
                                             <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">→</span>
                                         </a>
-                                        <Link
-                                            href="/akademik"
+                                        <a
+                                            href="#akademik"
                                             className="group inline-flex items-center justify-center gap-2.5 neu-btn text-piaud-slate text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-xl cursor-pointer"
                                         >
                                             <span>{siteConfig.hero.ctaSecondaryText}</span>
                                             <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">→</span>
-                                        </Link>
+                                        </a>
                                     </div>
-                                </div>
 
-                                {/* Stats & Features Cards Row with Decoupled Wrappers for Pure Smooth Hover */}
-                                <div className="pt-4 grid grid-cols-3 gap-2.5 sm:gap-4 text-xs">
-                                    <div className={inView.hero ? 'animate-slide-up delay-1' : ''}>
-                                        <div className="neu-card card-interactive-sm rounded-xl p-3 sm:p-4 flex flex-col justify-center group h-full">
-                                            <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Sarjana (S.Pd.)</span>
-                                            <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Gelar Lulusan</span>
-                                        </div>
-                                    </div>
-                                    <div className={inView.hero ? 'animate-slide-up delay-2' : ''}>
-                                        <div className="neu-card card-interactive-sm rounded-xl p-3 sm:p-4 flex flex-col justify-center group h-full">
-                                            <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">144 SKS (8 Sem)</span>
-                                            <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Masa Studi</span>
-                                        </div>
-                                    </div>
-                                    <div className={inView.hero ? 'animate-slide-up delay-3' : ''}>
-                                        <div className="neu-card card-interactive-sm rounded-xl p-3 sm:p-4 flex flex-col justify-center group h-full">
-                                            <span className="font-bold text-piaud-slate block text-xs sm:text-sm group-hover:text-[#0F4C3A] transition-colors">Reguler &amp; Guru</span>
-                                            <span className="text-piaud-slate-muted text-[10px] sm:text-[11px] group-hover:text-[#C2613A] transition-colors">Kelas Kuliah</span>
-                                        </div>
-                                    </div>
+                                    {/* Hero Note */}
+                                    <p className="text-xs sm:text-sm text-piaud-slate-muted pt-2 flex items-center gap-2">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C3A]"></span>
+                                        <span>{siteConfig.hero.heroNote}</span>
+                                    </p>
                                 </div>
                             </div>
 
-                            {/* Right Column (5 cols): Photo Card Decoupled Wrapper for Smooth Hover Float */}
+                            {/* Right Column (5 cols): Photo & Illustration Card */}
                             <div className={`lg:col-span-5 h-full flex flex-col ${inView.hero ? 'animate-slide-right' : ''}`}>
-                                <figure className="relative neu-card card-interactive rounded-2xl p-3 sm:p-3.5 h-full flex flex-col justify-center group overflow-hidden">
-                                    <div className="w-full h-full min-h-[280px] sm:min-h-[340px] lg:min-h-full overflow-hidden rounded-xl">
+                                <figure className="relative neu-card card-interactive rounded-2xl p-3 sm:p-4 group overflow-hidden">
+                                    <div className="w-full min-h-[300px] sm:min-h-[360px] overflow-hidden rounded-xl border border-[#E3DAC7] relative bg-[#F2ECE0]">
                                         <Photo
                                             src={siteConfig.hero.photoUrl}
                                             alt={siteConfig.hero.photoAlt}
@@ -229,116 +215,153 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                                             aspectRatio="auto"
                                             className="w-full h-full object-cover rounded-xl shadow-soft"
                                         />
-                                    </div>
-                                </figure>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* 3.5 QUICK ACCESS PORTAL BAR (Pintasan Cepat ke Portal & Web Lain) */}
-                <section data-section="quick-links" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-4 sm:py-5">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
-                            {/* Left Overline Badge */}
-                            <div className="flex items-center gap-2 self-start md:self-auto flex-shrink-0">
-                                <span className="w-2 h-2 rounded-full bg-[#0F4C3A]"></span>
-                                <span className="text-[11px] font-bold text-[#0F4C3A] uppercase tracking-wider">Akses Cepat Portal</span>
-                            </div>
-
-                            {/* Quick Links Strip */}
-                            <div className="w-full md:w-auto flex items-center gap-2.5 sm:gap-3 flex-wrap justify-start md:justify-end">
-                                {displayedQuickLinks.map((link) => (
-                                    <a
-                                        key={link.id}
-                                        href={link.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        title={link.title}
-                                        className="group neu-card card-interactive-sm rounded-lg px-3 py-2 flex items-center gap-2 bg-white border border-[#E3DAC7] hover:border-[#0F4C3A] transition-all cursor-pointer shadow-sm text-xs font-semibold text-[#1B2A2F]"
-                                    >
-                                        {link.logoUrl ? (
-                                            <img
-                                                src={link.logoUrl}
-                                                alt={link.title}
-                                                className="h-5 sm:h-6 w-auto max-w-[80px] object-contain flex-shrink-0 group-hover:scale-105 transition-transform"
-                                            />
-                                        ) : (
-                                            <i className="fa-solid fa-arrow-up-right-from-square text-[10px] text-[#0F4C3A] flex-shrink-0"></i>
-                                        )}
-
-                                        {link.showTitle && (
-                                            <span className="text-[11px] sm:text-xs font-semibold text-[#1B2A2F] group-hover:text-[#0F4C3A] transition-colors whitespace-nowrap">
-                                                {link.title}
+                                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0A3427]/85 to-transparent p-4 sm:p-5 text-white">
+                                            <div className="text-lg mb-1">👩🏻‍🏫 📚 🧒🏻</div>
+                                            <strong className="block text-sm font-serif font-bold text-white">
+                                                Belajar, Bertumbuh, Berakhlak
+                                            </strong>
+                                            <span className="text-[11px] text-white/80 block mt-0.5">
+                                                Mendampingi anak tumbuh dengan ilmu dan akhlak Islami
                                             </span>
-                                        )}
-                                    </a>
-                                ))}
+                                        </div>
+                                    </div>
+                                </figure>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* 4. SAMBUTAN KAPRODI (Warm Cream Alternating Section) */}
-                <section id="profil" data-section="kaprodi" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
-                            {/* Kaprodi Photo Card with Smooth Card Hover Lift */}
-                            <div className={`lg:col-span-4 space-y-4 ${inView.kaprodi ? 'animate-slide-left' : ''}`}>
-                                <figure className="neu-card card-interactive rounded-2xl p-4 group">
-                                    <div className="overflow-hidden rounded-xl">
-                                        <Photo
-                                            src={siteConfig.kaprodi.photoUrl}
-                                            alt={`Foto ${siteConfig.kaprodi.name}`}
-                                            aspectRatio="3/4"
-                                            className="w-full h-auto rounded-xl shadow-soft"
-                                        />
+                {/* 2. QUICK STRIP: FOKUS PROGRAM STUDI & QUICK ACCESS PORTAL */}
+                <section data-section="quick-strip" className="bg-white border-b border-[#E3DAC7]">
+                    {/* 4 Focus Points Grid */}
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 divide-y sm:divide-y-0 lg:divide-x divide-[#E3DAC7]">
+                            {siteConfig.focusStrip.map((item, idx) => (
+                                <div key={idx} className="flex items-start gap-3.5 py-3 lg:py-1 px-2 lg:px-5 first:pl-0">
+                                    <div className="w-10 h-10 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-xl shrink-0 shadow-sm">
+                                        {item.icon}
                                     </div>
-                                    <figcaption className="mt-3.5 space-y-1 px-1">
-                                        <p className="font-serif font-bold text-base sm:text-lg text-piaud-slate group-hover:text-[#0F4C3A] transition-colors">
-                                            {siteConfig.kaprodi.name}
-                                        </p>
-                                        <p className="text-xs text-[#C2613A] font-bold">
-                                            {siteConfig.kaprodi.title}
-                                        </p>
-                                        <p className="text-xs text-piaud-slate-muted pt-1 border-t border-[#E3DAC7]">
-                                            Fakultas Tarbiyah · IAI Persis Bandung
-                                        </p>
-                                    </figcaption>
-                                </figure>
-                            </div>
+                                    <div className="space-y-0.5">
+                                        <strong className="block text-xs sm:text-sm font-bold text-piaud-slate">
+                                            {item.title}
+                                        </strong>
+                                        <small className="block text-[11px] sm:text-xs text-piaud-slate-muted leading-relaxed">
+                                            {item.description}
+                                        </small>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
-                            {/* Editorial Content with Measured Slide-Right */}
-                            <div className={`lg:col-span-8 space-y-5 ${inView.kaprodi ? 'animate-slide-right delay-1' : ''}`}>
-                                <div>
-                                    <blockquote className="font-serif text-xl sm:text-2xl text-piaud-slate font-bold leading-relaxed border-l-4 border-[#C2613A] pl-4">
-                                        &ldquo;{siteConfig.kaprodi.pullQuote}&rdquo;
-                                    </blockquote>
+                    {/* Quick Access Portal Bar (Pintasan Web Lain) */}
+                    <div className="bg-[#F2ECE0] border-t border-[#E3DAC7] py-3.5 sm:py-4">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
+                                <div className="flex items-center gap-2 self-start md:self-auto flex-shrink-0">
+                                    <span className="w-2 h-2 rounded-full bg-[#0F4C3A]"></span>
+                                    <span className="text-[11px] font-bold text-[#0F4C3A] uppercase tracking-wider">Akses Cepat Portal</span>
                                 </div>
 
-                                <div className="space-y-3.5 text-sm sm:text-base text-piaud-slate-muted leading-relaxed max-w-[65ch]">
-                                    {siteConfig.kaprodi.content.map((paragraph, index) => (
-                                        <p key={index}>
-                                            {paragraph}
+                                <div className="w-full md:w-auto flex items-center gap-2.5 sm:gap-3 flex-wrap justify-start md:justify-end">
+                                    {displayedQuickLinks.map((link) => (
+                                        <a
+                                            key={link.id}
+                                            href={link.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            title={link.title}
+                                            className="group neu-card card-interactive-sm rounded-lg px-3 py-2 flex items-center gap-2 bg-white border border-[#E3DAC7] hover:border-[#0F4C3A] transition-all cursor-pointer shadow-sm text-xs font-semibold text-[#1B2A2F]"
+                                        >
+                                            {link.logoUrl ? (
+                                                <img
+                                                    src={link.logoUrl}
+                                                    alt={link.title}
+                                                    className="h-5 sm:h-6 w-auto max-w-[80px] object-contain flex-shrink-0 group-hover:scale-105 transition-transform"
+                                                />
+                                            ) : (
+                                                <i className="fa-solid fa-arrow-up-right-from-square text-[10px] text-[#0F4C3A] flex-shrink-0"></i>
+                                            )}
+
+                                            {link.showTitle && (
+                                                <span className="text-[11px] sm:text-xs font-semibold text-[#1B2A2F] group-hover:text-[#0F4C3A] transition-colors whitespace-nowrap">
+                                                    {link.title}
+                                                </span>
+                                            )}
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 3. PROFIL PRODI SECTION (#profil) */}
+                <section id="profil" data-section="about" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-14 items-center">
+                            {/* Left Art Card / Visual (5 cols) */}
+                            <div className={`lg:col-span-5 ${inView.about ? 'animate-slide-left' : ''}`}>
+                                <figure className="neu-card card-interactive rounded-2xl p-4 sm:p-5 group text-center space-y-4">
+                                    <div className="bg-[#F2ECE0] border border-[#E3DAC7] rounded-xl p-8 flex flex-col items-center justify-center">
+                                        <div className="text-6xl mb-3">🧒🏻📗</div>
+                                        <p className="font-serif font-bold text-base text-piaud-slate">
+                                            {siteConfig.about.artCaption}
                                         </p>
+                                        <p className="text-xs text-piaud-slate-muted mt-1 max-w-[30ch]">
+                                            Komitmen mencetak sarjana pendidikan anak usia dini yang berkarakter Islami.
+                                        </p>
+                                    </div>
+                                    <div className="pt-2 text-left">
+                                        <p className="text-xs text-[#C2613A] font-bold uppercase tracking-wider">
+                                            Fakultas Tarbiyah · IAI Persis Bandung
+                                        </p>
+                                        <p className="text-xs text-piaud-slate-muted mt-0.5">
+                                            Jenjang Sarjana (S1) · Terakreditasi LAMDIK
+                                        </p>
+                                    </div>
+                                </figure>
+                            </div>
+
+                            {/* Right Editorial Copy (7 cols) */}
+                            <div className={`lg:col-span-7 space-y-5 ${inView.about ? 'animate-slide-right delay-1' : ''}`}>
+                                <div className="space-y-3">
+                                    <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0F4C3A]">
+                                        <span className="w-5 h-[2px] bg-[#C2613A]"></span>
+                                        <span>{siteConfig.about.eyebrow}</span>
+                                    </div>
+                                    <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-piaud-slate leading-tight">
+                                        {siteConfig.about.title}
+                                    </h2>
+                                </div>
+
+                                <div className="space-y-3.5 text-sm sm:text-base text-piaud-slate-muted leading-relaxed">
+                                    {siteConfig.about.description.map((par, pIdx) => (
+                                        <p key={pIdx}>{par}</p>
                                     ))}
                                 </div>
 
-                                <div className="pt-4 border-t border-[#E3DAC7] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-[#0F4C3A] text-white flex items-center justify-center font-serif text-xs font-bold shrink-0 shadow-sm">
-                                            PS
-                                        </div>
-                                        <p className="text-xs text-piaud-slate-muted font-medium">
-                                            Komitmen kurikulum berbasis Al-Qur'an, As-Sunnah, dan standar keilmuan PAUD modern.
-                                        </p>
-                                    </div>
+                                <ul className="space-y-2.5 pt-2">
+                                    {siteConfig.about.checklist.map((item, cIdx) => (
+                                        <li key={cIdx} className="flex items-start gap-3 text-xs sm:text-sm text-piaud-slate font-medium">
+                                            <span className="w-5 h-5 rounded-md bg-[#0F4C3A] text-white flex items-center justify-center text-xs shrink-0 mt-0.5">✓</span>
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <div className="pt-4 flex items-center gap-4">
                                     <Link
-                                        href="/profil"
-                                        className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors shrink-0 tactile-press"
+                                        href={siteConfig.about.ctaHref}
+                                        className="group inline-flex items-center gap-2 bg-[#0F4C3A] hover:bg-[#0A3427] text-white text-xs sm:text-sm font-bold px-6 py-3.5 rounded-xl transition-all cursor-pointer shadow-sm"
                                     >
-                                        <span>Selengkapnya di Profil Prodi</span>
-                                        <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">&rarr;</span>
+                                        <span>{siteConfig.about.ctaText}</span>
+                                    </Link>
+                                    <Link
+                                        href="/sambutan-kaprodi"
+                                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors"
+                                    >
+                                        <span>Sambutan Kaprodi →</span>
                                     </Link>
                                 </div>
                             </div>
@@ -346,84 +369,247 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                     </div>
                 </section>
 
-                {/* 5. PILAR KEUNGGULAN (Clean Ivory Section with Measured Staggered Scroll Cards) */}
-                <section id="kurikulum" data-section="pillars" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                {/* 4. LAYANAN PROGRAM STUDI / INFORMASI AKADEMIK (#akademik) */}
+                <section id="akademik" data-section="academic" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className={`text-center max-w-2xl mx-auto mb-10 space-y-2 ${inView.pillars ? 'animate-slide-up' : ''}`}>
+                        <div className={`text-center max-w-2xl mx-auto mb-10 space-y-2.5 ${inView.academic ? 'animate-slide-up' : ''}`}>
+                            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0F4C3A]">
+                                <span className="w-5 h-[2px] bg-[#C2613A]"></span>
+                                <span>Informasi Akademik</span>
+                            </div>
                             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate leading-tight">
-                                Tiga Pilar Pendidikan Holistik Calon Guru AUD
+                                Jelajahi Layanan Program Studi
                             </h2>
                             <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
-                                Memastikan setiap lulusan memiliki integritas aqidah yang kokoh, kompetensi pedagogik mutakhir, dan keahlian media belajar aplikatif.
+                                Akses informasi akademik dan kegiatan prodi melalui kategori yang terstruktur.
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {siteConfig.pillars.map((pillar, idx) => (
-                                <div
-                                    key={pillar.number}
-                                    className={`h-full ${inView.pillars ? `animate-slide-up delay-${idx + 1}` : ''}`}
-                                >
-                                    <div className="neu-card card-interactive rounded-2xl p-6 flex flex-col justify-between group h-full">
-                                        <div className="space-y-3.5">
-                                            <div className="w-10 h-10 rounded-xl bg-[#0F4C3A] text-white font-serif text-lg font-bold flex items-center justify-center shadow-soft transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
-                                                {pillar.number}
+                        {/* 4 Academic Service Cards Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {siteConfig.academicServices.map((service, sIdx) => {
+                                const isExternal = service.href.startsWith('http');
+                                const CardWrapper = isExternal ? 'a' : Link;
+                                const wrapperProps = isExternal
+                                    ? { href: service.href, target: '_blank', rel: 'noopener noreferrer' }
+                                    : { href: service.href };
+
+                                return (
+                                    <div
+                                        key={sIdx}
+                                        id={service.id}
+                                        className={`h-full ${inView.academic ? `animate-slide-up delay-${sIdx + 1}` : ''}`}
+                                    >
+                                        <CardWrapper
+                                            {...(wrapperProps as any)}
+                                            className="neu-card card-interactive rounded-2xl p-6 flex flex-col justify-between group h-full cursor-pointer block"
+                                        >
+                                            <div className="space-y-3.5">
+                                                <div className="w-12 h-12 rounded-xl bg-[#FAF6EC] border border-[#E3DAC7] flex items-center justify-center text-2xl shadow-sm transform group-hover:scale-105 transition-transform duration-300">
+                                                    {service.icon}
+                                                </div>
+                                                <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate group-hover:text-[#0F4C3A] transition-colors leading-snug">
+                                                    {service.title}
+                                                </h3>
+                                                <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
+                                                    {service.description}
+                                                </p>
                                             </div>
-                                            <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate group-hover:text-[#0F4C3A] transition-colors">
-                                                {pillar.title}
-                                            </h3>
-                                            <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
-                                                {pillar.description}
-                                            </p>
-                                        </div>
 
-                                        <div className="pt-4 mt-5 border-t border-[#E3DAC7] space-y-2">
-                                            <span className="text-xs font-bold text-piaud-slate block">Fokus Capaian:</span>
-                                            <ul className="space-y-1.5 text-xs text-piaud-slate-muted">
-                                                {pillar.deliverables.map((item, dIdx) => (
-                                                    <li key={dIdx} className="flex items-center gap-2 transform group-hover:translate-x-1.5 transition-transform duration-200">
-                                                        <span className="w-1.5 h-1.5 bg-[#C2613A] rounded-full shrink-0"></span>
-                                                        <span>{item}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
+                                            <div className="pt-4 mt-4 border-t border-[#E3DAC7] flex items-center justify-between text-xs font-bold text-[#0F4C3A] group-hover:text-[#0A3427]">
+                                                <span>Akses Layanan</span>
+                                                <span className="transform group-hover:translate-x-1 transition-transform">→</span>
+                                            </div>
+                                        </CardWrapper>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className={`mt-8 text-center ${inView.pillars ? 'animate-slide-up delay-4' : ''}`}>
-                            <Link
-                                href="/akademik"
-                                className="group inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#0F4C3A] hover:text-[#0A3427] neu-btn px-6 py-3.5 rounded-xl transition-all cursor-pointer"
-                            >
-                                <span>Lihat Struktur Kurikulum &amp; Sebaran Mata Kuliah</span>
-                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">&rarr;</span>
-                            </Link>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>
 
-                {/* 6. DOSEN & TENAGA PENGAJAR (Warm Cream Grid with Staggered Scroll Cards) */}
-                <section id="dosen" data-section="lecturers" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                {/* 5. PUBLIKASI ILMIAH: JURNAL PIAUDKU (#jurnal-piaud) */}
+                <section id="jurnal-piaud" data-section="journal" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        {/* Solid Deep Emerald Banner Card adhering strictly to UI_GUIDELINES.md */}
+                        <div className={`bg-[#0A3427] border border-[#17664F] rounded-2xl p-8 sm:p-12 shadow-[0_12px_28px_rgba(0,0,0,0.30)] text-piaud-ivory relative overflow-hidden ${
+                            inView.journal ? 'animate-slide-up' : ''
+                        }`}>
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                                <div className="lg:col-span-8 space-y-3.5">
+                                    <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#F9C928]">
+                                        <span className="w-6 h-[3px] bg-[#F9C928] rounded-sm"></span>
+                                        <span>{siteConfig.journal.eyebrow}</span>
+                                    </div>
+
+                                    <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
+                                        {siteConfig.journal.title}
+                                    </h2>
+
+                                    <p className="text-sm sm:text-base text-piaud-ivory/90 leading-relaxed max-w-[65ch]">
+                                        {siteConfig.journal.description}
+                                    </p>
+
+                                    <div className="flex items-center gap-2 text-xs text-piaud-ivory/75 pt-1">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-[#F9C928]"></span>
+                                        <span>{siteConfig.journal.notice}</span>
+                                    </div>
+                                </div>
+
+                                <div className="lg:col-span-4 flex lg:justify-end items-center">
+                                    <a
+                                        href={siteConfig.journal.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group inline-flex items-center justify-center gap-2 bg-[#FAF6EC] hover:bg-[#F2ECE0] text-[#0F4C3A] text-xs sm:text-sm font-bold px-7 py-4 rounded-xl border border-[#E3DAC7] shadow-sm hover:shadow transition-all duration-200 cursor-pointer"
+                                    >
+                                        <span>{siteConfig.journal.ctaText}</span>
+                                        <span className="transform group-hover:translate-x-1.5 transition-transform duration-200">↗</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 6. BERITA DAN KEGIATAN (#berita) */}
+                <section id="berita" data-section="news" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 pb-3 border-b border-[#E3DAC7] ${
+                            inView.news ? 'animate-slide-left' : ''
+                        }`}>
+                            <div className="space-y-1.5">
+                                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0F4C3A]">
+                                    <span className="w-5 h-[2px] bg-[#C2613A]"></span>
+                                    <span>Kabar Kampus</span>
+                                </div>
+                                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
+                                    Berita dan Kegiatan
+                                </h2>
+                                <p className="text-xs sm:text-sm text-piaud-slate-muted">
+                                    Ruang untuk menyampaikan aktivitas akademik, prestasi, agenda, dan pengumuman resmi program studi.
+                                </p>
+                            </div>
+                            <Link
+                                href="/artikel"
+                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto cursor-pointer"
+                            >
+                                <span>Lihat Semua Kabar</span>
+                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">→</span>
+                            </Link>
+                        </div>
+
+                        {/* 3 News Cards Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                            {/* Card 1: Featured News */}
+                            <div className={`h-full ${inView.news ? 'animate-slide-up delay-1' : ''}`}>
+                                <article className="neu-card card-interactive rounded-2xl p-5 flex flex-col justify-between group h-full">
+                                    <div className="space-y-3.5">
+                                        <div className="overflow-hidden rounded-xl border border-[#E3DAC7] bg-[#FAF6EC] h-44 flex items-center justify-center">
+                                            <Photo
+                                                src={featuredArticle.photoUrl}
+                                                alt={featuredArticle.title}
+                                                aspectRatio="16/9"
+                                                className="w-full h-full object-cover rounded-xl shadow-soft"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
+                                                <span className="bg-[#0F4C3A] text-white px-2.5 py-0.5 rounded-md font-bold text-[11px]">
+                                                    {featuredArticle.category}
+                                                </span>
+                                                <span>{featuredArticle.publishedAt}</span>
+                                            </div>
+                                            <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
+                                                {featuredArticle.title}
+                                            </h3>
+                                            <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
+                                                {featuredArticle.excerpt}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="pt-4 mt-3 border-t border-[#E3DAC7]">
+                                        <Link
+                                            href={`/artikel/${featuredArticle.slug}`}
+                                            className="text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] inline-flex items-center gap-1"
+                                        >
+                                            <span>Baca selengkapnya →</span>
+                                        </Link>
+                                    </div>
+                                </article>
+                            </div>
+
+                            {/* Card 2 & 3: List Articles */}
+                            {listArticles.map((article, idx) => (
+                                <div
+                                    key={article.id}
+                                    className={`h-full ${inView.news ? `animate-slide-up delay-${idx + 2}` : ''}`}
+                                >
+                                    <article className="neu-card card-interactive rounded-2xl p-5 flex flex-col justify-between group h-full">
+                                        <div className="space-y-3.5">
+                                            <div className="overflow-hidden rounded-xl border border-[#E3DAC7] bg-[#FAF6EC] h-44 flex items-center justify-center">
+                                                <Photo
+                                                    src={article.photoUrl}
+                                                    alt={article.title}
+                                                    aspectRatio="16/9"
+                                                    className="w-full h-full object-cover rounded-xl shadow-soft"
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
+                                                    <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7]">
+                                                        {article.category}
+                                                    </span>
+                                                    <span>{article.publishedAt}</span>
+                                                </div>
+                                                <h3 className="font-serif text-base sm:text-lg font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
+                                                    {article.title}
+                                                </h3>
+                                                <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
+                                                    {article.excerpt}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="pt-4 mt-3 border-t border-[#E3DAC7]">
+                                            <Link
+                                                href={`/artikel/${article.slug}`}
+                                                className="text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] inline-flex items-center gap-1"
+                                            >
+                                                <span>Baca selengkapnya →</span>
+                                            </Link>
+                                        </div>
+                                    </article>
+                                </div>
+                            ))}
+                        </div>
+
+                        <p className="text-xs text-piaud-slate-muted mt-6 text-center italic">
+                            Konten berita resmi program studi diperbarui secara berkala oleh tim akademik dan humas prodi.
+                        </p>
+                    </div>
+                </section>
+
+                {/* 7. DOSEN & TENAGA PENGAJAR (#dosen) */}
+                <section data-section="lecturers" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] ${inView.lecturers ? 'animate-slide-left' : ''}`}>
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
-                                    Dosen Pengampu &amp; Pakar Tumbuh Kembang
+                                    Dosen dan Tenaga Pengajar
                                 </h2>
+                                <p className="text-xs sm:text-sm text-piaud-slate-muted mt-1">
+                                    Profil, bidang keahlian, publikasi, dan informasi akademik dosen pengampu PIAUD.
+                                </p>
                             </div>
                             <Link
                                 href="/dosen"
                                 className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto cursor-pointer"
                             >
                                 <span>Lihat Semua Dosen</span>
-                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">&rarr;</span>
+                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">→</span>
                             </Link>
                         </div>
 
-                        {/* Crisp Responsive Cards Grid with Decoupled Wrappers for Smooth Hover Lift */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {displayedLecturers.map((lecturer, index) => (
                                 <div
@@ -466,21 +652,24 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                     </div>
                 </section>
 
-                {/* 7. GALERI DOKUMENTASI (Warm Ivory Grid with Card Hover Lift) */}
-                <section id="galeri" data-section="gallery" className="bg-[#FAF6EC] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
+                {/* 8. GALERI DOKUMENTASI (#galeri) */}
+                <section id="galeri" data-section="gallery" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] ${inView.gallery ? 'animate-slide-left' : ''}`}>
                             <div>
                                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
                                     Galeri Praktikum &amp; Observasi Lapangan
                                 </h2>
+                                <p className="text-xs sm:text-sm text-piaud-slate-muted mt-1">
+                                    Dokumentasi nyata kegiatan pembelajaran, laboratorium APE, dan praktik pengalaman lapangan.
+                                </p>
                             </div>
                             <Link
                                 href="/galeri"
                                 className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto cursor-pointer"
                             >
                                 <span>Buka Galeri Lengkap</span>
-                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">&rarr;</span>
+                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">→</span>
                             </Link>
                         </div>
 
@@ -513,91 +702,9 @@ export default function Welcome({ dbLecturers, dbArticles, dbGalleries, dbQuickL
                         </div>
                     </div>
                 </section>
-
-                {/* 8. ARTIKEL PARENTING ISLAMI (Warm Cream Alternating Section with Card Hover Lift) */}
-                <section id="artikel" data-section="articles" className="bg-[#F2ECE0] border-b border-[#E3DAC7] py-12 sm:py-16 md:py-20">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className={`flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 pb-3 border-b border-[#E3DAC7] ${inView.articles ? 'animate-slide-left' : ''}`}>
-                            <div>
-                                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-piaud-slate">
-                                    Artikel Parenting Islami &amp; Khazanah AUD
-                                </h2>
-                            </div>
-                            <Link
-                                href="/artikel"
-                                className="group inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C3A] hover:text-[#0A3427] transition-colors self-start md:self-auto cursor-pointer"
-                            >
-                                <span>Lihat Semua Artikel</span>
-                                <span className="transform group-hover:translate-x-1.5 transition-transform duration-300 ease-out">&rarr;</span>
-                            </Link>
-                        </div>
-
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                            {/* Featured Article Card Wrapper */}
-                            <div className={`lg:col-span-6 h-full ${inView.articles ? 'animate-slide-left delay-1' : ''}`}>
-                                <article className="neu-card card-interactive rounded-2xl p-5 flex flex-col justify-between group h-full">
-                                    <div className="space-y-3.5">
-                                        <div className="overflow-hidden rounded-xl border border-[#E3DAC7]">
-                                            <Photo
-                                                src={featuredArticle.photoUrl}
-                                                alt={featuredArticle.title}
-                                                aspectRatio="16/9"
-                                                className="w-full h-auto rounded-xl shadow-soft"
-                                            />
-                                        </div>
-                                        <div className="space-y-2 px-1">
-                                            <div className="flex items-center gap-2 text-xs text-piaud-slate-muted flex-wrap">
-                                                <span className="bg-[#0F4C3A] text-white px-2.5 py-0.5 rounded-md font-bold text-[11px] group-hover:bg-[#0A3427] transition-colors">
-                                                    {featuredArticle.category}
-                                                </span>
-                                                <span>{featuredArticle.publishedAt}</span>
-                                                <span>&bull;</span>
-                                                <span>{featuredArticle.readTime}</span>
-                                            </div>
-                                            <h3 className="font-serif text-lg sm:text-xl font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
-                                                {featuredArticle.title}
-                                            </h3>
-                                            <p className="text-xs sm:text-sm text-piaud-slate-muted leading-relaxed">
-                                                {featuredArticle.excerpt}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-
-                            {/* List Articles Stack (3-Card Stack Flushed Bottom) */}
-                            <div className="lg:col-span-6 flex flex-col justify-between gap-4 h-full">
-                                {listArticles.map((article, idx) => (
-                                    <div
-                                        key={article.id}
-                                        className={`flex-1 flex flex-col ${inView.articles ? `animate-slide-right delay-${idx + 1}` : ''}`}
-                                    >
-                                        <article className="neu-card card-interactive rounded-xl p-4 flex-1 flex flex-col justify-center space-y-1.5 group">
-                                            <div className="flex items-center gap-2 text-xs text-piaud-slate-muted">
-                                                <span className="text-[#C2613A] font-bold text-[11px] bg-[#FAF6EC] px-2.5 py-0.5 rounded-md border border-[#E3DAC7] transform group-hover:translate-x-1.5 transition-transform duration-200">
-                                                    {article.category}
-                                                </span>
-                                                <span>&bull;</span>
-                                                <span>{article.publishedAt}</span>
-                                                <span>&bull;</span>
-                                                <span>{article.readTime}</span>
-                                            </div>
-                                            <h3 className="font-serif text-sm sm:text-base font-bold text-piaud-slate leading-snug group-hover:text-[#0F4C3A] transition-colors">
-                                                {article.title}
-                                            </h3>
-                                            <p className="text-xs text-piaud-slate-muted leading-relaxed line-clamp-2">
-                                                {article.excerpt}
-                                            </p>
-                                        </article>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </section>
             </main>
 
-            {/* Section 8: CTA Penutup & Institutional Footer */}
+            {/* Section 9: Informasi Resmi Program Studi & Footer */}
             <Footer />
 
             {/* Floating Left: WhatsApp PMB */}

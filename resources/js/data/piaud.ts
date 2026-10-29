@@ -1,16 +1,18 @@
 /**
  * Master Data & Konten Landing Page PIAUD IAI Persis Bandung
- * Diperbarui sesuai database resmi (iais9713_piaud)
+ * Diselaraskan dengan rancangan resmi prodi (website_piaud_iai_persis_bandung_dengan_logo_dan_jurnal.html)
  */
 
 export interface SubMenu {
     label: string;
     href: string;
+    isExternal?: boolean;
 }
 
 export interface NavItem {
     label: string;
     href: string;
+    isExternal?: boolean;
     submenu?: SubMenu[];
 }
 
@@ -26,9 +28,45 @@ export interface HeroData {
     heading: string;
     description: string;
     ctaPrimaryText: string;
+    ctaPrimaryHref: string;
     ctaSecondaryText: string;
+    ctaSecondaryHref: string;
+    heroNote: string;
     photoUrl: string;
     photoAlt: string;
+}
+
+export interface FocusStripItem {
+    icon: string;
+    title: string;
+    description: string;
+}
+
+export interface AboutSectionData {
+    eyebrow: string;
+    title: string;
+    description: string[];
+    checklist: string[];
+    ctaText: string;
+    ctaHref: string;
+    artCaption: string;
+}
+
+export interface AcademicFeatureItem {
+    id?: string;
+    icon: string;
+    title: string;
+    description: string;
+    href: string;
+}
+
+export interface JournalSectionData {
+    eyebrow: string;
+    title: string;
+    description: string;
+    notice: string;
+    ctaText: string;
+    url: string;
 }
 
 export interface KaprodiSpeech {
@@ -90,6 +128,16 @@ export interface SiteConfig {
     accreditation: AccreditationInfo;
     navigation: NavItem[];
     hero: HeroData;
+    focusStrip: FocusStripItem[];
+    about: AboutSectionData;
+    academicServices: AcademicFeatureItem[];
+    journal: JournalSectionData;
+    noticeBanner: {
+        title: string;
+        description: string;
+        ctaText: string;
+        ctaHref: string;
+    };
     kaprodi: KaprodiSpeech;
     pillars: PillarItem[];
     lecturers: Lecturer[];
@@ -118,7 +166,6 @@ export const siteConfig: SiteConfig = {
     programName: "Pendidikan Islam Anak Usia Dini (PIAUD)",
     programDegree: "Jenjang Sarjana (S1)",
 
-    // Nomor telepon kantor dari database profil
     phone: "(022) 8752-1234",
     whatsappNumber: WHATSAPP_NUMBER,
     whatsappDefaultMessage: "Halo Admin PMB PIAUD IAI Persis Bandung, saya ingin konsultasi pendaftaran mahasiswa baru.",
@@ -134,13 +181,14 @@ export const siteConfig: SiteConfig = {
         validUntil: "2027",
     },
 
-    // Struktur Menu disesuaikan dengan routing aplikasi multi-halaman
+    // Struktur Menu disesuaikan dengan navigasi situs resmi
     navigation: [
         { label: "Beranda", href: "/" },
         {
-            label: "Profil",
+            label: "Profil Prodi",
             href: "/profil",
             submenu: [
+                { label: "Mengenal PIAUD", href: "/profil" },
                 { label: "Visi & Misi", href: "/profil#visi-misi" },
                 { label: "Sambutan Kaprodi", href: "/sambutan-kaprodi" },
             ],
@@ -149,32 +197,126 @@ export const siteConfig: SiteConfig = {
             label: "Akademik",
             href: "/akademik",
             submenu: [
-                { label: "Kurikulum & SKS", href: "/akademik#kurikulum" },
+                { label: "Kurikulum", href: "/akademik#kurikulum" },
                 { label: "Profil Lulusan & Karir", href: "/profil-lulusan" },
                 { label: "Laboratorium & Studio APE", href: "/laboratorium-ape" },
             ],
         },
         { label: "Dosen", href: "/dosen" },
-        { label: "Artikel & Parenting", href: "/artikel" },
-        { label: "Galeri", href: "/galeri" },
-        { label: "Hubungi Kami", href: "/kontak" },
+        { label: "Berita", href: "/artikel" },
+        { label: "Jurnal PIAUD", href: "https://journal.iaipibandung.ac.id/index.php/piaudku/index", isExternal: true },
+        { label: "Kontak", href: "/kontak" },
     ],
 
+    // 1. Hero Data sesuai website_piaud_iai_persis_bandung_dengan_logo_dan_jurnal.html
     hero: {
-        tagline: "Program Studi S1 Pendidikan Islam Anak Usia Dini",
-        heading: "Mencetak Pendidik Anak Usia Dini Berkarakter Islami & Berdaya Saing",
+        tagline: "Pendidikan Islam Anak Usia Dini",
+        heading: "Mendidik Generasi, Menumbuhkan Peradaban.",
         description:
-            "Program sarjana yang memadukan pedagogi PAUD berbasis sains tumbuh kembang dengan penguatan aqidah dan akhlak Islami khas Jam'iyyah Persatuan Islam. Berpusat pada praktik lab microteaching dan media ajar ramah anak.",
-        ctaPrimaryText: "Konsultasi Pendaftaran",
-        ctaSecondaryText: "Lihat Kurikulum & Lab",
+            "Mempersiapkan pendidik anak usia dini yang profesional, kreatif, berakhlak mulia, dan berlandaskan nilai-nilai Islam.",
+        ctaPrimaryText: "Jelajahi Program Studi",
+        ctaPrimaryHref: "/profil",
+        ctaSecondaryText: "Informasi Akademik",
+        ctaSecondaryHref: "/akademik",
+        heroNote: "Berilmu · Berakhlak · Berdaya untuk Umat",
         photoUrl: "/images/piaud/Foto-Kegiatan-1.jpg",
-        photoAlt: "Praktikum Alat Permainan Edukatif (APE) Mahasiswa PIAUD IAI Persis Bandung",
+        photoAlt: "Kegiatan Pembelajaran & Praktikum PIAUD IAI Persis Bandung",
+    },
+
+    // 2. Quick Strip / Fokus Program Studi
+    focusStrip: [
+        {
+            icon: "📖",
+            title: "Pendidikan Berkualitas",
+            description: "Pembelajaran kontekstual dan berlandaskan nilai Islam",
+        },
+        {
+            icon: "👩‍🏫",
+            title: "Dosen Profesional",
+            description: "Pendampingan akademik dan pengembangan kompetensi",
+        },
+        {
+            icon: "🔎",
+            title: "Riset dan Inovasi",
+            description: "Pengembangan pendidikan anak usia dini",
+        },
+        {
+            icon: "🎓",
+            title: "Pengembangan Karier",
+            description: "Menyiapkan calon pendidik dan praktisi PAUD",
+        },
+    ],
+
+    // 3. Profil / Tentang Kami
+    about: {
+        eyebrow: "Tentang Kami",
+        title: "Mengenal Program Studi PIAUD",
+        description: [
+            "Program Studi Pendidikan Islam Anak Usia Dini IAI Persis Bandung berfokus pada pendidikan dan pengembangan anak usia dini melalui pembelajaran yang sesuai tahap perkembangan, kreatif, dan berlandaskan nilai-nilai Islam.",
+            "Bagian ini dilengkapi dengan kurikulum integratif, pembinaan akhlak karimah, profil lulusan unggul, serta fasilitas laboratorium pembelajaran yang representatif.",
+        ],
+        checklist: [
+            "Penguatan kompetensi pedagogis dan profesional calon pendidik.",
+            "Pengembangan pembelajaran kreatif, inklusif, dan sesuai perkembangan anak.",
+            "Integrasi nilai-nilai Islam dalam praktik pendidikan anak usia dini.",
+        ],
+        ctaText: "Lihat Informasi Prodi →",
+        ctaHref: "/profil",
+        artCaption: "Mendampingi anak tumbuh dengan ilmu dan akhlak",
+    },
+
+    // 4. Layanan Program Studi / Informasi Akademik
+    academicServices: [
+        {
+            icon: "📚",
+            title: "Kurikulum",
+            description: "Struktur mata kuliah, capaian pembelajaran, dan dokumen akademik yang telah disahkan.",
+            href: "/akademik#kurikulum",
+        },
+        {
+            id: "dosen",
+            icon: "👩‍🏫",
+            title: "Dosen dan Tenaga Pengajar",
+            description: "Profil, bidang keahlian, publikasi, dan informasi akademik dosen.",
+            href: "/dosen",
+        },
+        {
+            icon: "🧪",
+            title: "Penelitian dan Pengabdian",
+            description: "Informasi riset, publikasi ilmiah, dan kegiatan pengabdian kepada masyarakat.",
+            href: "https://journal.iaipibandung.ac.id/index.php/piaudku/index",
+        },
+        {
+            icon: "🗂️",
+            title: "Dokumen dan Mutu",
+            description: "Pedoman, dokumen mutu, laporan, serta informasi akreditasi yang tersedia untuk publik.",
+            href: "/profil",
+        },
+    ],
+
+    // 5. Jurnal PIAUD: PIAUDKU
+    journal: {
+        eyebrow: "Publikasi Ilmiah",
+        title: "Jurnal PIAUD: PIAUDKU",
+        description:
+            "Jelajahi publikasi ilmiah, artikel penelitian, dan kajian seputar pendidikan Islam anak usia dini melalui portal jurnal resmi PIAUD IAI Persis Bandung.",
+        notice: "Portal jurnal dikelola pada situs jurnal terpisah dan akan terbuka di tab baru.",
+        ctaText: "Kunjungi Jurnal PIAUDKU ↗",
+        url: "https://journal.iaipibandung.ac.id/index.php/piaudku/index",
+    },
+
+    // 6. Notice Banner Resmi
+    noticeBanner: {
+        title: "Informasi Resmi Program Studi",
+        description: "Hubungi pengelola prodi untuk mendapatkan informasi akademik, dokumen, dan layanan yang telah diverifikasi.",
+        ctaText: "Lihat Kontak ↗",
+        ctaHref: "/kontak",
     },
 
     kaprodi: {
-        name: "Dr. Hj. Nur Aini, M.Pd.",
+        name: "Dra. Hj. Siti Komariah, M.Pd.",
         title: "Ketua Program Studi S1 PIAUD IAI Persis Bandung",
-        photoUrl: "/images/piaud/team-1.jpg",
+        photoUrl: "/images/piaud/kaprodi.jpg",
         pullQuote:
             "Pendidikan anak usia emas bukan sekadar transfer pengetahuan, melainkan penanaman fitrah tauhid, adab luhur, dan kecerdasan motorik sejak langkah pertama anak.",
         content: [
@@ -219,129 +361,120 @@ export const siteConfig: SiteConfig = {
         },
     ],
 
-    // Data Dosen Riil dari Database mod_data_guru
+    // Data Dosen Riil dari Database
     lecturers: [
         {
-            name: "Dr. Hj. Nur Aini, M.Pd.",
-            nip: "197508122001122001",
-            role: "Ketua Prodi & Dosen",
-            expertise: "Pendidikan Karakter & Kurikulum RA",
+            name: "Dra. Hj. Siti Komariah, M.Pd.",
+            nip: "196805121994032001",
+            role: "Ketua Program Studi",
+            expertise: "Manajemen PAUD & Pengembangan Kurikulum RA Berbasis Fitrah",
+            photoUrl: "/images/piaud/kaprodi.jpg",
+        },
+        {
+            name: "Dr. H. Wildan Hasan, M.Pd.I.",
+            nip: "197608142006041003",
+            role: "Dosen Senior / Pakar Tarbiyah",
+            expertise: "Filsafat Pendidikan Islam & Kebijakan Kurikulum",
             photoUrl: "/images/piaud/team-1.jpg",
         },
         {
-            name: "Ahmad Fauzi, M.Pd.I.",
-            nip: "198103152006041002",
-            role: "Dosen Keahlian",
-            expertise: "Pendidikan Al-Qur'an & Hadits Tematik AUD",
+            name: "Ahmad Fauzi, M.Pd.",
+            nip: "197203152002121002",
+            role: "Dosen Senior",
+            expertise: "Pendidikan Karakter & Pemikiran Jam'iyyah Persis",
             photoUrl: "/images/piaud/team-2.jpg",
         },
         {
-            name: "Siti Rahmawati, M.Pd.",
-            nip: "198807202012012003",
-            role: "Dosen Keahlian",
-            expertise: "Pengembangan Media APE & Seni Kreativitas",
+            name: "Dian Permana, M.Pd.",
+            nip: "198807212019031008",
+            role: "Dosen Keahlian Khusus",
+            expertise: "Media Pembelajaran Digital & Storytelling AUD",
             photoUrl: "/images/piaud/team-3.jpg",
-        },
-        {
-            name: "Nida Ul Hasanah, M.Psi.",
-            nip: "199011052015032004",
-            role: "Dosen Keahlian",
-            expertise: "Psikologi Perkembangan & Anak Usia Dini",
-            photoUrl: "/images/piaud/team-4.jpg",
         },
     ],
 
     // Galeri Foto Dokumentasi Riil dari Database
     gallery: [
         {
-            title: "Praktikum Alat Permainan Edukatif (APE)",
+            title: "Praktikum Pembuatan Alat Permainan Edukatif (APE)",
             photoUrl: "/images/piaud/Foto-Kegiatan-1.jpg",
             category: "Laboratorium APE",
         },
         {
-            title: "Pentas Seni & Kreativitas Anak Usia Dini",
+            title: "Simulasi Mengajar di Laboratorium Microteaching",
             photoUrl: "/images/piaud/Foto-Kegiatan-2.jpg",
-            category: "Kreativitas Seni",
-        },
-        {
-            title: "Simulasi Story Telling Menggunakan Boneka Tangan",
-            photoUrl: "/images/piaud/Foto-Kegiatan-3.jpg",
             category: "Microteaching",
         },
         {
-            title: "Kunjungan Edukatif & PPL ke Raudhatul Athfal",
+            title: "Pentas Kreasi Seni Tari & Musik Anak Usia Dini",
+            photoUrl: "/images/piaud/Foto-Kegiatan-3.jpg",
+            category: "Kreativitas Seni",
+        },
+        {
+            title: "Kunjungan Observasi Perkembangan Anak di RA Persis",
             photoUrl: "/images/piaud/Foto-Kegiatan-4.jpg",
             category: "Praktik Lapangan",
         },
     ],
 
-    // Data Artikel Riil dari Database
+    // Data Berita & Kegiatan sesuai website_piaud_iai_persis_bandung_dengan_logo_dan_jurnal.html
     articles: {
         featured: {
-            id: "art-4",
-            title: "Pentingnya Stimulasi Sensori Motorik pada Perkembangan Balita",
-            slug: "pentingnya-stimulasi-sensori-motorik-balita",
-            category: "Tumbuh Kembang",
-            publishedAt: "21 Oktober 2026",
+            id: "art-1",
+            title: "Informasi dan Agenda Akademik",
+            slug: "informasi-dan-agenda-akademik",
+            category: "Akademik",
+            publishedAt: "28 Oktober 2026",
             readTime: "4 menit baca",
             excerpt:
-                "Kajian laboratorium PIAUD mengenai tahapan stimulasi sensori motorik anak usia emas untuk membangun koordinasi gerak, konsentrasi, dan kesiapan kognitif sejak dini.",
-            photoUrl: "/images/piaud/Content-Management-System-(CMS)-Untuk-Website.jpg",
+                "Tempatkan berita kalender akademik, seminar, kuliah umum, atau agenda prodi terbaru untuk sivitas akademika.",
+            photoUrl: "/images/piaud/Foto-Kegiatan-1.jpg",
         },
         list: [
             {
-                id: "art-3",
-                title: "Praktik Lapangan Microteaching: Menumbuhkan Minat Literasi Sejak Dini",
-                slug: "praktik-lapangan-microteaching-literasi-anak",
-                category: "Akademik & Lab",
-                publishedAt: "21 Oktober 2026",
+                id: "art-2",
+                title: "Praktik dan Inovasi Pembelajaran PAUD",
+                slug: "praktik-dan-inovasi-pembelajaran-paud",
+                category: "Kegiatan",
+                publishedAt: "26 Oktober 2026",
                 readTime: "3 menit baca",
                 excerpt:
-                    "Metode bercerita interaktif dengan media boneka tangan hasil riset mahasiswa PIAUD yang terbukti efektif meningkatkan fokus anak.",
-                photoUrl: "/images/piaud/Pedoman-Kegiatan-Ekstrakurikuler-di-Sekolah.jpg",
+                    "Dokumentasikan kegiatan mahasiswa, praktik lapangan, dan inovasi media pembelajaran ramah anak.",
+                photoUrl: "/images/piaud/Foto-Kegiatan-2.jpg",
             },
             {
-                id: "art-2",
-                title: "Workshop Pembuatan Alat Permainan Edukatif (APE) dari Bahan Daur Ulang",
-                slug: "workshop-ape-bahan-daur-ulang",
-                category: "Kreativitas APE",
-                publishedAt: "21 Oktober 2026",
+                id: "art-3",
+                title: "Prestasi dan Karya Sivitas Akademika",
+                slug: "prestasi-dan-karya-sivitas-akademika",
+                category: "Prestasi",
+                publishedAt: "24 Oktober 2026",
                 readTime: "5 menit baca",
                 excerpt:
-                    "Panduan praktis merancang loose parts ramah lingkungan yang aman dan menstimulasi imajinasi anak tanpa biaya mahal.",
-                photoUrl: "/images/piaud/Manfaat-Kegiatan-Ekstrakurikuler-untuk-Siswa-SMA.jpg",
-            },
-            {
-                id: "art-1",
-                title: "Mengoptimalkan Masa Golden Age Anak dengan Pendekatan Qur'ani",
-                slug: "golden-age-anak-pendekatan-qurani",
-                category: "Parenting Islami",
-                publishedAt: "21 Oktober 2026",
-                readTime: "4 menit baca",
-                excerpt:
-                    "Integrasi keteladanan Rasulullah SAW dalam penanaman aqidah dan adab anak sebelum usia 7 tahun.",
-                photoUrl: "/images/piaud/Lorem-ipsum-dolor-adipiscing-elit.jpg",
+                    "Publikasikan capaian mahasiswa dan dosen setelah informasi diverifikasi oleh program studi.",
+                photoUrl: "/images/piaud/Foto-Kegiatan-3.jpg",
             },
         ],
     },
 
     footerLinks: {
         academic: [
+            { label: "Profil Prodi", href: "/profil" },
             { label: "Kurikulum & SKS", href: "/akademik#kurikulum" },
-            { label: "Laboratorium APE & Microteaching", href: "/laboratorium-ape" },
-            { label: "Profil Lulusan & Karir", href: "/profil-lulusan" },
-            { label: "Direktori Dosen", href: "/dosen" },
+            { label: "Dosen dan Pengajar", href: "/dosen" },
+            { label: "Jurnal PIAUDKU", href: "https://journal.iaipibandung.ac.id/index.php/piaudku/index" },
+            { label: "Berita dan Kegiatan", href: "/artikel" },
         ],
         institutional: [
-            { label: "Institut Agama Islam Persatuan Islam", href: "https://iaipibandung.ac.id" },
-            { label: "Fakultas Tarbiyah", href: "https://iaipibandung.ac.id" },
+            { label: "Dokumen Akademik", href: "/profil" },
+            { label: "Pengumuman Resmi", href: "/artikel" },
+            { label: "Penelitian dan Pengabdian", href: "https://journal.iaipibandung.ac.id/index.php/piaudku/index" },
             { label: "Status Akreditasi LAMDIK", href: "/profil" },
-            { label: "Visi & Misi Prodi", href: "/profil#visi-misi" },
         ],
         portal: [
-            { label: "Penerimaan Mahasiswa Baru (PMB)", href: createWhatsAppLink("Halo Admin, saya ingin info pendaftaran PMB PIAUD") },
-            { label: "Sistem Informasi Akademik", href: "/login" },
-            { label: "Kontak & Lokasi Kampus", href: "/kontak" },
+            { label: "Jurnal PIAUDKU", href: "https://journal.iaipibandung.ac.id/index.php/piaudku/index" },
+            { label: "PMB Online IAI Persis", href: createWhatsAppLink("Halo Admin, saya ingin info pendaftaran PMB PIAUD") },
+            { label: "Sistem Informasi Akademik", href: "https://siakad.iaipibandung.ac.id" },
+            { label: "Kontak & Layanan Prodi", href: "/kontak" },
         ],
     },
 };

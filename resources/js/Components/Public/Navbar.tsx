@@ -30,17 +30,17 @@ export const Navbar: React.FC = () => {
 
     return (
         <header className="w-full bg-[#FAF6EC] border-b border-[#E3DAC7] sticky top-0 z-40 shadow-soft">
-            {/* 1. Top Bar (Solid Deep Forest Emerald) */}
+            {/* 1. Top Bar (Portal Resmi Program Studi PIAUD · Institut Agama Islam Persis Bandung) */}
             <div className={`bg-piaud-emerald text-piaud-ivory border-b border-piaud-emerald-dark text-xs leading-normal transition-all duration-200 ${isScrolled ? 'py-1' : 'py-1.5 sm:py-2'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
-                    {/* Left: Institution & Program Identity */}
+                    {/* Left: Official Headline sesuai file html */}
                     <div className="flex items-center gap-2 truncate">
-                        <span className="font-bold tracking-wider uppercase text-white text-[11px] sm:text-xs shrink-0">
-                            {siteConfig.institutionName}
+                        <span className="font-bold tracking-wider text-white text-[11px] sm:text-xs shrink-0">
+                            Portal Resmi Program Studi PIAUD
                         </span>
                         <span className="text-white/40 hidden md:inline">|</span>
                         <span className="text-white/90 font-medium hidden md:inline truncate text-[11px] sm:text-xs">
-                            {siteConfig.facultyName} · {siteConfig.programName}
+                            Institut Agama Islam Persis Bandung
                         </span>
                     </div>
 
@@ -130,10 +130,10 @@ export const Navbar: React.FC = () => {
                     />
                     <div className="flex flex-col min-w-0">
                         <span className="font-bold text-sm sm:text-base md:text-lg leading-tight text-piaud-slate tracking-tight group-hover:text-piaud-emerald transition-colors font-sans truncate">
-                            PIAUD IAI Persis
+                            IAI PERSIS BANDUNG
                         </span>
                         <span className="text-[10px] sm:text-xs text-piaud-slate-muted font-medium mt-0.5 hidden sm:block truncate">
-                            S1 Pendidikan Islam Anak Usia Dini
+                            Prodi Pendidikan Islam Anak Usia Dini
                         </span>
                     </div>
                 </Link>
@@ -142,6 +142,22 @@ export const Navbar: React.FC = () => {
                 <div className="hidden lg:flex items-center gap-1 xl:gap-1.5">
                     {siteConfig.navigation.map((item) => {
                         const active = isActive(item.href);
+
+                        if (item.isExternal) {
+                            return (
+                                <a
+                                    key={item.label}
+                                    href={item.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="relative inline-flex items-center gap-1 px-3 py-2 text-[13px] font-semibold text-piaud-slate hover:text-[#0F4C3A] transition-colors duration-150"
+                                >
+                                    <span>{item.label}</span>
+                                    <span className="text-[10px] text-[#0F4C3A]">↗</span>
+                                </a>
+                            );
+                        }
+
                         return (
                             <div key={item.label} className="relative group">
                                 {item.submenu ? (
@@ -203,15 +219,12 @@ export const Navbar: React.FC = () => {
 
                     {/* Desktop CTA Action Button */}
                     <div className="ml-2.5 pl-3 border-l border-[#E3DAC7]">
-                        <a
-                            href={waLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <Link
+                            href="/profil"
                             className="inline-flex items-center gap-1.5 bg-[#0F4C3A] hover:bg-[#0A3427] text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow-sm hover:shadow transition-all duration-200 active:scale-95"
                         >
-                            <span>Daftar PMB</span>
-                            <span className="text-[11px]">→</span>
-                        </a>
+                            <span>Informasi Prodi ↗</span>
+                        </Link>
                     </div>
                 </div>
 
@@ -257,6 +270,27 @@ export const Navbar: React.FC = () => {
                     <div className="flex flex-col space-y-1">
                         {siteConfig.navigation.map((item, index) => {
                             const active = isActive(item.href);
+
+                            if (item.isExternal) {
+                                return (
+                                    <div
+                                        key={item.label}
+                                        className="pb-1 border-b border-[#E3DAC7]/60"
+                                    >
+                                        <a
+                                            href={item.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={() => setIsMobileOpen(false)}
+                                            className="flex items-center justify-between py-2.5 px-3 text-sm font-semibold text-piaud-slate hover:text-[#0F4C3A]"
+                                        >
+                                            <span>{item.label}</span>
+                                            <span className="text-xs text-[#0F4C3A]">↗</span>
+                                        </a>
+                                    </div>
+                                );
+                            }
+
                             return (
                                 <div
                                     key={item.label}
@@ -319,15 +353,14 @@ export const Navbar: React.FC = () => {
 
                         {/* Mobile Drawer CTA Button */}
                         <div className="pt-3">
-                            <a
-                                href={waLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            <Link
+                                href="/profil"
+                                onClick={() => setIsMobileOpen(false)}
                                 className="w-full flex items-center justify-center gap-2 bg-[#0F4C3A] hover:bg-[#0A3427] text-white text-xs font-bold py-3 px-4 rounded-xl shadow-sm transition-colors"
                             >
-                                <span>Konsultasi &amp; Pendaftaran PMB</span>
+                                <span>Informasi Resmi Prodi</span>
                                 <span>→</span>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>

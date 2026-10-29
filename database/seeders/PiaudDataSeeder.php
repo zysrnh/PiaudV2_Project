@@ -51,7 +51,7 @@ class PiaudDataSeeder extends Seeder
             );
         }
 
-        // 2. Site Settings
+        // 2. Site Settings sesuai website_piaud_iai_persis_bandung_dengan_logo_dan_jurnal.html
         $settings = [
             'institution_name' => 'IAI Persis Bandung',
             'faculty_name' => 'Fakultas Tarbiyah',
@@ -65,9 +65,9 @@ class PiaudDataSeeder extends Seeder
             'accreditation_status' => 'Terakreditasi Baik',
             'accreditation_institution' => 'LAMDIK',
             'accreditation_valid_until' => '2027',
-            'footer_cta_title' => 'Siap Menjadi Pendidik Generasi Emas yang Berkarakter Islami?',
-            'footer_cta_description' => 'Konsultasikan persyaratan pendaftaran, konversi nilai guru mengajar, serta jadwal perkuliahan reguler dan kelas karyawan dengan tim prodi.',
-            'footer_copyright' => 'Program Studi S1 PIAUD IAI Persis Bandung. Hak Cipta Dilindungi Undang-Undang.',
+            'footer_cta_title' => 'Informasi Resmi Program Studi',
+            'footer_cta_description' => 'Hubungi pengelola prodi untuk mendapatkan informasi akademik, dokumen, dan layanan yang telah diverifikasi.',
+            'footer_copyright' => 'Program Studi PIAUD IAI Persis Bandung',
         ];
 
         foreach ($settings as $key => $value) {
@@ -122,12 +122,12 @@ class PiaudDataSeeder extends Seeder
             Lecturer::updateOrCreate(['name' => $lecturer['name']], $lecturer);
         }
 
-        // 4. Categories & Articles
+        // 4. Categories & Articles (Sinkronisasi dengan Berita & Kegiatan)
         $categories = [
+            'Akademik' => 'akademik',
+            'Kegiatan' => 'kegiatan',
+            'Prestasi' => 'prestasi',
             'Parenting Islami' => 'parenting-islami',
-            'Kreativitas APE' => 'kreativitas-ape',
-            'Akademik & Lab' => 'akademik-lab',
-            'Psikologi AUD' => 'psikologi-aud',
         ];
 
         $catModels = [];
@@ -137,32 +137,32 @@ class PiaudDataSeeder extends Seeder
 
         $articles = [
             [
-                'category_name' => 'Akademik & Lab',
-                'title' => 'Praktik Lapangan Terpadu Mahasiswa PIAUD di Lembaga PAUD Unggulan',
-                'slug' => 'praktik-lapangan-terpadu-mahasiswa-piaud',
-                'excerpt' => 'Implementasi metode sentra dan stimulasi perkembangan anak berbasis Al-Qur\'an langsung di sekolah mitra se-Bandung Raya.',
+                'category_name' => 'Akademik',
+                'title' => 'Informasi dan Agenda Akademik',
+                'slug' => 'informasi-dan-agenda-akademik',
+                'excerpt' => 'Tempatkan berita kalender akademik, seminar, kuliah umum, atau agenda prodi terbaru.',
                 'photo_url' => '/images/piaud/Foto-Kegiatan-1.jpg',
-                'read_time' => '5 menit baca',
+                'read_time' => '4 menit baca',
                 'is_featured' => true,
                 'published_at' => now()->subDays(2),
             ],
             [
-                'category_name' => 'Kreativitas APE',
-                'title' => 'Workshop Pembuatan APE Ramah Lingkungan dari Bahan Daur Ulang',
-                'slug' => 'workshop-pembuatan-ape-ramah-lingkungan',
-                'excerpt' => 'Mahasiswa mendesain alat peraga edukatif sensorial menggunakan bahan loose parts lokal yang aman bagi anak usia prasekolah.',
+                'category_name' => 'Kegiatan',
+                'title' => 'Praktik dan Inovasi Pembelajaran PAUD',
+                'slug' => 'praktik-dan-inovasi-pembelajaran-paud',
+                'excerpt' => 'Dokumentasikan kegiatan mahasiswa, praktik lapangan, dan inovasi media pembelajaran.',
                 'photo_url' => '/images/piaud/Foto-Kegiatan-2.jpg',
                 'read_time' => '3 menit baca',
                 'is_featured' => false,
                 'published_at' => now()->subDays(4),
             ],
             [
-                'category_name' => 'Parenting Islami',
-                'title' => 'Mengoptimalkan Golden Age Anak Melalui Keteladanan Akhlak Qur\'ani',
-                'slug' => 'mengoptimalkan-golden-age-keteladanan-akhlak',
-                'excerpt' => 'Kajian parenting ilmiah mengenai pentingnya stimulasi fitrah tauhid dan pengenalan adab harian sejak usia 0–6 tahun.',
+                'category_name' => 'Prestasi',
+                'title' => 'Prestasi dan Karya Sivitas Akademika',
+                'slug' => 'prestasi-dan-karya-sivitas-akademika',
+                'excerpt' => 'Publikasikan capaian mahasiswa dan dosen setelah informasi diverifikasi oleh prodi.',
                 'photo_url' => '/images/piaud/Foto-Kegiatan-3.jpg',
-                'read_time' => '4 menit baca',
+                'read_time' => '5 menit baca',
                 'is_featured' => false,
                 'published_at' => now()->subDays(7),
             ],
@@ -259,7 +259,7 @@ class PiaudDataSeeder extends Seeder
             \App\Models\Contact::firstOrCreate(['phone' => $sc['phone']], $sc);
         }
 
-        // 7. Quick Links (Pintasan Cepat Akses Kampus & Portal)
+        // 7. Quick Links (Pintasan Cepat Akses Kampus & Portal Jurnal)
         $quickLinks = [
             [
                 'title' => 'IAI Persis Bandung',
@@ -270,24 +270,24 @@ class PiaudDataSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'title' => 'SIAKAD Kampus',
-                'url' => 'https://siakad.iaipibandung.ac.id',
+                'title' => 'Jurnal PIAUDKU',
+                'url' => 'https://journal.iaipibandung.ac.id/index.php/piaudku/index',
                 'logo_url' => null,
                 'show_title' => true,
                 'order' => 2,
                 'is_active' => true,
             ],
             [
-                'title' => 'E-Library Kampus',
-                'url' => 'https://iaipibandung.ac.id',
+                'title' => 'SIAKAD Kampus',
+                'url' => 'https://siakad.iaipibandung.ac.id',
                 'logo_url' => null,
                 'show_title' => true,
                 'order' => 3,
                 'is_active' => true,
             ],
             [
-                'title' => 'Jurnal PIAUD',
-                'url' => 'https://ejournal.iaipibandung.ac.id',
+                'title' => 'E-Library Kampus',
+                'url' => 'https://iaipibandung.ac.id',
                 'logo_url' => null,
                 'show_title' => true,
                 'order' => 4,
