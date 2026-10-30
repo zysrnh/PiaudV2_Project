@@ -71,6 +71,18 @@
             <span class="text-[11px] text-[#5C6B73]">Klik tombol untuk langsung mengeksekusi di terminal</span>
         </div>
         <div class="flex flex-wrap gap-2 pt-1">
+            <button type="button" onclick="runCommandQuick('deploy:full')" class="neu-btn px-3.5 py-1.5 text-xs font-bold bg-[#0F4C3A] text-white hover:bg-[#15664F] flex items-center gap-1.5 cursor-pointer shadow-sm">
+                <i class="fa-solid fa-rocket text-[11px] text-[#F59E0B]"></i>
+                <span>⚡ 1-Klik Full Deploy</span>
+            </button>
+            <button type="button" onclick="runCommandQuick('git pull')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#0F4C3A] hover:bg-white flex items-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-code-pull-request text-[11px]"></i>
+                <span>git pull</span>
+            </button>
+            <button type="button" onclick="runCommandQuick('php artisan sync:build')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#0F4C3A] hover:bg-white flex items-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-boxes-packing text-[11px]"></i>
+                <span>sync:build</span>
+            </button>
             <button type="button" onclick="runCommandQuick('php artisan migrate')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#0F4C3A] hover:bg-white flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-database text-[11px]"></i>
                 <span>migrate</span>
@@ -90,10 +102,6 @@
             <button type="button" onclick="runCommandQuick('php artisan route:list')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#1B2A2F] hover:bg-white flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-list-check text-[11px]"></i>
                 <span>route:list</span>
-            </button>
-            <button type="button" onclick="runCommandQuick('php artisan migrate:status')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#1B2A2F] hover:bg-white flex items-center gap-1.5 cursor-pointer">
-                <i class="fa-solid fa-circle-info text-[11px]"></i>
-                <span>migrate:status</span>
             </button>
             <button type="button" onclick="runCommandQuick('help')" class="neu-btn px-3 py-1.5 text-xs font-bold text-[#5C6B73] hover:bg-white flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-circle-question text-[11px]"></i>
