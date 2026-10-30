@@ -122,34 +122,36 @@ TXT;
         // 1. Eksekusi Perintah GIT (git pull, git status, git log, dll)
         if (preg_match('/^git(\s+.*)?$/i', $rawCommand)) {
             $startTime = microtime(true);
-            $basePath = escapeshellarg(base_path());
+            $gitDir = base_path('.git');
 
-            if (!function_exists('shell_exec') && !function_exists('exec')) {
+            if (!is_dir($gitDir)) {
+                $elapsed = number_format(microtime(true) - $startTime, 2) . 's';
                 return response()->json([
                     'success' => false,
                     'command' => $rawCommand,
-                    'output' => "❌ Error: Fungsi shell_exec / exec dinonaktifkan di konfigurasi PHP hosting ini.",
-                    'execution_time' => '0.00s',
+                    'output' => "⚠️ Folder project di server hosting ini BUKAN Git Repository (folder .git tidak ditemukan).\n" .
+                                "Penyebab: Project di server kemungkinan di-upload manual via ZIP tanpa folder .git.\n\n" .
+                                "Solusi: Gunakan tombol 'sync:build' untuk sinkronisasi aset build langsung ke cPanel.",
+                    'execution_time' => $elapsed,
                     'exit_code' => 1,
                 ]);
             }
 
+            $basePath = escapeshellarg(base_path());
             $cdPrefix = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? "cd /d {$basePath}" : "cd {$basePath}";
             $fullCommand = "{$cdPrefix} && {$rawCommand} 2>&1";
 
-            $output = @shell_exec($fullCommand);
+            $output = $this->runShellCommand($fullCommand);
             $elapsed = number_format(microtime(true) - $startTime, 2) . 's';
 
-            if (empty(trim((string) $output))) {
-                $output = "✅ Perintah '{$rawCommand}' berhasil dieksekusi tanpa pesan balik.";
-            }
+            $isSuccess = !str_contains($output, '❌ Error:') && !str_contains($output, 'fatal:');
 
             return response()->json([
-                'success' => true,
+                'success' => $isSuccess,
                 'command' => $rawCommand,
-                'output' => trim((string) $output),
+                'output' => trim($output),
                 'execution_time' => $elapsed,
-                'exit_code' => 0,
+                'exit_code' => $isSuccess ? 0 : 1,
             ]);
         }
 
@@ -166,7 +168,9 @@ TXT;
             $log[] = "\n[1/3] Menjalankan git pull dari GitHub...";
             $basePath = escapeshellarg(base_path());
             $cdPrefix = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? "cd /d {$basePath}" : "cd {$basePath}";
-            $gitOutput = @shell_exec("{$cdPrefix} && git pull 2>&1");
+            $gitOutput = is_dir(base_path('.git'))
+                ? $this->runShellCommand("{$cdPrefix} && git pull 2>&1")
+                : "ℹ️ Dilewati: Folder di hosting bukan Git repository (folder .git tidak ada). Langsung lanjut ke sinkronisasi build.";
             $log[] = trim((string) $gitOutput) ?: "✅ Git pull selesai.";
 
             // Tahap 2: Sync Folder Build ke cPanel target (build & Uploads/build)
@@ -292,5 +296,47 @@ TXT;
                 'exit_code' => 1,
             ]);
         }
+    }
+
+    /**
+     * Eksekusi shell command dengan fallback berjenjang (shell_exec, exec, proc_open, passthru)
+     */
+    private function runShellCommand(string $cmd): string
+    {
+        $disabled = array_map('trim', explode(',', (string) ini_get('disable_functions')));
+
+        if (function_exists('shell_exec') && !in_array('shell_exec', $disabled)) {
+            $res = @shell_exec($cmd);
+            if ($res !== null) return (string) $res;
+        }
+
+        if (function_exists('exec') && !in_array('exec', $disabled)) {
+            $output = [];
+            @exec($cmd, $output);
+            if (!empty($output)) return implode("\n", $output);
+        }
+
+        if (function_exists('proc_open') && !in_array('proc_open', $disabled)) {
+            $process = @proc_open($cmd, [
+                1 => ['pipe', 'w'],
+                2 => ['pipe', 'w']
+            ], $pipes);
+            if (is_resource($process)) {
+                $out = stream_get_contents($pipes[1]) . stream_get_contents($pipes[2]);
+                fclose($pipes[1]);
+                fclose($pipes[2]);
+                proc_close($process);
+                return (string) $out;
+            }
+        }
+
+        if (function_exists('passthru') && !in_array('passthru', $disabled)) {
+            ob_start();
+            @passthru($cmd);
+            $out = ob_get_clean();
+            if (!empty($out)) return (string) $out;
+        }
+
+        return "❌ Error: Fungsi eksekusi shell (shell_exec, exec, proc_open) dinonaktifkan di server hosting ini (disable_functions di php.ini).";
     }
 }

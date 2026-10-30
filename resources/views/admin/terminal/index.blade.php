@@ -276,9 +276,21 @@
             },
             body: JSON.stringify({ command: cmd })
         })
-        .then(response => response.json())
-        .then(data => {
-            appendCommandResult(cmd, data.output, data.success, data.execution_time, timeStr);
+        .then(async response => {
+            let data = null;
+            try {
+                data = await response.json();
+            } catch (e) {
+                const text = await response.text();
+                data = { output: text || `HTTP ${response.status}: ${response.statusText}`, success: false };
+            }
+            return { ok: response.ok, data };
+        })
+        .then(({ ok, data }) => {
+            const output = data.output ?? data.message ?? (typeof data === 'string' ? data : JSON.stringify(data, null, 2));
+            const isSuccess = ok && (data.success !== false);
+            const execTime = data.execution_time ?? (isSuccess ? "0.01s" : "0.00s");
+            appendCommandResult(cmd, output, isSuccess, execTime, timeStr);
         })
         .catch(err => {
             appendCommandResult(cmd, "❌ Koneksi Gagal: " + err.message, false, "0.00s", timeStr);
