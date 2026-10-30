@@ -19,107 +19,121 @@ class SyncBuildCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Otomatis salin folder public/build ke folder web root cPanel (build & Uploads/build)';
+    protected $description = 'Otomatis salin aset public/build dan public/images ke web root cPanel';
 
     /**
      * Execute the console command.
      */
     public function handle(): int
     {
-        $source = public_path('build');
+        // 1. Tentukan sumber aset build (Prioritaskan base_path/public/build hasil Git)
+        $sourceBuild = base_path('public' . DIRECTORY_SEPARATOR . 'build');
+        if (!File::isDirectory($sourceBuild)) {
+            $sourceBuild = public_path('build');
+        }
 
-        if (!File::exists($source) || !File::isDirectory($source)) {
-            $this->error("❌ Folder sumber tidak ditemukan: {$source}");
-            $this->warn("Silakan jalankan 'npm run build' terlebih dahulu di komputer lokal.");
+        if (!File::exists($sourceBuild) || !File::isDirectory($sourceBuild)) {
+            $this->error("❌ Folder sumber build tidak ditemukan: {$sourceBuild}");
             return Command::FAILURE;
         }
 
-        $sourceFiles = File::allFiles($source);
+        $sourceFiles = File::allFiles($sourceBuild);
         $totalFiles = count($sourceFiles);
 
         $this->info("=================================================");
-        $this->info(" 📦 PIAUD SYNC ASSETS BUILD CONSOLE");
+        $this->info(" 📦 PIAUD SYNC ASSETS & IMAGES CONSOLE");
         $this->info("=================================================");
-        $this->line("Sumber Aset : <fg=cyan>{$source}</>");
-        $this->line("Jumlah File : <fg=yellow>{$totalFiles} berkas</>");
+        $this->line("Sumber Build  : <fg=cyan>{$sourceBuild}</>");
+        $this->line("Jumlah Berkas : <fg=yellow>{$totalFiles} file</>");
         $this->line("-------------------------------------------------");
 
-        // Deteksi lokasi target cPanel
-        $targetRoots = [];
-
-        $customTarget = $this->option('target');
-        if (!empty($customTarget)) {
-            $targetRoots[] = rtrim($customTarget, '/\\');
-        }
-
-        // Cek path dari env jika ada
-        if (env('DEPLOY_WEB_ROOT')) {
-            $targetRoots[] = rtrim(env('DEPLOY_WEB_ROOT'), '/\\');
-        }
-
-        // Lokasi standar cPanel shared hosting (relatif dari root Laravel)
-        $potentialRoots = [
-            base_path('../public_html/piaud.iaipibandung.ac.id'),
-            base_path('../../public_html/piaud.iaipibandung.ac.id'),
-            base_path('../piaud.iaipibandung.ac.id'),
-            base_path('public_html/piaud.iaipibandung.ac.id'),
+        // Deteksi target web root di cPanel
+        $destinations = [
+            base_path('build'),
+            base_path('Uploads' . DIRECTORY_SEPARATOR . 'build'),
         ];
 
-        foreach ($potentialRoots as $potential) {
-            $real = realpath($potential);
-            if ($real && is_dir($real)) {
-                $targetRoots[] = $real;
+        // Jika ada target khusus
+        if ($this->option('target')) {
+            $dest = rtrim($this->option('target'), '/\\') . DIRECTORY_SEPARATOR . 'build';
+            $destinations[] = $dest;
+        }
+
+        // Cek jika project berada di luar public_html
+        $potentialPublicHtml = [
+            base_path('../public_html/piaud.iaipibandung.ac.id/build'),
+            base_path('../../public_html/piaud.iaipibandung.ac.id/build'),
+            base_path('../piaud.iaipibandung.ac.id/build'),
+        ];
+        foreach ($potentialPublicHtml as $p) {
+            $dir = dirname($p);
+            if (is_dir($dir)) {
+                $destinations[] = $p;
             }
         }
 
-        // Jika di server cPanel folder belum ada tapi public_html ada, buat di ../public_html/piaud.iaipibandung.ac.id
-        $cpanelPublicHtml = realpath(base_path('../public_html')) ?: realpath(base_path('../../public_html'));
-        if ($cpanelPublicHtml && is_dir($cpanelPublicHtml)) {
-            $defaultSubdomainRoot = $cpanelPublicHtml . DIRECTORY_SEPARATOR . 'piaud.iaipibandung.ac.id';
-            if (!in_array($defaultSubdomainRoot, $targetRoots)) {
-                $targetRoots[] = $defaultSubdomainRoot;
-            }
-        }
+        $destinations = array_unique($destinations);
 
-        // Jika tidak ditemukan satupun root cPanel (misal mode lokal), fallback ke ../public_html/piaud.iaipibandung.ac.id
-        if (empty($targetRoots)) {
-            $targetRoots[] = base_path('../public_html/piaud.iaipibandung.ac.id');
-        }
-
-        $targetRoots = array_unique($targetRoots);
-
+        // Salin aset build
         $successCount = 0;
+        foreach ($destinations as $dest) {
+            // Hindari copy ke folder yang sama persis dengan sumber
+            if (realpath($dest) === realpath($sourceBuild)) {
+                continue;
+            }
 
-        foreach ($targetRoots as $root) {
-            // Sesuai instruksi: salin ke KEDUA lokasi (build dan Uploads/build)
-            $destinations = [
-                $root . DIRECTORY_SEPARATOR . 'build',
-                $root . DIRECTORY_SEPARATOR . 'Uploads' . DIRECTORY_SEPARATOR . 'build',
+            try {
+                if (!File::exists($dest)) {
+                    File::makeDirectory($dest, 0755, true, true);
+                }
+
+                // Bersihkan file lama agar tidak bertumpuk
+                File::cleanDirectory($dest);
+
+                File::copyDirectory($sourceBuild, $dest);
+                $this->info("✅ Build disalin ke: <fg=green>{$dest}</>");
+                $successCount++;
+            } catch (\Throwable $e) {
+                $this->error("❌ Gagal menyalin ke: {$dest} ({$e->getMessage()})");
+            }
+        }
+
+        // 2. Salin juga folder IMAGES (logo kampus & foto kegiatan) ke web root
+        $sourceImages = base_path('public' . DIRECTORY_SEPARATOR . 'images');
+        if (File::isDirectory($sourceImages)) {
+            $imgDestinations = [
+                base_path('images'),
+                base_path('Uploads' . DIRECTORY_SEPARATOR . 'images'),
             ];
 
-            foreach ($destinations as $dest) {
-                try {
-                    if (!File::exists($dest)) {
-                        File::makeDirectory($dest, 0755, true, true);
-                    }
+            foreach ($potentialPublicHtml as $p) {
+                $dir = dirname($p);
+                if (is_dir($dir)) {
+                    $imgDestinations[] = $dir . DIRECTORY_SEPARATOR . 'images';
+                }
+            }
 
-                    File::copyDirectory($source, $dest);
-                    $this->info("✅ Berhasil disalin ke: <fg=green>{$dest}</>");
-                    $successCount++;
+            $imgDestinations = array_unique($imgDestinations);
+
+            foreach ($imgDestinations as $imgDest) {
+                if (realpath($imgDest) === realpath($sourceImages)) {
+                    continue;
+                }
+
+                try {
+                    if (!File::exists($imgDest)) {
+                        File::makeDirectory($imgDest, 0755, true, true);
+                    }
+                    File::copyDirectory($sourceImages, $imgDest);
+                    $this->info("🖼️ Images disalin ke: <fg=green>{$imgDest}</>");
                 } catch (\Throwable $e) {
-                    $this->error("❌ Gagal menyalin ke: {$dest}");
-                    $this->line("   Pesan: " . $e->getMessage());
+                    $this->error("❌ Gagal menyalin images ke: {$imgDest} ({$e->getMessage()})");
                 }
             }
         }
 
         $this->line("-------------------------------------------------");
-        if ($successCount > 0) {
-            $this->info("🎉 Selesai! Seluruh aset Vite berhasil disinkronkan ke {$successCount} lokasi.");
-            return Command::SUCCESS;
-        } else {
-            $this->error("⚠️ Tidak ada lokasi yang berhasil disinkronkan.");
-            return Command::FAILURE;
-        }
+        $this->info("🎉 Selesai! Seluruh aset Vite & Gambar kampus berhasil disinkronkan.");
+        return Command::SUCCESS;
     }
 }

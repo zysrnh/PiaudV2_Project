@@ -164,7 +164,18 @@ TXT;
                 $syncOutput = $this->pullFromGitHubZip();
 
                 try {
+                    Artisan::call('migrate', ['--force' => true]);
+                    $migOutput = trim(Artisan::output());
+                    if (!empty($migOutput)) $syncOutput .= "\n\n" . $migOutput;
+                } catch (Throwable $e) {}
+
+                try {
                     Artisan::call('sync:build');
+                    $syncOutput .= "\n\n" . trim(Artisan::output());
+                } catch (Throwable $e) {}
+
+                try {
+                    Artisan::call('optimize:clear');
                     $syncOutput .= "\n\n" . trim(Artisan::output());
                 } catch (Throwable $e) {}
 
