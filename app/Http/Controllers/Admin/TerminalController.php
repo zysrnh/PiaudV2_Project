@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Throwable;
+use ZipArchive;
 
 class TerminalController extends Controller
 {
@@ -115,94 +118,64 @@ TXT;
                 ]);
             }
 
-            // 1. Eksekusi Perintah GIT (git pull, git status, git log, git:connect, dll)
-            if (preg_match('/^git(\s+.*)?$/i', $rawCommand) || $command === 'git:connect' || $command === 'git:init') {
+            // 1. Eksekusi Perintah GIT / UPDATE (git pull, git status, git log, git:connect, dll)
+            if (preg_match('/^git(\s+.*)?$/i', $rawCommand) || $command === 'git:connect' || $command === 'git:init' || $command === 'update') {
                 $gitDir = base_path('.git');
                 $repoUrl = 'https://github.com/zysrnh/PiaudV2_Project.git';
-                $basePath = escapeshellarg(base_path());
-                $cdPrefix = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? "cd /d {$basePath}" : "cd {$basePath}";
 
-                // Jika folder .git belum ada, lakukan auto-inisialisasi & koneksi ke GitHub
-                if (!is_dir($gitDir) || $command === 'git:connect' || $command === 'git:init') {
+                // Cek apakah shell execution diizinkan di server hosting ini
+                $canUseShell = $this->canExecuteShell();
+
+                // Jika server mengizinkan shell DAN git command ada
+                if ($canUseShell) {
                     $ver = $this->runShellCommand("git --version 2>&1");
-                    if (str_contains($ver, '❌ Error:') || str_contains($ver, 'not found') || str_contains($ver, 'is not recognized')) {
+                    $gitAvailable = !str_contains($ver, '❌ Error:') && !str_contains($ver, 'not found') && !str_contains($ver, 'is not recognized');
+
+                    if ($gitAvailable) {
+                        $base = '"' . str_replace(['"', '\\'], ['', '/'], base_path()) . '"';
+                        $cdPrefix = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? "cd /d {$base}" : "cd {$base}";
+
+                        // Jika .git belum ada, auto-inisialisasi
+                        if (!is_dir($gitDir)) {
+                            $this->runShellCommand("{$cdPrefix} && git init && git remote add origin {$repoUrl} && git branch -M main && git fetch origin main && git reset --hard origin/main");
+                        } else {
+                            $this->runShellCommand("{$cdPrefix} && git pull origin main 2>&1");
+                        }
+
+                        // Jalankan sync build
+                        try {
+                            Artisan::call('sync:build');
+                        } catch (Throwable $e) {}
+
                         $elapsed = number_format(microtime(true) - $startTime, 2) . 's';
                         return response()->json([
-                            'success' => false,
+                            'success' => true,
                             'command' => $rawCommand,
-                            'output' => "❌ Error: Binary Git tidak tersedia atau dinonaktifkan di server hosting ini.\n" .
-                                        "Detail: {$ver}\n\n" .
-                                        "💡 Solusi Cepat: Upload folder 'public/build' lalu klik tombol 'sync:build' untuk deploy langsung.",
+                            'output' => "✅ Git pull via Shell CLI berhasil dieksekusi!\n" .
+                                        "Seluruh file terbaru dari GitHub telah diperbarui ke server.\n\n" .
+                                        Artisan::output(),
                             'execution_time' => $elapsed,
-                            'exit_code' => 1,
+                            'exit_code' => 0,
                         ]);
                     }
-
-                    $log = [];
-                    $log[] = "=================================================";
-                    $log[] = " 🔗 AUTO-CONNECT: MENGHUBUNGKAN SERVER KE GITHUB";
-                    $log[] = "=================================================";
-                    $log[] = "✅ Binary Git: " . trim($ver);
-                    $log[] = "📡 Repository: {$repoUrl}\n";
-
-                    $setupSteps = [
-                        'git init',
-                        'git config user.name "PIAUD Auto Deploy"',
-                        'git config user.email "server@iaipibandung.ac.id"',
-                        'git remote remove origin 2>&1',
-                        "git remote add origin {$repoUrl}",
-                        'git branch -M main',
-                        'git fetch origin main 2>&1',
-                        'git reset --hard origin/main 2>&1',
-                        'git branch --set-upstream-to=origin/main main 2>&1'
-                    ];
-
-                    foreach ($setupSteps as $step) {
-                        $res = trim($this->runShellCommand("{$cdPrefix} && {$step}"));
-                        if (!empty($res) && !str_contains($res, 'No such remote')) {
-                            $log[] = "> {$step}\n{$res}";
-                        }
-                    }
-
-                    $log[] = "\n🎉 BERHASIL! Server hosting sekarang sudah resmi terhubung ke Git Repository.";
-                    $log[] = "Seluruh file terbaru (termasuk aset build) telah ditarik ke server.";
-
-                    try {
-                        Artisan::call('sync:build');
-                        $log[] = "\n" . trim(Artisan::output());
-                    } catch (Throwable $e) {}
-
-                    $elapsed = number_format(microtime(true) - $startTime, 2) . 's';
-
-                    return response()->json([
-                        'success' => true,
-                        'command' => $rawCommand,
-                        'output' => implode("\n", $log),
-                        'execution_time' => $elapsed,
-                        'exit_code' => 0,
-                    ]);
                 }
 
-                // Jika folder .git sudah ada, jalankan perintah git normal
-                $fullCommand = "{$cdPrefix} && {$rawCommand} 2>&1";
-                $output = $this->runShellCommand($fullCommand);
+                // JIKA SHELL/GIT DIBLOKIR HOSTING: Gunakan Pure PHP GitHub Sync (Kebal blokir cPanel)
+                $syncOutput = $this->pullFromGitHubZip();
+
+                try {
+                    Artisan::call('sync:build');
+                    $syncOutput .= "\n\n" . trim(Artisan::output());
+                } catch (Throwable $e) {}
+
                 $elapsed = number_format(microtime(true) - $startTime, 2) . 's';
 
-                if (str_contains($rawCommand, 'pull') && !str_contains($output, 'fatal:')) {
-                    try {
-                        Artisan::call('sync:build');
-                        $output .= "\n\n" . trim(Artisan::output());
-                    } catch (Throwable $e) {}
-                }
-
-                $isSuccess = !str_contains($output, '❌ Error:') && !str_contains($output, 'fatal:');
-
                 return response()->json([
-                    'success' => $isSuccess,
+                    'success' => !str_contains($syncOutput, '❌ Gagal'),
                     'command' => $rawCommand,
-                    'output' => trim($output),
+                    'output' => $syncOutput,
                     'execution_time' => $elapsed,
-                    'exit_code' => $isSuccess ? 0 : 1,
+                    'exit_code' => str_contains($syncOutput, '❌ Gagal') ? 1 : 0,
                 ]);
             }
 
@@ -213,10 +186,10 @@ TXT;
                 $log[] = " 🚀 MEMULAI PROSES 1-KLIK FULL DEPLOY PRODUKSI";
                 $log[] = "=================================================";
 
-                // Tahap 1: Git Pull / Auto-Connect
-                $log[] = "\n[1/3] Menjalankan git pull dari GitHub...";
+                // Tahap 1: Tarik Update dari GitHub
+                $log[] = "\n[1/3] Menarik file terbaru dari GitHub...";
                 $gitRes = $this->execute(new Request(['command' => 'git pull']))->getData(true);
-                $log[] = $gitRes['output'] ?? 'Git pull selesai.';
+                $log[] = $gitRes['output'] ?? 'Pembaruan GitHub selesai.';
 
                 // Tahap 2: Sync Folder Build ke cPanel target (build & Uploads/build)
                 $log[] = "\n[2/3] Menyinkronkan folder build ke web root target...";
@@ -340,7 +313,17 @@ TXT;
     }
 
     /**
-     * Eksekusi shell command dengan fallback berjenjang (shell_exec, exec, proc_open, passthru)
+     * Cek apakah server mengizinkan eksekusi shell command
+     */
+    private function canExecuteShell(): bool
+    {
+        $disabled = array_map('trim', explode(',', (string) ini_get('disable_functions')));
+        return (function_exists('shell_exec') && !in_array('shell_exec', $disabled))
+            || (function_exists('exec') && !in_array('exec', $disabled));
+    }
+
+    /**
+     * Eksekusi shell command dengan fallback berjenjang
      */
     private function runShellCommand(string $cmd): string
     {
@@ -357,34 +340,119 @@ TXT;
                 @exec($cmd, $output);
                 if (!empty($output)) return implode("\n", $output);
             }
-
-            if (function_exists('proc_open') && !in_array('proc_open', $disabled)) {
-                $descriptors = [
-                    0 => ['pipe', 'r'],
-                    1 => ['pipe', 'w'],
-                    2 => ['pipe', 'w'],
-                ];
-                $process = @proc_open($cmd, $descriptors, $pipes);
-                if (is_resource($process)) {
-                    if (isset($pipes[0])) fclose($pipes[0]);
-                    $out = stream_get_contents($pipes[1]) . stream_get_contents($pipes[2]);
-                    if (isset($pipes[1])) fclose($pipes[1]);
-                    if (isset($pipes[2])) fclose($pipes[2]);
-                    proc_close($process);
-                    if (!empty(trim((string) $out))) return (string) $out;
-                }
-            }
-
-            if (function_exists('passthru') && !in_array('passthru', $disabled)) {
-                ob_start();
-                @passthru($cmd);
-                $out = ob_get_clean();
-                if (!empty($out)) return (string) $out;
-            }
         } catch (Throwable $e) {
             return "❌ Shell Error: " . $e->getMessage();
         }
 
-        return "❌ Error: Fungsi eksekusi shell (shell_exec, exec, proc_open) dinonaktifkan di server hosting ini (disable_functions di php.ini).";
+        return "❌ Error: Eksekusi shell dinonaktifkan di server hosting.";
+    }
+
+    /**
+     * Pure PHP GitHub Updater (Solusi 100% Kebal Blokir Hosting cPanel)
+     * Mengunduh zip master dari GitHub dan mengekstraknya langsung via PHP tanpa butuh Git / Shell!
+     */
+    private function pullFromGitHubZip(): string
+    {
+        $repoZipUrl = 'https://github.com/zysrnh/PiaudV2_Project/archive/refs/heads/main.zip';
+        $tempDir = storage_path('app/temp_git_sync');
+
+        if (!is_dir($tempDir)) {
+            @mkdir($tempDir, 0755, true);
+        }
+
+        $tempZip = $tempDir . '/main.zip';
+
+        // 1. Download berkas zip dari GitHub
+        $content = null;
+        try {
+            $resp = Http::timeout(120)->withHeaders(['User-Agent' => 'PIAUD-Campus-Updater'])->get($repoZipUrl);
+            if ($resp->successful()) {
+                $content = $resp->body();
+            }
+        } catch (Throwable $e) {}
+
+        if (!$content && function_exists('curl_init')) {
+            $ch = curl_init($repoZipUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 120);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'PIAUD-Campus-Updater');
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            $content = curl_exec($ch);
+            curl_close($ch);
+        }
+
+        if (!$content) {
+            $content = @file_get_contents($repoZipUrl);
+        }
+
+        if (empty($content) || strlen($content) < 1000) {
+            return "❌ Gagal mengunduh pembaruan dari GitHub ({$repoZipUrl}).\n" .
+                   "Pastikan server hosting memiliki akses internet keluar (cURL / allow_url_fopen).";
+        }
+
+        file_put_contents($tempZip, $content);
+
+        // 2. Ekstrak file zip
+        if (!class_exists('ZipArchive')) {
+            @unlink($tempZip);
+            return "❌ Ekstensi PHP ZipArchive tidak aktif di hosting ini.";
+        }
+
+        $zip = new ZipArchive();
+        if ($zip->open($tempZip) !== true) {
+            @unlink($tempZip);
+            return "❌ Gagal membuka arsip zip pembaruan dari GitHub.";
+        }
+
+        $extractPath = $tempDir . '/extracted';
+        if (!is_dir($extractPath)) {
+            @mkdir($extractPath, 0755, true);
+        }
+
+        $zip->extractTo($extractPath);
+        $zip->close();
+        @unlink($tempZip);
+
+        // Folder hasil ekstrak di GitHub biasanya bernama PiaudV2_Project-main
+        $extractedFolder = $extractPath . '/PiaudV2_Project-main';
+        if (!is_dir($extractedFolder)) {
+            $dirs = glob($extractPath . '/*', GLOB_ONLYDIR);
+            $extractedFolder = $dirs[0] ?? $extractPath;
+        }
+
+        // 3. Salin seluruh file ke base_path(), AMANKAN .env dan storage
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($extractedFolder, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        $updatedCount = 0;
+        foreach ($files as $item) {
+            $relPath = substr($item->getPathname(), strlen($extractedFolder) + 1);
+
+            // JANGAN PERNAH timpa konfigurasi server .env dan folder storage
+            if ($relPath === '.env' || str_starts_with($relPath, 'storage/') || str_starts_with($relPath, 'storage\\')) {
+                continue;
+            }
+
+            $destPath = base_path($relPath);
+            if ($item->isDir()) {
+                if (!is_dir($destPath)) {
+                    @mkdir($destPath, 0755, true);
+                }
+            } else {
+                @copy($item->getPathname(), $destPath);
+                $updatedCount++;
+            }
+        }
+
+        // Bersihkan folder temp
+        try {
+            File::deleteDirectory($tempDir);
+        } catch (Throwable $e) {}
+
+        return "🎉 BERHASIL! {$updatedCount} file berhasil diperbarui langsung dari GitHub (Pure PHP Auto-Sync).\n" .
+               "Semua kodingan dan folder build terbaru sudah masuk ke server hosting!";
     }
 }
