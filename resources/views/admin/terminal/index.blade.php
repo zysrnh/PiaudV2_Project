@@ -280,7 +280,7 @@
             let data = null;
             try {
                 data = await response.json();
-            } catch (e) {
+        } catch (e) {
                 const text = await response.text();
                 data = { output: text || `HTTP ${response.status}: ${response.statusText}`, success: false };
             }

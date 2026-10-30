@@ -119,30 +119,88 @@ TXT;
             ]);
         }
 
-        // 1. Eksekusi Perintah GIT (git pull, git status, git log, dll)
-        if (preg_match('/^git(\s+.*)?$/i', $rawCommand)) {
+        // 1. Eksekusi Perintah GIT (git pull, git status, git log, git:connect, dll)
+        if (preg_match('/^git(\s+.*)?$/i', $rawCommand) || $command === 'git:connect' || $command === 'git:init') {
             $startTime = microtime(true);
             $gitDir = base_path('.git');
+            $repoUrl = 'https://github.com/zysrnh/PiaudV2_Project.git';
+            $basePath = escapeshellarg(base_path());
+            $cdPrefix = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? "cd /d {$basePath}" : "cd {$basePath}";
 
-            if (!is_dir($gitDir)) {
+            // Jika folder .git belum ada, lakukan auto-inisialisasi & koneksi ke GitHub
+            if (!is_dir($gitDir) || $command === 'git:connect' || $command === 'git:init') {
+                $ver = $this->runShellCommand("git --version 2>&1");
+                if (str_contains($ver, '❌ Error:') || str_contains($ver, 'not found') || str_contains($ver, 'is not recognized')) {
+                    $elapsed = number_format(microtime(true) - $startTime, 2) . 's';
+                    return response()->json([
+                        'success' => false,
+                        'command' => $rawCommand,
+                        'output' => "❌ Error: Binary Git tidak tersedia atau dinonaktifkan di server hosting ini.\n" .
+                                    "Detail: {$ver}\n\n" .
+                                    "💡 Solusi Cepat: Upload folder 'public/build' lalu klik tombol 'sync:build' untuk deploy langsung.",
+                        'execution_time' => $elapsed,
+                        'exit_code' => 1,
+                    ]);
+                }
+
+                $log = [];
+                $log[] = "=================================================";
+                $log[] = " 🔗 AUTO-CONNECT: MENGHUBUNGKAN SERVER KE GITHUB";
+                $log[] = "=================================================";
+                $log[] = "✅ Binary Git: " . trim($ver);
+                $log[] = "📡 Repository: {$repoUrl}\n";
+
+                $setupSteps = [
+                    'git init',
+                    'git config user.name "PIAUD Auto Deploy"',
+                    'git config user.email "server@iaipibandung.ac.id"',
+                    'git remote remove origin 2>&1',
+                    "git remote add origin {$repoUrl}",
+                    'git branch -M main',
+                    'git fetch origin main 2>&1',
+                    'git reset --hard origin/main 2>&1',
+                    'git branch --set-upstream-to=origin/main main 2>&1'
+                ];
+
+                foreach ($setupSteps as $step) {
+                    $res = trim($this->runShellCommand("{$cdPrefix} && {$step}"));
+                    if (!empty($res) && !str_contains($res, 'No such remote')) {
+                        $log[] = "> {$step}\n{$res}";
+                    }
+                }
+
+                $log[] = "\n🎉 BERHASIL! Server hosting sekarang sudah resmi terhubung ke Git Repository.";
+                $log[] = "Seluruh file terbaru (termasuk aset build) telah ditarik ke server.";
+
+                // Auto jalankan sync:build
+                try {
+                    Artisan::call('sync:build');
+                    $log[] = "\n" . trim(Artisan::output());
+                } catch (Throwable $e) {}
+
                 $elapsed = number_format(microtime(true) - $startTime, 2) . 's';
+
                 return response()->json([
-                    'success' => false,
+                    'success' => true,
                     'command' => $rawCommand,
-                    'output' => "⚠️ Folder project di server hosting ini BUKAN Git Repository (folder .git tidak ditemukan).\n" .
-                                "Penyebab: Project di server kemungkinan di-upload manual via ZIP tanpa folder .git.\n\n" .
-                                "Solusi: Gunakan tombol 'sync:build' untuk sinkronisasi aset build langsung ke cPanel.",
+                    'output' => implode("\n", $log),
                     'execution_time' => $elapsed,
-                    'exit_code' => 1,
+                    'exit_code' => 0,
                 ]);
             }
 
-            $basePath = escapeshellarg(base_path());
-            $cdPrefix = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? "cd /d {$basePath}" : "cd {$basePath}";
+            // Jika folder .git sudah ada, jalankan perintah git normal
             $fullCommand = "{$cdPrefix} && {$rawCommand} 2>&1";
-
             $output = $this->runShellCommand($fullCommand);
             $elapsed = number_format(microtime(true) - $startTime, 2) . 's';
+
+            // Jika perintahnya git pull dan berhasil, jalankan sync:build otomatis
+            if (str_contains($rawCommand, 'pull') && !str_contains($output, 'fatal:')) {
+                try {
+                    Artisan::call('sync:build');
+                    $output .= "\n\n" . trim(Artisan::output());
+                } catch (Throwable $e) {}
+            }
 
             $isSuccess = !str_contains($output, '❌ Error:') && !str_contains($output, 'fatal:');
 
@@ -164,14 +222,10 @@ TXT;
             $log[] = " 🚀 MEMULAI PROSES 1-KLIK FULL DEPLOY PRODUKSI";
             $log[] = "=================================================";
 
-            // Tahap 1: Git Pull
+            // Tahap 1: Git Pull / Auto-Connect
             $log[] = "\n[1/3] Menjalankan git pull dari GitHub...";
-            $basePath = escapeshellarg(base_path());
-            $cdPrefix = (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? "cd /d {$basePath}" : "cd {$basePath}";
-            $gitOutput = is_dir(base_path('.git'))
-                ? $this->runShellCommand("{$cdPrefix} && git pull 2>&1")
-                : "ℹ️ Dilewati: Folder di hosting bukan Git repository (folder .git tidak ada). Langsung lanjut ke sinkronisasi build.";
-            $log[] = trim((string) $gitOutput) ?: "✅ Git pull selesai.";
+            $gitRes = $this->execute(new Request(['command' => 'git pull']))->getData(true);
+            $log[] = $gitRes['output'] ?? 'Git pull selesai.';
 
             // Tahap 2: Sync Folder Build ke cPanel target (build & Uploads/build)
             $log[] = "\n[2/3] Menyinkronkan folder build ke web root target...";
